@@ -176,6 +176,7 @@ schemas = [
     'pid_zone.json',
     'stepwise.json',
     'virtual_sensor.json',
+    'supported_configuration.json',
 ]
 
 foreach s : schemas
