@@ -224,6 +224,7 @@ schemas = [
     'stepwise.json',
     'virtual_sensor.json',
     'satellite_controller.json',
+    'supported_configuration.json',
 ]
 
 foreach s : schemas
