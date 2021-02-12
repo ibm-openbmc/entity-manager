@@ -7,6 +7,27 @@
                 "ibm,rainier"
             ],
             "Type": "IBMCompatibleSystem"
+        },
+        {
+            "Name": "1000W IBMCFFPS Configuration",
+            "Type": "SupportedConfiguration",
+            "SupportedType": "PowerSupply",
+            "SupportedModel": "51ED",
+            "RedundantCount": 2,
+            "InputVoltage": [
+                110,
+                220
+            ]
+        },
+        {
+            "Name": "2000W IBMCFFPS Configuration",
+            "Type": "SupportedConfiguration",
+            "SupportedType": "PowerSupply",
+            "SupportedModel": "51E9",
+            "RedundantCount": 2,
+            "InputVoltage": [
+                220
+            ]
         }
     ],
     "Name": "Rainier 2U Chassis",
