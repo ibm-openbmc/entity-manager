@@ -1,0 +1,53 @@
+{
+    "Bus": "$bus",
+    "Exposes": [
+        {
+            "Address": "$address",
+            "Bus": "$bus",
+            "Name": "Samsung PM1735 $index FRU",
+            "Type": "EEPROM"
+        },
+        {
+            "Address": "0x6a",
+            "Bus": "$bus",
+            "Name": "Samsung PM1735 $index Temp",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 115
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 110
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower non critical",
+                    "Severity": 0,
+                    "Value": 5
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0
+                }
+            ],
+            "Type": "NVME1000"
+        }
+    ],
+    "Logging": "Off",
+    "Name": "Samsung PM1735 $index",
+    "Probe": "com.ibm.ipzvpd.VINI({'CC': [78, 86, 77, 101]})",
+    "Type": "NVMe",
+    "xyz.openbmc_project.Inventory.Decorator.Asset": {
+        "Manufacturer": "Samsung",
+        "Model": "PM1735",
+        "PartNumber": "$PN",
+        "SerialNumber": "$SN"
+    }
+}
