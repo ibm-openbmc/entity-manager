@@ -113,6 +113,7 @@ configs = [
     'Nisqually.json',
     'NVME P4000.json',
     'PCIE SSD Retimer.json',
+    'PM1735.json',
     'PSSF132202A.json',
     'PSSF162205A.json',
     'PSSF212201A.json',
