@@ -6,6 +6,16 @@
                 "ibm,everest"
             ],
             "Type": "IBMCompatibleSystem"
+        },
+        {
+            "Name": "2300W IBMCFFPS Configuration",
+            "Type": "SupportedConfiguration",
+            "SupportedType": "PowerSupply",
+            "SupportedModel": "51EA",
+            "RedundantCount": 4,
+            "InputVoltage": [
+                220
+            ]
         }
     ],
     "Name": "Everest Chassis",
