@@ -7,6 +7,27 @@
                 "ibm,rainier"
             ],
             "Type": "IBMCompatibleSystem"
+        },
+        {
+            "Name": "1000W IBMCFFPS Configuration",
+            "Type": "SupportedConfiguration",
+            "SupportedType": "PowerSupply",
+            "SupportedModel": "2B1D",
+            "RedundantCount": 4,
+            "InputVoltage": [
+                110,
+                220
+            ]
+        },
+        {
+            "Name": "1600W IBMCFFPS Configuration",
+            "Type": "SupportedConfiguration",
+            "SupportedType": "PowerSupply",
+            "SupportedModel": "2B1E",
+            "RedundantCount": 2,
+            "InputVoltage": [
+                220
+            ]
         }
     ],
     "Name": "Rainier 1S4U Chassis",
