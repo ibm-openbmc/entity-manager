@@ -7,6 +7,16 @@
                 "ibm,rainier"
             ],
             "Type": "IBMCompatibleSystem"
+        },
+        {
+            "Name": "1400W 1600W IBMCFFPS Configuration",
+            "Type": "SupportedConfiguration",
+            "SupportedType": "PowerSupply",
+            "SupportedModel": "2B1E",
+            "RedundantCount": 4,
+            "InputVoltage": [
+                220
+            ]
         }
     ],
     "Name": "Rainier 4U Chassis",
