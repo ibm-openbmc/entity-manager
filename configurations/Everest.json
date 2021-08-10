@@ -11,7 +11,7 @@
             "Name": "2300W IBMCFFPS Configuration",
             "Type": "SupportedConfiguration",
             "SupportedType": "PowerSupply",
-            "SupportedModel": "51EA",
+            "SupportedModel": "51DA",
             "RedundantCount": 4,
             "InputVoltage": [
                 220
