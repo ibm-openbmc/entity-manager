@@ -128,6 +128,7 @@ configs = [
     'Storm King.json',
     'STP Baseboard.json',
     'STP P4000 Chassis.json',
+    'Tola.json',
     'Tyan_S7106_Baseboard.json',
     'WFT Baseboard.json',
 ]
