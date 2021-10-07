@@ -57,6 +57,9 @@
                 "CurrScaleFactor": {
                     "$ref": "#/definitions/Types/CurrScaleFactor"
                 },
+                "DevName": {
+                    "$ref": "#/definitions/Types/DevName"
+                },
                 "Direction": {
                     "$ref": "#/definitions/Types/Direction"
                 },
@@ -473,6 +476,9 @@
             },
             "CurrScaleFactor": {
                 "type": "number"
+            },
+            "DevName": {
+                "type": "string"
             },
             "Direction": {
                 "type": "string"
