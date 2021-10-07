@@ -112,6 +112,7 @@ configs = [
     'ibm_1600w_cffps.json',
     'ibm_2000w_cffps.json',
     'ibm_2300w_cffps.json',
+    'ingraham.json',
     'intel_front_panel.json',
     'kudo_bmc.json',
     'kudo_motherboard.json',
