@@ -1,12 +1,12 @@
 {
     "Exposes": [
         {
-            "BridgeGpio": [
+	    "BridgeGpio": [
                  {
                      "Name": "battery-voltage-read-enable",
                      "Polarity": "High"
                  }
-	    ],
+            ],
             "Index": 0,
             "Name": "Battery Voltage",
             "DevName": "iio-hwmon-battery",
@@ -23,7 +23,7 @@
             "Type": "ADC"
         }
     ],
-    "Name": "Ingraham Board",
-    "Probe": "com.ibm.ipzvpd.VINI({'CC': [54, 66, 53, 56]})",
+    "Name": "Tola Board",
+    "Probe": "com.ibm.ipzvpd.VINI({'CC': [50, 69, 51, 53]})",
     "Type": "Board"
 }
