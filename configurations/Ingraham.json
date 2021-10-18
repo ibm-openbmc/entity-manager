@@ -17,7 +17,7 @@
                     "Direction": "less than",
                     "Name": "lower critical",
                     "Severity": 1,
-                    "Value": 3.0  
+                    "Value": 2.45  
                 }
             ],
             "Type": "ADC"
