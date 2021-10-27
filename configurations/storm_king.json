@@ -18,7 +18,8 @@
             "Address": "0x48",
             "Bus": 29,
             "Name": "Ambient 0 Temp",
-            "Type": "TMP75"
+            "Type": "TMP75",
+            "PollRate": 1
         },
         {
             "MaxValidInput": 100,
