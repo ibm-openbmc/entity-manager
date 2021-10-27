@@ -55,7 +55,8 @@
             "Address": "0x48",
             "Bus": 7,
             "Name": "Ambient 0 Temp",
-            "Type": "TMP75"
+            "Type": "TMP75",
+            "PollRate": 1
         }
     ],
     "Name": "Blyth Panel",
