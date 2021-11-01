@@ -16,7 +16,8 @@
             "RedundantCount": 4,
             "InputVoltage": [
                 220
-            ]
+            ],
+            "PowerConfigFullLoad": true
         }
     ],
     "Name": "Rainier 4U Chassis",
