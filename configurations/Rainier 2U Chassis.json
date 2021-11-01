@@ -17,7 +17,8 @@
             "InputVoltage": [
                 110,
                 220
-            ]
+            ],
+            "PowerConfigFullLoad": false
         },
         {
             "Name": "2000W IBMCFFPS Configuration",
@@ -27,7 +28,8 @@
             "RedundantCount": 2,
             "InputVoltage": [
                 220
-            ]
+            ],
+            "PowerConfigFullLoad": false
         }
     ],
     "Name": "Rainier 2U Chassis",
