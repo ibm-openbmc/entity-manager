@@ -47,6 +47,16 @@
                     "items": {
                         "type": "number"
                     }
+                },
+                "PowerConfigFullLoad": {
+                    "description": [
+                        "Indicates if the number of power supplies specified",
+                        "in this configuration is the maximum number that",
+                        "a system supports for the case where a system has",
+                        "models that support two different number of power",
+                        "supplies (example 2 or 4)."
+                    ],
+                    "type": "boolean"
                 }
             },
             "required": [

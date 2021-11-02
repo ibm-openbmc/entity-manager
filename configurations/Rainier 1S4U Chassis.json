@@ -17,7 +17,8 @@
             "InputVoltage": [
                 110,
                 220
-            ]
+            ],
+            "PowerConfigFullLoad": true
         },
         {
             "Name": "1600W IBMCFFPS Configuration",
@@ -27,7 +28,8 @@
             "RedundantCount": 2,
             "InputVoltage": [
                 220
-            ]
+            ],
+            "PowerConfigFullLoad": false
         }
     ],
     "Name": "Rainier 1S4U Chassis",
