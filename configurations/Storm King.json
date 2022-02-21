@@ -37,13 +37,13 @@
                     "Direction": "greater than",
                     "Name": "HardShutdown",
                     "Severity": 4,
-                    "Value": 58
+                    "Value": 53
                 },
                 {
                     "Direction": "greater than",
                     "Name": "SoftShutdown",
                     "Severity": 3,
-                    "Value": 53
+                    "Value": 48
                 },
                 {
                     "Direction": "greater than",
