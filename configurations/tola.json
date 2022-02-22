@@ -3,7 +3,7 @@
         {
 	    "BridgeGpio": [
                  {
-                     "Name": "battery-voltage-read-enable",
+                     "Name": "rtc-battery-voltage-read-enable",
                      "Polarity": "High"
                  }
             ],
