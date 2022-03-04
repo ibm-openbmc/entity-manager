@@ -3,8 +3,8 @@
         {
             "Address": "$address % 4 + 76",
             "Bus": "$bus",
-            "Name": "PCIe Cable Card $index Local Temp",
-            "Name1": "PCIe Cable Card $index Temp",
+            "Name": "PCIe Cable Card C$slotnumber Local Temp",
+            "Name1": "PCIe Cable Card C$slotnumber Temp",
             "Type": "TMP435",
             "PowerStateOwner": "PCIeSlot",
             "LocationCode": "$locationcode",
@@ -20,7 +20,7 @@
             ]
         }
     ],
-    "Name": "2U PCIe Cable Card $index",
+    "Name": "2U PCIe Cable Card C$slotnumber",
     "Probe": "com.ibm.ipzvpd.VINI({'CC': [54, 66, 57, 50]})",
     "Type": "Board"
 }

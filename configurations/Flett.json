@@ -3,8 +3,8 @@
         {
             "Address": "$address % 4 + 76",
             "Bus": "$bus",
-            "Name": "NVMe JBOF Card $index Local Temp",
-            "Name1": "NVMe JBOF Card $index Temp",
+            "Name": "NVMe JBOF Card C$slotnumber Local Temp",
+            "Name1": "NVMe JBOF Card C$slotnumber Temp",
             "Type": "TMP435",
             "PowerStateOwner": "PCIeSlot",
             "LocationCode": "$locationcode",
@@ -20,7 +20,7 @@
             ]
         }
     ],
-    "Name": "NVMe JBOF Card $index",
+    "Name": "NVMe JBOF Card C$slotnumber",
     "Probe": "com.ibm.ipzvpd.VINI({'CC': [54, 66, 56, 55]})",
     "Type": "Board"
 }
