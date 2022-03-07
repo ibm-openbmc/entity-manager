@@ -14,7 +14,7 @@
                     "Direction": "greater than",
                     "Name": "upper non critical",
                     "Severity": 0,
-                    "Value": 75,
+                    "Value": 85,
                     "Index": 2
                 }
             ]
