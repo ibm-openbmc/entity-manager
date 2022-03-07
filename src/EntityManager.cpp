@@ -610,16 +610,21 @@ void postToDbus(const nlohmann::json& newConfiguration,
             createInterface(objServer, boardName,
                             "xyz.openbmc_project.Inventory.Item", boardKey);
 
-        std::shared_ptr<sdbusplus::asio::dbus_interface> boardIface =
-            createInterface(objServer, boardName,
-                            "xyz.openbmc_project.Inventory.Item." + boardType,
-                            boardKeyOrig);
-
         createAddObjectMethod(jsonPointerPath, boardName, systemConfiguration,
                               objServer, boardKeyOrig);
 
-        populateInterfaceFromJson(systemConfiguration, jsonPointerPath,
-                                  boardIface, boardValues, objServer);
+        if (boardType != "Chassis")
+        {
+            std::shared_ptr<sdbusplus::asio::dbus_interface> boardIface =
+                createInterface(objServer, boardName,
+                                "xyz.openbmc_project.Inventory.Item." +
+                                    boardType,
+                                boardKeyOrig);
+
+            populateInterfaceFromJson(systemConfiguration, jsonPointerPath,
+                                      boardIface, boardValues, objServer);
+        }
+
         jsonPointerPath += "/";
         // iterate through board properties
         for (auto& boardField : boardValues.items())
