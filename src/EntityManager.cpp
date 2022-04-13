@@ -1079,7 +1079,8 @@ int main()
     // entities from DBus.
     sdbusplus::bus::match::match nameOwnerChangedMatch(
         static_cast<sdbusplus::bus::bus&>(*systemBus),
-        sdbusplus::bus::match::rules::nameOwnerChanged(),
+        sdbusplus::bus::match::rules::nameOwnerChanged(
+            "xyz.openbmc_project.Inventory.Manager"),
         [&](sdbusplus::message::message&) {
             propertiesChangedCallback(systemConfiguration, objServer);
         });
@@ -1087,13 +1088,15 @@ int main()
     // destroyed.
     sdbusplus::bus::match::match interfacesAddedMatch(
         static_cast<sdbusplus::bus::bus&>(*systemBus),
-        sdbusplus::bus::match::rules::interfacesAdded(),
+        sdbusplus::bus::match::rules::interfacesAdded(
+            "/xyz/openbmc_project/inventory"),
         [&](sdbusplus::message::message&) {
             propertiesChangedCallback(systemConfiguration, objServer);
         });
     sdbusplus::bus::match::match interfacesRemovedMatch(
         static_cast<sdbusplus::bus::bus&>(*systemBus),
-        sdbusplus::bus::match::rules::interfacesRemoved(),
+        sdbusplus::bus::match::rules::interfacesRemoved(
+            "/xyz/openbmc_project/inventory"),
         [&](sdbusplus::message::message&) {
             propertiesChangedCallback(systemConfiguration, objServer);
         });
