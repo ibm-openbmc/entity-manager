@@ -22,7 +22,7 @@
         {
             "EnterUtilizationDwellTime": 240,
             "EnterUtilizationPercent": 8,
-            "ExitUtilizationDwellTime": 120,
+            "ExitUtilizationDwellTime": 10,
             "ExitUtilizationPercent": 12,
             "IdlePowerSaverEnabled": true,
             "Name": "Default Power Mode Properties",
