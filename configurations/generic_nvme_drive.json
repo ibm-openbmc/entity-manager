@@ -4,13 +4,13 @@
         {
             "Address": "$address",
             "Bus": "$bus",
-            "Name": "Samsung PM1735 $index FRU",
+            "Name": "NVMe $index FRU",
             "Type": "EEPROM"
         },
         {
             "Address": "0x6a",
             "Bus": "$bus",
-            "Name": "Samsung PM1735 $index Temp",
+            "Name": "NVMe $index Temp",
             "Thresholds": [
                 {
                     "Direction": "greater than",
@@ -29,12 +29,12 @@
         }
     ],
     "Logging": "Off",
-    "Name": "Samsung PM1735 $index",
+    "Name": "NVMe $index",
     "Probe": "com.ibm.ipzvpd.VINI({'CC': [78, 86, 77, 101]})",
     "Type": "NVMe",
     "xyz.openbmc_project.Inventory.Decorator.Asset": {
-        "Manufacturer": "Samsung",
-        "Model": "PM1735",
+        "Manufacturer": "Unknown",
+        "Model": "NVMe",
         "PartNumber": "$PN",
         "SerialNumber": "$SN"
     }
