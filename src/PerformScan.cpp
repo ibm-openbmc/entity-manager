@@ -338,7 +338,13 @@ void PerformScan::run()
                             *findExposes = copy;
                         }
 
-                        // keep user changes
+                        // If the config contains template parameters then ignore the cached config
+                        if (*fromLastJson != *recordPtr)
+                        {
+                            itr++;
+                            continue;
+                        }
+
                         _systemConfiguration[recordName] = *fromLastJson;
                         _missingConfigurations.erase(recordName);
                         itr = foundDevices.erase(itr);
