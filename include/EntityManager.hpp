@@ -65,6 +65,12 @@ using FoundProbeTypeT =
                                              CmpStr>::const_iterator>;
 FoundProbeTypeT findProbeType(const std::string& probe);
 
+struct ConfigurationRelation
+{
+    nlohmann::json systemConfiguration;
+    nlohmann::json probeObjectPaths;
+};
+
 struct PerformScan : std::enable_shared_from_this<PerformScan>
 {
 
