@@ -22,6 +22,7 @@
 #include <boost/container/flat_set.hpp>
 
 #include <charconv>
+#include <functional>
 
 /* Hacks from splitting EntityManager.cpp */
 extern std::shared_ptr<sdbusplus::asio::connection> systemBus;
@@ -590,6 +591,18 @@ void PerformScan::run()
                     // overwrite ourselves with cleaned up version
                     _systemConfiguration[recordName] = record;
                     _missingConfigurations.erase(recordName);
+
+                    auto* cr = containerOf(
+                        &_systemConfiguration,
+                        &ConfigurationRelation::systemConfiguration);
+                    auto pathKey =
+                        std::to_string(std::hash<std::string>{}(record.dump()));
+                    cr->probeObjectPaths[pathKey] = path;
+                    if constexpr (debug) {
+                        std::cerr << "Registered path " << path << " with pathKey "
+                                  << pathKey << " for configuration "
+                                  << record.dump() << "\n";
+                    }
                 }
             });
 

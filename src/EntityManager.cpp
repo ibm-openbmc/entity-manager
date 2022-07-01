@@ -39,6 +39,7 @@
 #include <chrono>
 #include <filesystem>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <map>
 #include <regex>
@@ -624,6 +625,41 @@ void postToDbus(const nlohmann::json& newConfiguration,
 
             populateInterfaceFromJson(systemConfiguration, jsonPointerPath,
                                       boardIface, boardValues, objServer);
+
+            std::shared_ptr<sdbusplus::asio::dbus_interface> associationIface =
+                createInterface(objServer, boardName,
+                                "xyz.openbmc_project.Association.Definitions",
+                                boardKeyOrig);
+
+            {
+                auto* cr =
+                    containerOf(&systemConfiguration,
+                                 &ConfigurationRelation::systemConfiguration);
+                auto pathKey = std::to_string(
+                    std::hash<std::string>{}(boardPair.value().dump()));
+                if (cr->probeObjectPaths.contains(pathKey))
+                {
+                    auto& path = cr->probeObjectPaths[pathKey];
+                    std::vector<
+                        std::tuple<std::string, std::string, std::string>>
+                        values = {{"probed_by", "probes", path}};
+                    associationIface->register_property("Associations", values);
+                    associationIface->initialize();
+                    if constexpr (debug) {
+                        std::cerr << "Added association interface to path " << path
+                            << " from pathKey " << pathKey << " on "
+                            << boardName << " for configuration "
+                            << boardPair.value().dump() << "\n";
+                    }
+                }
+                else
+                {
+                    if constexpr (debug) {
+                        std::cerr << "No registered path for pathKey " << pathKey
+                                  << "\n";
+                    }
+                }
+            }
         }
 
         jsonPointerPath += "/";
@@ -1087,7 +1123,10 @@ int main()
     // to keep reference to the match / filter objects so they don't get
     // destroyed
 
-    nlohmann::json systemConfiguration = nlohmann::json::object();
+    ConfigurationRelation system;
+
+    system.systemConfiguration = nlohmann::json::object();
+    system.probeObjectPaths = nlohmann::json::object();
 
     // We need a poke from DBus for static providers that create all their
     // objects prior to claiming a well-known name, and thus don't emit any
@@ -1098,7 +1137,7 @@ int main()
         static_cast<sdbusplus::bus::bus&>(*systemBus),
         sdbusplus::bus::match::rules::nameOwnerChanged(),
         [&](sdbusplus::message::message&) {
-            propertiesChangedCallback(systemConfiguration, objServer);
+            propertiesChangedCallback(system.systemConfiguration, objServer);
         });
     // We also need a poke from DBus when new interfaces are created or
     // destroyed.
@@ -1106,20 +1145,21 @@ int main()
         static_cast<sdbusplus::bus::bus&>(*systemBus),
         sdbusplus::bus::match::rules::interfacesAdded(),
         [&](sdbusplus::message::message&) {
-            propertiesChangedCallback(systemConfiguration, objServer);
+            propertiesChangedCallback(system.systemConfiguration, objServer);
         });
     sdbusplus::bus::match::match interfacesRemovedMatch(
         static_cast<sdbusplus::bus::bus&>(*systemBus),
         sdbusplus::bus::match::rules::interfacesRemoved(),
         [&](sdbusplus::message::message&) {
-            propertiesChangedCallback(systemConfiguration, objServer);
+            propertiesChangedCallback(system.systemConfiguration, objServer);
         });
 
-    io.post(
-        [&]() { propertiesChangedCallback(systemConfiguration, objServer); });
+    io.post([&]() {
+        propertiesChangedCallback(system.systemConfiguration, objServer);
+    });
 
     entityIface->register_method("ReScan", [&]() {
-        propertiesChangedCallback(systemConfiguration, objServer);
+        propertiesChangedCallback(system.systemConfiguration, objServer);
     });
     entityIface->initialize();
 
