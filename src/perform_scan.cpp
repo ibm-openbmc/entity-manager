@@ -23,6 +23,7 @@
 #include <phosphor-logging/lg2.hpp>
 
 #include <charconv>
+#include <functional>
 
 /* Hacks from splitting entity_manager.cpp */
 // NOLINTBEGIN(cppcoreguidelines-avoid-non-const-global-variables)
@@ -569,6 +570,14 @@ void PerformScan::updateSystemConfiguration(const nlohmann::json& recordRef,
         // overwrite ourselves with cleaned up version
         _systemConfiguration[recordName] = record;
         _missingConfigurations.erase(recordName);
+
+        auto* cr = containerOf(&_systemConfiguration,
+                               &ConfigurationRelation::systemConfiguration);
+        auto pathKey = std::to_string(std::hash<std::string>{}(record.dump()));
+        cr->probeObjectPaths[pathKey] = path;
+        lg2::debug(
+            "Registered path {PATH} with {PATH_KEY} for configuration {CONFIGURATION}",
+            "PATH", path, "PATH_KEY", pathKey, "CONFIGURATION", record.dump());
     }
 }
 
