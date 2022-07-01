@@ -45,6 +45,9 @@
 #include <map>
 #include <regex>
 #include <variant>
+
+constexpr const bool debug = false;
+
 constexpr const char* hostConfigurationDirectory = SYSCONF_DIR "configurations";
 constexpr const char* configurationDirectory = PACKAGE_DIR "configurations";
 constexpr const char* schemaDirectory = PACKAGE_DIR "configurations/schemas";
@@ -67,6 +70,8 @@ using JsonVariantType =
     std::variant<std::vector<std::string>, std::vector<double>, std::string,
                  int64_t, uint64_t, double, int32_t, uint32_t, int16_t,
                  uint16_t, uint8_t, bool>;
+
+using Association = std::tuple<std::string, std::string, std::string>;
 
 // NOLINTBEGIN(cppcoreguidelines-avoid-non-const-global-variables)
 // store reference to all interfaces so we can destroy them later
@@ -579,12 +584,34 @@ void createAddObjectMethod(
     tryIfaceInitialize(iface);
 }
 
+static void saveAssociation(
+    const std::string& path, const std::string& boardName,
+    const Association& assoc,
+    std::unordered_map<std::string,
+                       std::tuple<std::string, std::vector<Association>>>&
+        allAssocs)
+{
+    auto it = allAssocs.find(path);
+    if (it == allAssocs.end())
+    {
+        allAssocs[path] = std::tuple{boardName, std::vector{assoc}};
+    }
+    else
+    {
+        auto& assocs = std::get<1>(it->second);
+        assocs.push_back(assoc);
+    }
+}
+
 void postToDbus(const nlohmann::json& newConfiguration,
                 nlohmann::json& systemConfiguration,
                 sdbusplus::asio::object_server& objServer)
 
 {
     std::map<std::string, std::string> newBoards; // path -> name
+    std::unordered_map<std::string,
+                       std::tuple<std::string, std::vector<Association>>>
+        associations;
 
     // iterate through boards
     for (const auto& [boardId, boardConfig] : newConfiguration.items())
@@ -636,6 +663,37 @@ void postToDbus(const nlohmann::json& newConfiguration,
 
             populateInterfaceFromJson(systemConfiguration, jsonPointerPath,
                                       boardIface, boardValues, objServer);
+
+            {
+                auto* cr =
+                    containerOf(&systemConfiguration,
+                                &ConfigurationRelation::systemConfiguration);
+                auto pathKey = std::to_string(
+                    std::hash<std::string>{}(boardConfig.dump()));
+                if (cr->probeObjectPaths.contains(pathKey))
+                {
+                    auto& path = cr->probeObjectPaths[pathKey];
+                    Association values{"probed_by", "probes", path};
+                    saveAssociation(boardPath, boardName, values, associations);
+
+                    if constexpr (debug)
+                    {
+                        std::cerr << "Added association interface to path "
+                                  << path << " from pathKey " << pathKey
+                                  << " on " << boardPath
+                                  << " for configuration " << boardConfig.dump()
+                                  << "\n";
+                    }
+                }
+                else
+                {
+                    if constexpr (debug)
+                    {
+                        std::cerr << "No registered path for pathKey "
+                                  << pathKey << "\n";
+                    }
+                }
+            }
         }
 
         jsonPointerPath += "/";
@@ -820,11 +878,21 @@ void postToDbus(const nlohmann::json& newConfiguration,
             continue;
         }
 
+        // Add the assocs on this path to the associations map.
+        for (const auto& a : assocPropValue)
+        {
+            saveAssociation(assocPath, findBoard->second, a, associations);
+        }
+    }
+
+    // Now put them on D-Bus.
+    for (const auto& [assocPath, assocData] : associations)
+    {
         auto ifacePtr = createInterface(
             objServer, assocPath, "xyz.openbmc_project.Association.Definitions",
-            findBoard->second);
+            std::get<0>(assocData));
 
-        ifacePtr->register_property("Associations", assocPropValue);
+        ifacePtr->register_property("Associations", std::get<1>(assocData));
         tryIfaceInitialize(ifacePtr);
     }
 }
@@ -1262,7 +1330,10 @@ int main()
     // to keep reference to the match / filter objects so they don't get
     // destroyed
 
-    nlohmann::json systemConfiguration = nlohmann::json::object();
+    ConfigurationRelation system;
+
+    system.systemConfiguration = nlohmann::json::object();
+    system.probeObjectPaths = nlohmann::json::object();
 
     std::set<std::string> probeInterfaces = getProbeInterfaces();
 
@@ -1308,11 +1379,11 @@ int main()
         });
 
     boost::asio::post(io, [&]() {
-        propertiesChangedCallback(systemConfiguration, objServer);
+        propertiesChangedCallback(system.systemConfiguration, objServer);
     });
 
     entityIface->register_method("ReScan", [&]() {
-        propertiesChangedCallback(systemConfiguration, objServer);
+        propertiesChangedCallback(system.systemConfiguration, objServer);
     });
     tryIfaceInitialize(entityIface);
 

@@ -26,6 +26,19 @@
 #include <fstream>
 #include <iostream>
 
+template <typename P, typename M>
+static inline P* containerOf(M* ptr, const M P::*member)
+{
+    // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast)
+    auto inner = reinterpret_cast<intptr_t>(ptr);
+    auto offset =
+        reinterpret_cast<ptrdiff_t>(&(reinterpret_cast<P*>(0)->*member));
+    // NOLINTNEXTLINE(performance-no-int-to-ptr)
+    auto outer = reinterpret_cast<P*>(inner - offset);
+    return outer;
+    // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast)
+}
+
 constexpr const char* configurationOutDir = "/var/configuration/";
 constexpr const char* versionHashFile = "/var/configuration/version";
 constexpr const char* versionFile = "/etc/os-release";
