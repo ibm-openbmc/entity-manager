@@ -28,6 +28,13 @@
             "Name": "Default Power Mode Properties",
             "PowerMode": "MaximumPerformance",
             "Type": "PowerModeProperties"
+        },
+        {
+            "Hostname": "9.3.84.11",
+            "Port": "2443",
+            "Name": "aggregated0",
+            "Type": "SatelliteController",
+            "AuthType": "None"
         }
     ],
     "Name": "Rainier 4U Chassis",
