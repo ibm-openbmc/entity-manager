@@ -81,18 +81,21 @@
             "Thresholds": [
                 {
                     "Direction": "greater than",
+                    "Hysteresis": 50,
                     "Name": "HardShutdown",
                     "Severity": 4,
                     "Value": 53
                 },
                 {
                     "Direction": "greater than",
+                    "Hysteresis": 3,
                     "Name": "SoftShutdown",
                     "Severity": 3,
                     "Value": 48
                 },
                 {
                     "Direction": "greater than",
+                    "Hysteresis": 3,
                     "Name": "Warning",
                     "Severity": 0,
                     "Value": 45
