@@ -27,6 +27,7 @@
             "SupportedModel": "51E9",
             "RedundantCount": 2,
             "InputVoltage": [
+                110,
                 220
             ],
             "PowerConfigFullLoad": false
