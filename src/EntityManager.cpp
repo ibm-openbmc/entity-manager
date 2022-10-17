@@ -634,7 +634,7 @@ void postToDbus(const nlohmann::json& newConfiguration,
             {
                 auto* cr =
                     containerOf(&systemConfiguration,
-                                 &ConfigurationRelation::systemConfiguration);
+                                &ConfigurationRelation::systemConfiguration);
                 auto pathKey = std::to_string(
                     std::hash<std::string>{}(boardPair.value().dump()));
                 if (cr->probeObjectPaths.contains(pathKey))
@@ -645,18 +645,21 @@ void postToDbus(const nlohmann::json& newConfiguration,
                         values = {{"probed_by", "probes", path}};
                     associationIface->register_property("Associations", values);
                     associationIface->initialize();
-                    if constexpr (debug) {
-                        std::cerr << "Added association interface to path " << path
-                            << " from pathKey " << pathKey << " on "
-                            << boardName << " for configuration "
-                            << boardPair.value().dump() << "\n";
+                    if constexpr (debug)
+                    {
+                        std::cerr << "Added association interface to path "
+                                  << path << " from pathKey " << pathKey
+                                  << " on " << boardName
+                                  << " for configuration "
+                                  << boardPair.value().dump() << "\n";
                     }
                 }
                 else
                 {
-                    if constexpr (debug) {
-                        std::cerr << "No registered path for pathKey " << pathKey
-                                  << "\n";
+                    if constexpr (debug)
+                    {
+                        std::cerr << "No registered path for pathKey "
+                                  << pathKey << "\n";
                     }
                 }
             }
@@ -1136,7 +1139,16 @@ int main()
     sdbusplus::bus::match::match nameOwnerChangedMatch(
         static_cast<sdbusplus::bus::bus&>(*systemBus),
         sdbusplus::bus::match::rules::nameOwnerChanged(),
-        [&](sdbusplus::message::message&) {
+        [&](sdbusplus::message::message& m) {
+            std::string name;
+            m.read(name);
+
+            if (name.starts_with(':'))
+            {
+                // We should do nothing with unique-name connections.
+                return;
+            }
+
             propertiesChangedCallback(system.systemConfiguration, objServer);
         });
     // We also need a poke from DBus when new interfaces are created or
