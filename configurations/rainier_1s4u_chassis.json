@@ -13,12 +13,12 @@
             "Type": "SupportedConfiguration",
             "SupportedType": "PowerSupply",
             "SupportedModel": "2B1D",
-            "RedundantCount": 4,
+            "RedundantCount": 2,
             "InputVoltage": [
                 110,
                 220
             ],
-            "PowerConfigFullLoad": true
+            "PowerConfigFullLoad": false
         },
         {
             "Name": "1600W IBMCFFPS Configuration",
