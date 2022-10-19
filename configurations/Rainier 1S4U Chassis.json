@@ -13,7 +13,7 @@
             "Type": "SupportedConfiguration",
             "SupportedType": "PowerSupply",
             "SupportedModel": "2B1D",
-            "RedundantCount": 4,
+            "RedundantCount": 2,
             "InputVoltage": [
                 110,
                 220
