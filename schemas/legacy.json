@@ -622,9 +622,7 @@
             },
             "PowerStateOwner": {
                 "type": "string",
-                "enum": [
-                    "PCIeSlot"
-                ]
+                "enum": ["PCIeSlot"]
             },
             "Presence": {
                 "properties": {

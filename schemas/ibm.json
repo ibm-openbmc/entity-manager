@@ -87,35 +87,25 @@
                     }
                 }
             },
-            "required": [
-                "Name",
-                "Type",
-                "Names"
-            ]
+            "required": ["Name", "Type", "Names"]
         },
         "PowerModeProperties": {
             "title": "PowerMode Properties",
-            "description": [
-                "The default PowerMode properties for the system"
-            ],
+            "description": ["The default PowerMode properties for the system"],
             "type": "object",
             "properties": {
                 "PowerMode": {
                     "description": [
                         "The default PowerMode to use prior to being set by a user."
                     ],
-                    "enum": [
-                        "Static",
-                        "PowerSaving",
-                        "MaximumPerformance"
-                    ]
+                    "enum": ["Static", "PowerSaving", "MaximumPerformance"]
                 },
                 "IdlePowerSaverEnabled": {
                     "description": [
                         "Default state of idle power saver mode.",
                         "Setting to true will enable idle power saver."
                     ],
-                    "type" : "boolean"
+                    "type": "boolean"
                 },
                 "EnterUtilizationPercent": {
                     "description": [
@@ -158,11 +148,7 @@
                     "maximum": 600
                 }
             },
-            "required": [
-                "PowerMode",
-                "IdlePowerSaverEnabled"
-            ]
->>>>>>> schema: ibm: add default power mode props. schema (#18)
+            "required": ["PowerMode", "IdlePowerSaverEnabled"]
         }
     }
 }
