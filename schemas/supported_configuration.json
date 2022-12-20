@@ -14,9 +14,7 @@
                     "type": "string"
                 },
                 "Type": {
-                    "enum": [
-                        "SupportedConfiguration"
-                    ]
+                    "enum": ["SupportedConfiguration"]
                 },
                 "SupportedType": {
                     "description": [

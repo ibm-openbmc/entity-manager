@@ -768,7 +768,7 @@ unsigned int getHeaderAreaFieldOffset(fruAreas area)
     return static_cast<unsigned int>(area) + 1;
 }
 
-std::vector<uint8_t>& getFRUInfo(const uint8_t& bus, const uint8_t& address)
+std::vector<uint8_t>& getFRUInfo(const uint16_t& bus, const uint8_t& address)
 {
     auto deviceMap = busMap.find(bus);
     if (deviceMap == busMap.end())
@@ -792,8 +792,7 @@ std::vector<uint8_t>& getFRUInfo(const uint8_t& bus, const uint8_t& address)
 
 bool findFruAreaLocationAndField(std::vector<uint8_t>& fruData,
                                  const std::string& propertyName,
-                                 struct FruArea& fruAreaParams,
-                                 size_t& fruDataIter)
+                                 struct FruArea& fruAreaParams)
 {
     const std::vector<std::string>* fruAreaFieldNames = nullptr;
 
@@ -840,7 +839,7 @@ bool findFruAreaLocationAndField(std::vector<uint8_t>& fruData,
     fruAreaParams.start = fruAreaOffsetFieldValue * fruBlockSize;
     fruAreaParams.size = fruData[fruAreaParams.start + 1] * fruBlockSize;
     fruAreaParams.end = fruAreaParams.start + fruAreaParams.size;
-    fruDataIter = fruAreaParams.start + offset;
+    size_t fruDataIter = fruAreaParams.start + offset;
     size_t skipToFRUUpdateField = 0;
     ssize_t fieldLength = 0;
 
@@ -891,4 +890,100 @@ bool findFruAreaLocationAndField(std::vector<uint8_t>& fruData,
     fruAreaParams.updateFieldLoc = fruDataIter;
 
     return true;
+}
+
+// Copy the FRU Area fields and properties into restFRUAreaFieldsData vector.
+// Return true for success and false for failure.
+
+bool copyRestFRUArea(std::vector<uint8_t>& fruData,
+                     const std::string& propertyName,
+                     struct FruArea& fruAreaParams,
+                     std::vector<uint8_t>& restFRUAreaFieldsData)
+{
+    size_t fieldLoc = fruAreaParams.updateFieldLoc;
+    size_t start = fruAreaParams.start;
+    size_t fruAreaSize = fruAreaParams.size;
+
+    // Push post update fru field bytes to a vector
+    ssize_t fieldLength = getFieldLength(fruData[fieldLoc]);
+    if (fieldLength < 0)
+    {
+        std::cerr << "Property " << propertyName << " not present \n";
+        return false;
+    }
+
+    size_t fruDataIter = 0;
+    fruDataIter = fieldLoc;
+    fruDataIter += 1 + fieldLength;
+    size_t restFRUFieldsLoc = fruDataIter;
+    size_t endOfFieldsLoc = 0;
+
+    if (fruDataIter < fruData.size())
+    {
+        while ((fieldLength = getFieldLength(fruData[fruDataIter])) >= 0)
+        {
+            if (fruDataIter >= (start + fruAreaSize))
+            {
+                fruDataIter = start + fruAreaSize;
+                break;
+            }
+            fruDataIter += 1 + fieldLength;
+        }
+        endOfFieldsLoc = fruDataIter;
+    }
+
+    std::copy_n(fruData.begin() + restFRUFieldsLoc,
+                endOfFieldsLoc - restFRUFieldsLoc + 1,
+                std::back_inserter(restFRUAreaFieldsData));
+
+    fruAreaParams.restFieldsLoc = restFRUFieldsLoc;
+    fruAreaParams.restFieldsEnd = endOfFieldsLoc;
+
+    return true;
+}
+
+// Get all device dbus path and match path with product name using
+// regular expression and find the device index for all devices.
+
+std::optional<int> findIndexForFRU(
+    boost::container::flat_map<
+        std::pair<size_t, size_t>,
+        std::shared_ptr<sdbusplus::asio::dbus_interface>>& dbusInterfaceMap,
+    std::string& productName)
+{
+
+    int highest = -1;
+    bool found = false;
+
+    for (auto const& busIface : dbusInterfaceMap)
+    {
+        std::string path = busIface.second->get_object_path();
+        if (std::regex_match(path, std::regex(productName + "(_\\d+|)$")))
+        {
+
+            // Check if the match named has extra information.
+            found = true;
+            std::smatch baseMatch;
+
+            bool match = std::regex_match(path, baseMatch,
+                                          std::regex(productName + "_(\\d+)$"));
+            if (match)
+            {
+                if (baseMatch.size() == 2)
+                {
+                    std::ssub_match baseSubMatch = baseMatch[1];
+                    std::string base = baseSubMatch.str();
+
+                    int value = std::stoi(base);
+                    highest = (value > highest) ? value : highest;
+                }
+            }
+        }
+    } // end searching objects
+
+    if (!found)
+    {
+        return std::nullopt;
+    }
+    return highest;
 }

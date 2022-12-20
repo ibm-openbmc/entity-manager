@@ -79,6 +79,7 @@ static boost::container::flat_map<
     foundDevices;
 
 static boost::container::flat_map<size_t, std::set<size_t>> failedAddresses;
+static boost::container::flat_map<size_t, std::set<size_t>> fruAddresses;
 
 boost::asio::io_service io;
 
@@ -377,6 +378,8 @@ int getBusFRUs(int file, int first, int last, int bus,
         // Scan for i2c eeproms loaded on this bus.
         std::set<int> skipList = findI2CEeproms(bus, devices);
         std::set<size_t>& failedItems = failedAddresses[bus];
+        std::set<size_t>& foundItems = fruAddresses[bus];
+        foundItems.clear();
 
         std::set<size_t>* rootFailures = nullptr;
         int rootBus = getRootBus(bus);
@@ -384,6 +387,7 @@ int getBusFRUs(int file, int first, int last, int bus,
         if (rootBus >= 0)
         {
             rootFailures = &(failedAddresses[rootBus]);
+            foundItems = fruAddresses[rootBus];
         }
 
         constexpr int startSkipSlaveAddr = 0;
@@ -391,6 +395,10 @@ int getBusFRUs(int file, int first, int last, int bus,
 
         for (int ii = first; ii <= last; ii++)
         {
+            if (foundItems.find(ii) != foundItems.end())
+            {
+                continue;
+            }
             if (skipList.find(ii) != skipList.end())
             {
                 continue;
@@ -464,6 +472,7 @@ int getBusFRUs(int file, int first, int last, int bus,
             }
 
             devices->emplace(ii, device);
+            fruAddresses[bus].insert(ii);
         }
         return 1;
     });
@@ -683,58 +692,14 @@ void addFruObjectToDbus(
         unknownBusObjectCount++;
     }
 
-    productName = "/xyz/openbmc_project/FruDevice/" + productName;
-    // avoid duplicates by checking to see if on a mux
-    if (bus > 0)
+    std::optional<int> index = findIndexForFRU(dbusInterfaceMap, productName);
+    if (index.has_value())
     {
-        int highest = -1;
-        bool found = false;
-
-        for (auto const& busIface : dbusInterfaceMap)
-        {
-            std::string path = busIface.second->get_object_path();
-            if (std::regex_match(path, std::regex(productName + "(_\\d+|)$")))
-            {
-                if (isMuxBus(bus) && bus != busIface.first.first &&
-                    address == busIface.first.second &&
-                    (getFRUInfo(static_cast<uint8_t>(busIface.first.first),
-                                static_cast<uint8_t>(busIface.first.second)) ==
-                     getFRUInfo(static_cast<uint8_t>(bus),
-                                static_cast<uint8_t>(address))))
-                {
-                    // This device is already added to the lower numbered bus,
-                    // do not replicate it.
-                    return;
-                }
-
-                // Check if the match named has extra information.
-                found = true;
-                std::smatch baseMatch;
-
-                bool match = std::regex_match(
-                    path, baseMatch, std::regex(productName + "_(\\d+)$"));
-                if (match)
-                {
-                    if (baseMatch.size() == 2)
-                    {
-                        std::ssub_match baseSubMatch = baseMatch[1];
-                        std::string base = baseSubMatch.str();
-
-                        int value = std::stoi(base);
-                        highest = (value > highest) ? value : highest;
-                    }
-                }
-            }
-        } // end searching objects
-
-        if (found)
-        {
-            // We found something with the same name.  If highest was still -1,
-            // it means this new entry will be _0.
-            productName += "_";
-            productName += std::to_string(++highest);
-        }
+        productName += "_";
+        productName += std::to_string(++(*index));
     }
+
+    productName = "/xyz/openbmc_project/FruDevice/" + productName;
 
     std::shared_ptr<sdbusplus::asio::dbus_interface> iface =
         objServer.add_interface(productName, "xyz.openbmc_project.FruDevice");
@@ -931,7 +896,7 @@ bool writeFRU(uint8_t bus, uint8_t address, const std::vector<uint8_t>& fru)
 }
 
 void rescanOneBus(
-    BusMap& busmap, uint8_t busNum,
+    BusMap& busmap, uint16_t busNum,
     boost::container::flat_map<
         std::pair<size_t, size_t>,
         std::shared_ptr<sdbusplus::asio::dbus_interface>>& dbusInterfaceMap,
@@ -1094,7 +1059,7 @@ bool updateFRUProperty(
     std::vector<uint8_t> fruData;
     try
     {
-        fruData = getFRUInfo(static_cast<uint8_t>(bus),
+        fruData = getFRUInfo(static_cast<uint16_t>(bus),
                              static_cast<uint8_t>(address));
     }
     catch (const std::invalid_argument& e)
@@ -1108,43 +1073,22 @@ bool updateFRUProperty(
         return false;
     }
 
-    struct FruArea fruAreaParams{};
-    size_t fruDataIter = 0;
+    struct FruArea fruAreaParams
+    {};
 
-    if (!findFruAreaLocationAndField(fruData, propertyName, fruAreaParams,
-                                     fruDataIter))
+    if (!findFruAreaLocationAndField(fruData, propertyName, fruAreaParams))
     {
         std::cerr << "findFruAreaLocationAndField failed \n";
         return false;
     }
 
-    ssize_t fieldLength = 0;
-
-    // Push post update fru field bytes to a vector
-    fieldLength = getFieldLength(fruData[fruAreaParams.updateFieldLoc]);
-    if (fieldLength < 0)
+    std::vector<uint8_t> restFRUAreaFieldsData;
+    if (!copyRestFRUArea(fruData, propertyName, fruAreaParams,
+                         restFRUAreaFieldsData))
     {
-        std::cerr << "Property " << propertyName << " not present \n";
+        std::cerr << "copyRestFRUArea failed \n";
         return false;
     }
-    fruDataIter += 1 + fieldLength;
-    size_t restFRUFieldsLoc = fruDataIter;
-    size_t endOfFieldsLoc = 0;
-    while ((fieldLength = getFieldLength(fruData[fruDataIter])) >= 0)
-    {
-        if (fruDataIter >= (fruAreaParams.start + fruAreaParams.size))
-        {
-            fruDataIter = fruAreaParams.start + fruAreaParams.size;
-            break;
-        }
-        fruDataIter += 1 + fieldLength;
-    }
-    endOfFieldsLoc = fruDataIter;
-
-    std::vector<uint8_t> restFRUAreaFieldsData;
-    std::copy_n(fruData.begin() + restFRUFieldsLoc,
-                endOfFieldsLoc - restFRUFieldsLoc + 1,
-                std::back_inserter(restFRUAreaFieldsData));
 
     // Push post update fru areas if any
     unsigned int nextFRUAreaLoc = 0;
@@ -1153,7 +1097,7 @@ bool updateFRUProperty(
     {
         unsigned int fruAreaLoc =
             fruData[getHeaderAreaFieldOffset(nextFRUArea)] * fruBlockSize;
-        if ((fruAreaLoc > endOfFieldsLoc) &&
+        if ((fruAreaLoc > fruAreaParams.restFieldsEnd) &&
             ((nextFRUAreaLoc == 0) || (fruAreaLoc < nextFRUAreaLoc)))
         {
             nextFRUAreaLoc = fruAreaLoc;
@@ -1202,10 +1146,13 @@ bool updateFRUProperty(
               fruData.begin() + fruAreaParams.updateFieldLoc);
 
     // Copy remaining data to main fru area - post updated fru field vector
-    restFRUFieldsLoc = fruAreaParams.updateFieldLoc + updatePropertyReqLen;
-    size_t fruAreaDataEnd = restFRUFieldsLoc + restFRUAreaFieldsData.size();
+    fruAreaParams.restFieldsLoc =
+        fruAreaParams.updateFieldLoc + updatePropertyReqLen;
+    size_t fruAreaDataEnd =
+        fruAreaParams.restFieldsLoc + restFRUAreaFieldsData.size();
+
     std::copy(restFRUAreaFieldsData.begin(), restFRUAreaFieldsData.end(),
-              fruData.begin() + restFRUFieldsLoc);
+              fruData.begin() + fruAreaParams.restFieldsLoc);
 
     // Update final fru with new fru area length and checksum
     unsigned int nextFRUAreaNewLoc = updateFRUAreaLenAndChecksum(
@@ -1304,14 +1251,14 @@ int main()
                      objServer, systemBus);
     });
 
-    iface->register_method("ReScanBus", [&](uint8_t bus) {
+    iface->register_method("ReScanBus", [&](uint16_t bus) {
         rescanOneBus(busMap, bus, dbusInterfaceMap, true, unknownBusObjectCount,
                      powerIsOn, objServer, systemBus);
     });
 
     iface->register_method("GetRawFru", getFRUInfo);
 
-    iface->register_method("WriteFru", [&](const uint8_t bus,
+    iface->register_method("WriteFru", [&](const uint16_t bus,
                                            const uint8_t address,
                                            const std::vector<uint8_t>& data) {
         if (!writeFRU(bus, address, data))
@@ -1391,7 +1338,7 @@ int main()
                                           << "\n";
                                 continue;
                             }
-                            rescanOneBus(busMap, static_cast<uint8_t>(bus),
+                            rescanOneBus(busMap, static_cast<uint16_t>(bus),
                                          dbusInterfaceMap, false,
                                          unknownBusObjectCount, powerIsOn,
                                          objServer, systemBus);

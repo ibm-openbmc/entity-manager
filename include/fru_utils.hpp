@@ -19,6 +19,7 @@
 #include "fru_reader.hpp"
 
 #include <boost/container/flat_map.hpp>
+#include <sdbusplus/asio/object_server.hpp>
 
 #include <cstdint>
 #include <functional>
@@ -68,6 +69,8 @@ struct FruArea
     size_t size;           // Fru Area Size
     size_t end;            // Fru Area end offset
     size_t updateFieldLoc; // Fru Area update Field Location
+    size_t restFieldsLoc;  // Starting location of restFRUArea data
+    size_t restFieldsEnd;  // Ending location of restFRUArea data
 };
 
 const std::vector<std::string> fruAreaNames = {"INTERNAL", "CHASSIS", "BOARD",
@@ -123,7 +126,7 @@ resCodes
     formatIPMIFRU(const std::vector<uint8_t>& fruBytes,
                   boost::container::flat_map<std::string, std::string>& result);
 
-std::vector<uint8_t>& getFRUInfo(const uint8_t& bus, const uint8_t& address);
+std::vector<uint8_t>& getFRUInfo(const uint16_t& bus, const uint8_t& address);
 
 uint8_t calculateChecksum(std::vector<uint8_t>::const_iterator iter,
                           std::vector<uint8_t>::const_iterator end);
@@ -170,10 +173,37 @@ unsigned int getHeaderAreaFieldOffset(fruAreas area);
 /// properties
 /// \param fruData - vector to store fru data
 /// \param propertyName - fru property Name
-/// \param fruAreaParams - struct to have fru Area paramteters like length,
-/// size. \return true if fru field is found, fruAreaParams are updated with
-/// fruArea and field info.
+/// \param fruAreaParams - struct to have fru Area parameters like length,
+/// size.
+/// \return true if fru field is found, fruAreaParams like updateFieldLoc,
+/// Start, Size, End are updated with fruArea and field info.
 bool findFruAreaLocationAndField(std::vector<uint8_t>& fruData,
                                  const std::string& propertyName,
-                                 struct FruArea& fruAreaParams,
-                                 size_t& fruDataIter);
+                                 struct FruArea& fruAreaParams);
+
+/// \brief Copy the fru Area fields and properties into restFRUAreaFieldsData.
+/// restFRUAreaField is the rest of the fields in FRU area after the field that
+/// is being updated.
+/// \param fruData - vector to store fru data
+/// \param propertyName - fru property Name
+/// \param fruAreaParams - struct to have fru Area parameters like length
+/// \param restFRUAreaFieldsData - vector to store fru Area Fields and
+/// properties.
+/// \return true on success false on failure. restFieldLoc and restFieldEnd
+/// are updated.
+bool copyRestFRUArea(std::vector<uint8_t>& fruData,
+                     const std::string& propertyName,
+                     struct FruArea& fruAreaParams,
+                     std::vector<uint8_t>& restFRUAreaFieldsData);
+
+/// \brief Get all device dbus path and match path with product name using
+/// regular expression and find the device index for all devices.
+/// \param dbusInterfaceMap - Map to store fru device dbus path and interface
+/// \param productName - fru device product name.
+/// \return optional<int> highest index for fru device on success, return
+/// nullopt on failure.
+std::optional<int> findIndexForFRU(
+    boost::container::flat_map<
+        std::pair<size_t, size_t>,
+        std::shared_ptr<sdbusplus::asio::dbus_interface>>& dbusInterfaceMap,
+    std::string& productName);

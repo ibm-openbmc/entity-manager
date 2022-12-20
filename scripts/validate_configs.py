@@ -5,9 +5,10 @@ A tool for validating entity manager configurations.
 """
 import argparse
 import json
-import jsonschema.validators
 import os
 import sys
+
+import jsonschema.validators
 
 DEFAULT_SCHEMA_FILENAME = "global.json"
 
@@ -17,24 +18,40 @@ def main():
         description="Entity manager configuration validator",
     )
     parser.add_argument(
-        "-s", "--schema", help=(
+        "-s",
+        "--schema",
+        help=(
             "Use the specified schema file instead of the default "
-            "(__file__/../../schemas/global.json)"))
+            "(__file__/../../schemas/global.json)"
+        ),
+    )
     parser.add_argument(
-        "-c", "--config", action='append', help=(
+        "-c",
+        "--config",
+        action="append",
+        help=(
             "Validate the specified configuration files (can be "
             "specified more than once) instead of the default "
-            "(__file__/../../configurations/**.json)"))
+            "(__file__/../../configurations/**.json)"
+        ),
+    )
     parser.add_argument(
-        "-e", "--expected-fails", help=(
+        "-e",
+        "--expected-fails",
+        help=(
             "A file with a list of configurations to ignore should "
-            "they fail to validate"))
+            "they fail to validate"
+        ),
+    )
     parser.add_argument(
-        "-k", "--continue", action='store_true', help=(
-            "keep validating after a failure"))
+        "-k",
+        "--continue",
+        action="store_true",
+        help="keep validating after a failure",
+    )
     parser.add_argument(
-        "-v", "--verbose", action='store_true', help=(
-            "be noisy"))
+        "-v", "--verbose", action="store_true", help="be noisy"
+    )
     args = parser.parse_args()
 
     schema_file = args.schema
@@ -42,35 +59,38 @@ def main():
         try:
             source_dir = os.path.realpath(__file__).split(os.sep)[:-2]
             schema_file = os.sep + os.path.join(
-                *source_dir, 'schemas', DEFAULT_SCHEMA_FILENAME)
-        except Exception as e:
+                *source_dir, "schemas", DEFAULT_SCHEMA_FILENAME
+            )
+        except Exception:
             sys.stderr.write(
                 "Could not guess location of {}\n".format(
-                    DEFAULT_SCHEMA_FILENAME))
+                    DEFAULT_SCHEMA_FILENAME
+                )
+            )
             sys.exit(2)
 
     schema = {}
     try:
         with open(schema_file) as fd:
             schema = json.load(fd)
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         sys.stderr.write(
-            "Could not read schema file '{}'\n".format(schema_file))
+            "Could not read schema file '{}'\n".format(schema_file)
+        )
         sys.exit(2)
 
     config_files = args.config or []
     if len(config_files) == 0:
         try:
             source_dir = os.path.realpath(__file__).split(os.sep)[:-2]
-            configs_dir = os.sep + os.path.join(*source_dir, 'configurations')
+            configs_dir = os.sep + os.path.join(*source_dir, "configurations")
             data = os.walk(configs_dir)
             for root, _, files in data:
                 for f in files:
-                    if f.endswith('.json'):
+                    if f.endswith(".json"):
                         config_files.append(os.path.join(root, f))
-        except Exception as e:
-            sys.stderr.write(
-                "Could not guess location of configurations\n")
+        except Exception:
+            sys.stderr.write("Could not guess location of configurations\n")
             sys.exit(2)
 
     configs = []
@@ -78,9 +98,10 @@ def main():
         try:
             with open(config_file) as fd:
                 configs.append(json.load(fd))
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             sys.stderr.write(
-                    "Could not parse config file '{}'\n".format(config_file))
+                "Could not parse config file '{}'\n".format(config_file)
+            )
             sys.exit(2)
 
     expected_fails = []
@@ -89,14 +110,17 @@ def main():
             with open(args.expected_fails) as fd:
                 for line in fd:
                     expected_fails.append(line.strip())
-        except Exception as e:
+        except Exception:
             sys.stderr.write(
-                    "Could not read expected fails file '{}'\n".format(
-                        args.expected_fails))
+                "Could not read expected fails file '{}'\n".format(
+                    args.expected_fails
+                )
+            )
             sys.exit(2)
 
     base_uri = "file://{}/".format(
-        os.path.split(os.path.realpath(schema_file))[0])
+        os.path.split(os.path.realpath(schema_file))[0]
+    )
     resolver = jsonschema.RefResolver(base_uri, schema)
     validator = jsonschema.Draft7Validator(schema, resolver=resolver)
 

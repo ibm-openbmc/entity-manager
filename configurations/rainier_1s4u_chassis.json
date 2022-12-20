@@ -9,29 +9,6 @@
             "Type": "IBMCompatibleSystem"
         },
         {
-            "Name": "1000W IBMCFFPS Configuration",
-            "Type": "SupportedConfiguration",
-            "SupportedType": "PowerSupply",
-            "SupportedModel": "2B1D",
-            "RedundantCount": 2,
-            "InputVoltage": [
-                110,
-                220
-            ],
-            "PowerConfigFullLoad": false
-        },
-        {
-            "Name": "1600W IBMCFFPS Configuration",
-            "Type": "SupportedConfiguration",
-            "SupportedType": "PowerSupply",
-            "SupportedModel": "2B1E",
-            "RedundantCount": 2,
-            "InputVoltage": [
-                220
-            ],
-            "PowerConfigFullLoad": false
-        },
-        {
             "EnterUtilizationDwellTime": 240,
             "EnterUtilizationPercent": 8,
             "ExitUtilizationDwellTime": 10,
@@ -40,6 +17,29 @@
             "Name": "Default Power Mode Properties",
             "PowerMode": "MaximumPerformance",
             "Type": "PowerModeProperties"
+        },
+        {
+            "InputVoltage": [
+                110,
+                220
+            ],
+            "Name": "1000W IBMCFFPS Configuration",
+            "PowerConfigFullLoad": false,
+            "RedundantCount": 2,
+            "SupportedModel": "2B1D",
+            "SupportedType": "PowerSupply",
+            "Type": "SupportedConfiguration"
+        },
+        {
+            "InputVoltage": [
+                220
+            ],
+            "Name": "1600W IBMCFFPS Configuration",
+            "PowerConfigFullLoad": false,
+            "RedundantCount": 2,
+            "SupportedModel": "2B1E",
+            "SupportedType": "PowerSupply",
+            "Type": "SupportedConfiguration"
         }
     ],
     "Name": "Rainier 1S4U Chassis",
