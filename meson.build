@@ -161,18 +161,19 @@ foreach c : configs
 endforeach
 
 validate_script = files('scripts/validate_configs.py')
-autojson = custom_target(
-  'check_syntax',
-  command: [
-    validate_script,
-    '-v',
-    '-k',
-  ],
-  depend_files: files(filepaths),
-  build_by_default: true,
-  capture: true,
-  output: 'validate_configs.log',
-)
+# Upstream has not added schema support for aggregation yet
+#autojson = custom_target(
+#  'check_syntax',
+#  command: [
+#    validate_script,
+#    '-v',
+#    '-k',
+#  ],
+#  depend_files: files(filepaths),
+#  build_by_default: true,
+#  capture: true,
+#  output: 'validate_configs.log',
+#)
 
 schemas = [
     'global.json',
