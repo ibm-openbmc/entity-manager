@@ -28,6 +28,13 @@
             "SupportedModel": "2B1E",
             "SupportedType": "PowerSupply",
             "Type": "SupportedConfiguration"
+        },
+        {
+            "Hostname": "10.2.2.100",
+            "Port": "443",
+            "Name": "aggregated0",
+            "Type": "SatelliteController",
+            "AuthType": "None"
         }
     ],
     "Name": "Rainier 4U Chassis",
