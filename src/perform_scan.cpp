@@ -495,9 +495,13 @@ void PerformScan::updateSystemConfiguration(const nlohmann::json& recordRef,
 
             pruneRecordExposes(*record);
 
-            recordDiscoveredIdentifiers(usedNames, indexes, probeName, *record);
-
-            _systemConfiguration[recordName] = *record;
+            // Only cache the config if it contains no template parameters
+            if (*record == recordRef)
+            {
+                recordDiscoveredIdentifiers(usedNames, indexes, probeName,
+                                            *record);
+                _systemConfiguration[recordName] = *record;
+            }
         }
         _missingConfigurations.erase(recordName);
 
