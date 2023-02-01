@@ -494,6 +494,14 @@ void PerformScan::updateSystemConfiguration(const nlohmann::json& recordRef,
                 continue;
             }
 
+            // If the config contains template parameters then ignore the cached
+            // config
+            if (*record != recordRef)
+            {
+                itr++;
+                continue;
+            }
+
             pruneRecordExposes(*record);
 
             recordDiscoveredIdentifiers(usedNames, indexes, probeName, *record);
