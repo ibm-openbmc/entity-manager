@@ -1143,6 +1143,109 @@ void propertiesChangedCallback(nlohmann::json& systemConfiguration,
     });
 }
 
+// Extract the D-Bus interfaces to probe from the JSON config files.
+std::set<std::string> getProbeInterfaces()
+{
+    std::set<std::string> interfaces;
+    std::list<nlohmann::json> configurations;
+    if (!loadConfigurations(configurations))
+    {
+        return interfaces;
+    }
+
+    for (auto it = configurations.begin(); it != configurations.end();)
+    {
+        auto findProbe = it->find("Probe");
+        if (findProbe == it->end())
+        {
+            std::cerr << "configuration file missing probe:\n " << *it << "\n";
+            continue;
+        }
+
+        nlohmann::json probeCommand;
+        if ((*findProbe).type() != nlohmann::json::value_t::array)
+        {
+            probeCommand = nlohmann::json::array();
+            probeCommand.push_back(*findProbe);
+        }
+        else
+        {
+            probeCommand = *findProbe;
+        }
+
+        for (const nlohmann::json& probeJson : probeCommand)
+        {
+            const std::string* probe = probeJson.get_ptr<const std::string*>();
+            if (probe == nullptr)
+            {
+                std::cerr << "Probe statement wasn't a string, can't parse";
+                continue;
+            }
+            // Skip it if the probe cmd doesn't contain an interface.
+            if (findProbeType(*probe))
+            {
+                continue;
+            }
+
+            // syntax requires probe before first open brace
+            auto findStart = probe->find('(');
+            std::string interface = probe->substr(0, findStart);
+            interfaces.emplace(interface);
+        }
+        it++;
+    }
+    if constexpr (debug)
+    {
+        std::cerr << "Probe interfaces found:\n";
+        for (const auto& iface : interfaces)
+        {
+            std::cerr << "    " << iface << "\n";
+        }
+    }
+
+    return interfaces;
+}
+
+// Check if InterfacesAdded payload contains an iface that needs probing.
+bool iaContainsProbeInterface(sdbusplus::message_t& msg,
+                              const std::set<std::string>& probeInterfaces)
+{
+    sdbusplus::message::object_path path;
+    DBusObject interfaces;
+
+    msg.read(path, interfaces);
+
+    for (const auto& interface : interfaces)
+    {
+        if (probeInterfaces.find(interface.first) != probeInterfaces.end())
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+// Check if InterfacesRemoved payload contains an iface that needs probing.
+bool irContainsProbeInterface(sdbusplus::message_t& msg,
+                              const std::set<std::string>& probeInterfaces)
+{
+    sdbusplus::message::object_path path;
+    std::vector<std::string> interfaces;
+
+    msg.read(path, interfaces);
+
+    for (const auto& interface : interfaces)
+    {
+        if (probeInterfaces.find(interface) != probeInterfaces.end())
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 int main()
 {
     // setup connection to dbus
@@ -1171,6 +1274,8 @@ int main()
     system.systemConfiguration = nlohmann::json::object();
     system.probeObjectPaths = nlohmann::json::object();
 
+    std::set<std::string> probeInterfaces = getProbeInterfaces();
+
     // We need a poke from DBus for static providers that create all their
     // objects prior to claiming a well-known name, and thus don't emit any
     // org.freedesktop.DBus.Properties signals.  Similarly if a process exits
@@ -1196,14 +1301,22 @@ int main()
     sdbusplus::bus::match_t interfacesAddedMatch(
         static_cast<sdbusplus::bus_t&>(*systemBus),
         sdbusplus::bus::match::rules::interfacesAdded(),
-        [&](sdbusplus::message_t&) {
-            propertiesChangedCallback(system.systemConfiguration, objServer);
+        [&](sdbusplus::message_t& msg) {
+            if (iaContainsProbeInterface(msg, probeInterfaces))
+            {
+                propertiesChangedCallback(system.systemConfiguration,
+                                          objServer);
+            }
         });
     sdbusplus::bus::match_t interfacesRemovedMatch(
         static_cast<sdbusplus::bus_t&>(*systemBus),
         sdbusplus::bus::match::rules::interfacesRemoved(),
-        [&](sdbusplus::message_t&) {
-            propertiesChangedCallback(system.systemConfiguration, objServer);
+        [&](sdbusplus::message_t& msg) {
+            if (irContainsProbeInterface(msg, probeInterfaces))
+            {
+                propertiesChangedCallback(system.systemConfiguration,
+                                          objServer);
+            }
         });
 
     io.post([&]() {
