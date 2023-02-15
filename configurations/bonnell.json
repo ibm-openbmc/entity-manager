@@ -6,6 +6,17 @@
                 "ibm,bonnell"
             ],
             "Type": "IBMCompatibleSystem"
+        },
+        {
+            "InputVoltage": [
+                110,
+                220
+            ],
+            "Name": "800W IBMCFFPS Configuration",
+            "RedundantCount": 2,
+            "SupportedModel": "FPG0",
+            "SupportedType": "PowerSupply",
+            "Type": "SupportedConfiguration"
         }
     ],
     "Name": "Bonnell Chassis",
