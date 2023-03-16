@@ -606,8 +606,17 @@ void postToDbus(const nlohmann::json& newConfiguration,
             createInterface(objServer, boardName,
                             "xyz.openbmc_project.Inventory.Item", boardKey);
 
-        createAddObjectMethod(jsonPointerPath, boardName, systemConfiguration,
-                              objServer, boardKeyOrig);
+        try
+        {
+            createAddObjectMethod(jsonPointerPath, boardName,
+                                  systemConfiguration, objServer, boardKeyOrig);
+        }
+        catch (const sdbusplus::exception_t&)
+        {
+            std::cerr << "Failed creating AddObject method on " << boardName
+                      << "\n";
+            throw;
+        }
 
         if (boardType != "Chassis")
         {
