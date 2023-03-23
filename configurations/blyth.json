@@ -37,7 +37,7 @@
             "Thresholds": [
                 {
                     "Direction": "greater than",
-                    "Hysteresis": 50,
+                    "Hysteresis": 3,
                     "Name": "HardShutdown",
                     "Severity": 4,
                     "Value": 58
