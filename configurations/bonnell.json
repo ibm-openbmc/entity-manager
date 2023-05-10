@@ -24,7 +24,7 @@
             ],
             "Name": "800W IBMCFFPS Configuration",
             "RedundantCount": 2,
-            "SupportedModel": "FPG0",
+            "SupportedModel": "51FA",
             "SupportedType": "PowerSupply",
             "Type": "SupportedConfiguration"
         }
