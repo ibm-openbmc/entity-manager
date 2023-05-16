@@ -312,8 +312,8 @@ std::set<int> findI2CEeproms(int i2cBus,
     {
         const std::string node = p.path().string();
         std::smatch m;
-        bool found =
-            std::regex_match(node, m, std::regex(".+\\d+-([0-9abcdef]+$)"));
+        bool found = std::regex_match(node, m,
+                                      std::regex(".+\\d+-([0-9abcdef]+$)"));
 
         if (!found)
         {
@@ -364,7 +364,6 @@ int getBusFRUs(int file, int first, int last, int bus,
                std::shared_ptr<DeviceMap> devices, const bool& powerIsOn,
                sdbusplus::asio::object_server& objServer)
 {
-
     std::future<int> future = std::async(std::launch::async, [&]() {
         // NOTE: When reading the devices raw on the bus, it can interfere with
         // the driver's ability to operate, therefore read eeproms first before
@@ -463,8 +462,8 @@ int getBusFRUs(int file, int first, int last, int bus,
                                      outbuf);
             };
             FRUReader reader(std::move(readFunc));
-            std::string errorMessage =
-                "bus " + std::to_string(bus) + " address " + std::to_string(ii);
+            std::string errorMessage = "bus " + std::to_string(bus) +
+                                       " address " + std::to_string(ii);
             std::vector<uint8_t> device = readFRUContents(reader, errorMessage);
             if (device.empty())
             {
@@ -503,8 +502,8 @@ void loadBlacklist(const char* path)
         return;
     }
 
-    nlohmann::json data =
-        nlohmann::json::parse(blacklistStream, nullptr, false);
+    nlohmann::json data = nlohmann::json::parse(blacklistStream, nullptr,
+                                                false);
     if (data.is_discarded())
     {
         std::cerr << "Illegal blacklist file detected, cannot validate JSON, "
@@ -707,15 +706,14 @@ void addFruObjectToDbus(
 
     for (auto& property : formattedFRU)
     {
-
         std::regex_replace(property.second.begin(), property.second.begin(),
                            property.second.end(), nonAsciiRegex, "_");
         if (property.second.empty() && property.first != "PRODUCT_ASSET_TAG")
         {
             continue;
         }
-        std::string key =
-            std::regex_replace(property.first, nonAsciiRegex, "_");
+        std::string key = std::regex_replace(property.first, nonAsciiRegex,
+                                             "_");
 
         if (property.first == "PRODUCT_ASSET_TAG")
         {
@@ -725,23 +723,23 @@ void addFruObjectToDbus(
                 [bus, address, propertyName, &dbusInterfaceMap,
                  &unknownBusObjectCount, &powerIsOn, &objServer,
                  &systemBus](const std::string& req, std::string& resp) {
-                    if (strcmp(req.c_str(), resp.c_str()) != 0)
+                if (strcmp(req.c_str(), resp.c_str()) != 0)
+                {
+                    // call the method which will update
+                    if (updateFRUProperty(req, bus, address, propertyName,
+                                          dbusInterfaceMap,
+                                          unknownBusObjectCount, powerIsOn,
+                                          objServer, systemBus))
                     {
-                        // call the method which will update
-                        if (updateFRUProperty(req, bus, address, propertyName,
-                                              dbusInterfaceMap,
-                                              unknownBusObjectCount, powerIsOn,
-                                              objServer, systemBus))
-                        {
-                            resp = req;
-                        }
-                        else
-                        {
-                            throw std::invalid_argument(
-                                "FRU property update failed.");
-                        }
+                        resp = req;
                     }
-                    return 1;
+                    else
+                    {
+                        throw std::invalid_argument(
+                            "FRU property update failed.");
+                    }
+                }
+                return 1;
                 });
         }
         else if (!iface->register_property(key, property.second + '\0'))
@@ -932,25 +930,25 @@ void rescanOneBus(
         i2cBuses, busmap, powerIsOn, objServer,
         [busNum, &busmap, &dbusInterfaceMap, &unknownBusObjectCount, &powerIsOn,
          &objServer, &systemBus]() {
-            for (auto& busIface : dbusInterfaceMap)
+        for (auto& busIface : dbusInterfaceMap)
+        {
+            if (busIface.first.first == static_cast<size_t>(busNum))
             {
-                if (busIface.first.first == static_cast<size_t>(busNum))
-                {
-                    objServer.remove_interface(busIface.second);
-                }
+                objServer.remove_interface(busIface.second);
             }
-            auto found = busmap.find(busNum);
-            if (found == busmap.end() || found->second == nullptr)
-            {
-                return;
-            }
-            for (auto& device : *(found->second))
-            {
-                addFruObjectToDbus(device.second, dbusInterfaceMap,
-                                   static_cast<uint32_t>(busNum), device.first,
-                                   unknownBusObjectCount, powerIsOn, objServer,
-                                   systemBus);
-            }
+        }
+        auto found = busmap.find(busNum);
+        if (found == busmap.end() || found->second == nullptr)
+        {
+            return;
+        }
+        for (auto& device : *(found->second))
+        {
+            addFruObjectToDbus(device.second, dbusInterfaceMap,
+                               static_cast<uint32_t>(busNum), device.first,
+                               unknownBusObjectCount, powerIsOn, objServer,
+                               systemBus);
+        }
         });
     scan->run();
 }
@@ -1118,14 +1116,13 @@ bool updateFRUProperty(
     size_t fruAreaAvailableSize = fruAreaParams.size - fruAreaDataSize;
     if ((updatePropertyReqLen + 1) > fruAreaAvailableSize)
     {
-
 #ifdef ENABLE_FRU_AREA_RESIZE
         size_t newFRUAreaSize = fruAreaDataSize + updatePropertyReqLen + 1;
         // round size to 8-byte blocks
-        newFRUAreaSize =
-            ((newFRUAreaSize - 1) / fruBlockSize + 1) * fruBlockSize;
-        size_t newFRUDataSize =
-            fruData.size() + newFRUAreaSize - fruAreaParams.size;
+        newFRUAreaSize = ((newFRUAreaSize - 1) / fruBlockSize + 1) *
+                         fruBlockSize;
+        size_t newFRUDataSize = fruData.size() + newFRUAreaSize -
+                                fruAreaParams.size;
         fruData.resize(newFRUDataSize);
         fruAreaParams.size = newFRUAreaSize;
         fruAreaParams.end = fruAreaParams.start + fruAreaParams.size;
@@ -1146,10 +1143,10 @@ bool updateFRUProperty(
               fruData.begin() + fruAreaParams.updateFieldLoc);
 
     // Copy remaining data to main fru area - post updated fru field vector
-    fruAreaParams.restFieldsLoc =
-        fruAreaParams.updateFieldLoc + updatePropertyReqLen;
-    size_t fruAreaDataEnd =
-        fruAreaParams.restFieldsLoc + restFRUAreaFieldsData.size();
+    fruAreaParams.restFieldsLoc = fruAreaParams.updateFieldLoc +
+                                  updatePropertyReqLen;
+    size_t fruAreaDataEnd = fruAreaParams.restFieldsLoc +
+                            restFRUAreaFieldsData.size();
 
     std::copy(restFRUAreaFieldsData.begin(), restFRUAreaFieldsData.end(),
               fruData.begin() + fruAreaParams.restFieldsLoc);
@@ -1160,8 +1157,8 @@ bool updateFRUProperty(
 
 #ifdef ENABLE_FRU_AREA_RESIZE
     ++nextFRUAreaNewLoc;
-    ssize_t nextFRUAreaOffsetDiff =
-        (nextFRUAreaNewLoc - nextFRUAreaLoc) / fruBlockSize;
+    ssize_t nextFRUAreaOffsetDiff = (nextFRUAreaNewLoc - nextFRUAreaLoc) /
+                                    fruBlockSize;
     // Append rest FRU Areas if size changed and there were other sections after
     // updated one
     if (nextFRUAreaOffsetDiff && nextFRUAreaLoc)
@@ -1258,9 +1255,9 @@ int main()
 
     iface->register_method("GetRawFru", getFRUInfo);
 
-    iface->register_method("WriteFru", [&](const uint16_t bus,
-                                           const uint8_t address,
-                                           const std::vector<uint8_t>& data) {
+    iface->register_method("WriteFru",
+                           [&](const uint16_t bus, const uint8_t address,
+                               const std::vector<uint8_t>& data) {
         if (!writeFRU(bus, address, data))
         {
             throw std::invalid_argument("Invalid Arguments.");
@@ -1274,28 +1271,28 @@ int main()
 
     std::function<void(sdbusplus::message_t & message)> eventHandler =
         [&](sdbusplus::message_t& message) {
-            std::string objectName;
-            boost::container::flat_map<
-                std::string,
-                std::variant<std::string, bool, int64_t, uint64_t, double>>
-                values;
-            message.read(objectName, values);
-            auto findState = values.find("CurrentHostState");
-            if (findState != values.end())
+        std::string objectName;
+        boost::container::flat_map<
+            std::string,
+            std::variant<std::string, bool, int64_t, uint64_t, double>>
+            values;
+        message.read(objectName, values);
+        auto findState = values.find("CurrentHostState");
+        if (findState != values.end())
+        {
+            if (std::get<std::string>(findState->second) ==
+                "xyz.openbmc_project.State.Host.HostState.Running")
             {
-                if (std::get<std::string>(findState->second) ==
-                    "xyz.openbmc_project.State.Host.HostState.Running")
-                {
-                    powerIsOn = true;
-                }
+                powerIsOn = true;
             }
+        }
 
-            if (powerIsOn)
-            {
-                rescanBusses(busMap, dbusInterfaceMap, unknownBusObjectCount,
-                             powerIsOn, objServer, systemBus);
-            }
-        };
+        if (powerIsOn)
+        {
+            rescanBusses(busMap, dbusInterfaceMap, unknownBusObjectCount,
+                         powerIsOn, objServer, systemBus);
+        }
+    };
 
     sdbusplus::bus::match_t powerMatch = sdbusplus::bus::match_t(
         static_cast<sdbusplus::bus_t&>(*systemBus),
