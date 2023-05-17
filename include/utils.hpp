@@ -128,7 +128,6 @@ inline bool fwVersionIsSame(void)
     std::ifstream hashFile(versionHashFile);
     if (hashFile.good())
     {
-
         std::string hashString;
         hashFile >> hashString;
 
