@@ -84,6 +84,21 @@ boost::asio::io_context io;
 const std::regex illegalDbusPathRegex("[^A-Za-z0-9_.]");
 const std::regex illegalDbusMemberRegex("[^A-Za-z0-9_]");
 
+void tryIfaceInitialize(std::shared_ptr<sdbusplus::asio::dbus_interface>& iface)
+{
+    try
+    {
+        iface->initialize();
+    }
+    catch (std::exception& e)
+    {
+        std::cerr << "Unable to initialize dbus interface : " << e.what()
+                  << "\n"
+                  << "object Path : " << iface->get_object_path() << "\n"
+                  << "interface name : " << iface->get_interface_name() << "\n";
+    }
+}
+
 FoundProbeTypeT findProbeType(const std::string& probe)
 {
     boost::container::flat_map<const char*, probe_type_codes,
@@ -424,7 +439,7 @@ void populateInterfaceFromJson(
         createDeleteObjectMethod(jsonPointerPath, iface, objServer,
                                  systemConfiguration);
     }
-    iface->initialize();
+    tryIfaceInitialize(iface);
 }
 
 sdbusplus::asio::PropertyPermission getPermission(const std::string& interface)
@@ -560,7 +575,7 @@ void createAddObjectMethod(const std::string& jsonPointerPath,
             interface, newData, objServer,
             sdbusplus::asio::PropertyPermission::readWrite);
     });
-    iface->initialize();
+     tryIfaceInitialize(iface);
 }
 
 void postToDbus(const nlohmann::json& newConfiguration,
@@ -646,7 +661,7 @@ void postToDbus(const nlohmann::json& newConfiguration,
                         std::tuple<std::string, std::string, std::string>>
                         values = {{"probed_by", "probes", path}};
                     associationIface->register_property("Associations", values);
-                    associationIface->initialize();
+                    tryIfaceInitialize(associationIface);
                     if constexpr (debug)
                     {
                         std::cerr << "Added association interface to path "
@@ -1322,7 +1337,7 @@ int main()
     entityIface->register_method("ReScan", [&]() {
         propertiesChangedCallback(system.systemConfiguration, objServer);
     });
-    entityIface->initialize();
+    tryIfaceInitialize(entityIface);
 
     if (fwVersionIsSame())
     {
