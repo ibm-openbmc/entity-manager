@@ -603,7 +603,7 @@
                 "type": "number"
             },
             "Polarity": {
-                "type": "string"
+                "enum": ["High", "Low"]
             },
             "Polling": {
                 "type": "object"
@@ -630,7 +630,7 @@
                         "type": "string"
                     },
                     "Polarity": {
-                        "enum": "Low"
+                        "$ref": "#/definitions/Types/Polarity"
                     }
                 },
                 "type": "object"
