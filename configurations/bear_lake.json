@@ -1,0 +1,26 @@
+{
+    "Exposes": [
+        {
+            "Address": "$address % 4 + 76",
+            "Bus": "$bus",
+            "LocationCode": "$locationcode",
+            "Name": "PCIe Cable Card C$slotnumber Local Temp",
+            "Name1": "PCIe Cable Card C$slotnumber Temp",
+            "PollRate": 5,
+            "PowerStateOwner": "PCIeSlot",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Index": 2,
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 75
+                }
+            ],
+            "Type": "TMP435"
+        }
+    ],
+    "Name": "4U PCIe Cable Card C$slotnumber",
+    "Probe": "com.ibm.ipzvpd.VINI({'CC': [54, 66, 57, 57]})",
+    "Type": "Board"
+}

@@ -1,0 +1,26 @@
+{
+    "Exposes": [
+        {
+            "Address": "$address % 4 + 76",
+            "Bus": "$bus",
+            "LocationCode": "$locationcode",
+            "Name": "NVMe JBOF Card C$slotnumber Local Temp",
+            "Name1": "NVMe JBOF Card C$slotnumber Temp",
+            "PollRate": 5,
+            "PowerStateOwner": "PCIeSlot",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Index": 2,
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 85
+                }
+            ],
+            "Type": "TMP435"
+        }
+    ],
+    "Name": "NVMe JBOF Card C$slotnumber",
+    "Probe": "com.ibm.ipzvpd.VINI({'CC': [54, 66, 56, 55]})",
+    "Type": "Board"
+}

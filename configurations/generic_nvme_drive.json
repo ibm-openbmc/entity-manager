@@ -1,0 +1,41 @@
+{
+    "Bus": "$bus",
+    "Exposes": [
+        {
+            "Address": "$address",
+            "Bus": "$bus",
+            "Name": "NVMe $index FRU",
+            "Type": "EEPROM"
+        },
+        {
+            "Address": "0x6a",
+            "Bus": "$bus",
+            "Name": "NVMe $index Temp",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 115
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 110
+                }
+            ],
+            "Type": "NVME1000"
+        }
+    ],
+    "Logging": "Off",
+    "Name": "NVMe $index",
+    "Probe": "com.ibm.ipzvpd.VINI({'CC': [78, 86, 77, 101]})",
+    "Type": "NVMe",
+    "xyz.openbmc_project.Inventory.Decorator.Asset": {
+        "Manufacturer": "Unknown",
+        "Model": "NVMe",
+        "PartNumber": "$PN",
+        "SerialNumber": "$SN"
+    }
+}
