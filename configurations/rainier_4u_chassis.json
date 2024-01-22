@@ -17,6 +17,17 @@
             "Name": "Default Power Mode Properties",
             "PowerMode": "MaximumPerformance",
             "Type": "PowerModeProperties"
+        },
+        {
+            "InputVoltage": [
+                220
+            ],
+            "Name": "1400W 1600W IBMCFFPS Configuration",
+            "PowerConfigFullLoad": true,
+            "RedundantCount": 4,
+            "SupportedModel": "2B1E",
+            "SupportedType": "PowerSupply",
+            "Type": "SupportedConfiguration"
         }
     ],
     "Name": "Rainier 4U Chassis",

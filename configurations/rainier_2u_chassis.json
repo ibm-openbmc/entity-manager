@@ -17,6 +17,30 @@
             "Name": "Default Power Mode Properties",
             "PowerMode": "MaximumPerformance",
             "Type": "PowerModeProperties"
+        },
+        {
+            "InputVoltage": [
+                110,
+                220
+            ],
+            "Name": "1000W IBMCFFPS Configuration",
+            "PowerConfigFullLoad": false,
+            "RedundantCount": 2,
+            "SupportedModel": "51ED",
+            "SupportedType": "PowerSupply",
+            "Type": "SupportedConfiguration"
+        },
+        {
+            "InputVoltage": [
+                110,
+                220
+            ],
+            "Name": "2000W IBMCFFPS Configuration",
+            "PowerConfigFullLoad": false,
+            "RedundantCount": 2,
+            "SupportedModel": "51E9",
+            "SupportedType": "PowerSupply",
+            "Type": "SupportedConfiguration"
         }
     ],
     "Name": "Rainier 2U Chassis",
