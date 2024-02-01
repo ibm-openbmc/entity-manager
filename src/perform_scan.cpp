@@ -77,7 +77,7 @@ void getInterfaces(
         }
 
         scan->dbusProbeObjects[instance.path][instance.interface] = resp;
-        },
+    },
         instance.busName, instance.path, "org.freedesktop.DBus.Properties",
         "GetAll", instance.interface);
 
@@ -192,7 +192,7 @@ void findDbusObjects(std::vector<std::shared_ptr<PerformProbe>>&& probeVector,
         }
 
         processDbusObjects(probeVector, scan, interfaceSubtree);
-        },
+    },
         "xyz.openbmc_project.ObjectMapper",
         "/xyz/openbmc_project/object_mapper",
         "xyz.openbmc_project.ObjectMapper", "GetSubTree", "/", maxMapperDepth,
