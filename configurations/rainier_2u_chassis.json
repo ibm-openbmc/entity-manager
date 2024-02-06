@@ -23,7 +23,7 @@
                 110,
                 220
             ],
-            "Name": "1000W IBMCFFPS Configuration",
+            "Name": "10000W IBMCFFPS Configuration",
             "PowerConfigFullLoad": false,
             "RedundantCount": 2,
             "SupportedModel": "51ED",
