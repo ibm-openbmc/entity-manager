@@ -7,7 +7,6 @@
                     "Polarity": "High"
                 }
             ],
-            "DevName": "iio-hwmon-battery",
             "Index": 0,
             "Name": "Battery Voltage",
             "PollRate": 86400,
