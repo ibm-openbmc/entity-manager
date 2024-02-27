@@ -6,6 +6,27 @@
                 "ibm,bonnell"
             ],
             "Type": "IBMCompatibleSystem"
+        },
+        {
+            "EnterUtilizationDwellTime": 240,
+            "EnterUtilizationPercent": 8,
+            "ExitUtilizationDwellTime": 10,
+            "ExitUtilizationPercent": 12,
+            "IdlePowerSaverEnabled": true,
+            "Name": "Default Power Mode Properties",
+            "PowerMode": "MaximumPerformance",
+            "Type": "PowerModeProperties"
+        },
+        {
+            "InputVoltage": [
+                110,
+                220
+            ],
+            "Name": "800W IBMCFFPS Configuration",
+            "RedundantCount": 2,
+            "SupportedModel": "51FA",
+            "SupportedType": "PowerSupply",
+            "Type": "SupportedConfiguration"
         }
     ],
     "Name": "Bonnell Chassis",

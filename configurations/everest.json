@@ -16,6 +16,16 @@
             "Name": "Default Power Mode Properties",
             "PowerMode": "MaximumPerformance",
             "Type": "PowerModeProperties"
+        },
+        {
+            "InputVoltage": [
+                220
+            ],
+            "Name": "2300W IBMCFFPS Configuration",
+            "RedundantCount": 4,
+            "SupportedModel": "51DA",
+            "SupportedType": "PowerSupply",
+            "Type": "SupportedConfiguration"
         }
     ],
     "Name": "Everest Chassis",
