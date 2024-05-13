@@ -118,6 +118,7 @@ configs = [
     'fbyv35_nic_mellanox.json',
     'flett.json',
     'flextronics_s-1100adu00-201_psu.json',
+    'fuji.json',
     'generic_nvme_drive.json',
     'genesis3_psu.json',
     'genesis3_baseboard.json',
