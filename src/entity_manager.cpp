@@ -646,7 +646,7 @@ void postToDbus(const nlohmann::json& newConfiguration,
 
         std::shared_ptr<sdbusplus::asio::dbus_interface> inventoryIface =
             createInterface(objServer, boardPath,
-                            "xyz.openbmc_project.Inventory.Item", boardName);
+                            "xyz.openbmc_project.Inventory.Item", boardNameOrig);
 
         createAddObjectMethod(jsonPointerPath, boardPath, systemConfiguration,
                               objServer, boardNameOrig);
@@ -672,7 +672,8 @@ void postToDbus(const nlohmann::json& newConfiguration,
                 {
                     auto& path = cr->probeObjectPaths[pathKey];
                     Association values{"probed_by", "probes", path};
-                    saveAssociation(boardPath, boardName, values, associations);
+                    saveAssociation(boardPath, boardNameOrig, values,
+                                    associations);
 
                     if constexpr (debug)
                     {
