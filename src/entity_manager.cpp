@@ -34,6 +34,7 @@
 #include <boost/container/flat_set.hpp>
 #include <boost/range/iterator_range.hpp>
 #include <nlohmann/json.hpp>
+#include <phosphor-logging/lg2.hpp>
 #include <sdbusplus/asio/connection.hpp>
 #include <sdbusplus/asio/object_server.hpp>
 
@@ -45,8 +46,6 @@
 #include <map>
 #include <regex>
 #include <variant>
-
-constexpr const bool debug = false;
 
 constexpr const char* hostConfigurationDirectory = SYSCONF_DIR "configurations";
 constexpr const char* configurationDirectory = PACKAGE_DIR "configurations";
@@ -648,7 +647,8 @@ void postToDbus(const nlohmann::json& newConfiguration,
 
         std::shared_ptr<sdbusplus::asio::dbus_interface> inventoryIface =
             createInterface(objServer, boardPath,
-                            "xyz.openbmc_project.Inventory.Item", boardNameOrig);
+                            "xyz.openbmc_project.Inventory.Item",
+                            boardNameOrig);
 
         createAddObjectMethod(jsonPointerPath, boardPath, systemConfiguration,
                               objServer, boardNameOrig);
@@ -656,10 +656,10 @@ void postToDbus(const nlohmann::json& newConfiguration,
         if (boardType != "Chassis")
         {
             std::shared_ptr<sdbusplus::asio::dbus_interface> boardIface =
-                createInterface(objServer, boardPath,
-                                "xyz.openbmc_project.Inventory.Item." +
-                                    boardType,
-                                boardNameOrig);
+                createInterface(
+                    objServer, boardPath,
+                    "xyz.openbmc_project.Inventory.Item." + boardType,
+                    boardNameOrig);
 
             populateInterfaceFromJson(systemConfiguration, jsonPointerPath,
                                       boardIface, boardValues, objServer);
@@ -677,22 +677,17 @@ void postToDbus(const nlohmann::json& newConfiguration,
                     saveAssociation(boardPath, boardNameOrig, values,
                                     associations);
 
-                    if constexpr (debug)
-                    {
-                        std::cerr << "Added association interface to path "
-                                  << path << " from pathKey " << pathKey
-                                  << " on " << boardPath
-                                  << " for configuration " << boardConfig.dump()
-                                  << "\n";
-                    }
+                    lg2::debug(
+                        "Added association interface to path {PATH} "
+                        "from pathKey {PATH_KEY} on boardPath {BOARD_PATH} "
+                        "for configuration {BOARD_CONFIG}",
+                        "PATH", path, "PATH_KEY", pathKey, "BOARD_PATH",
+                        boardPath, "BOARD_CONFIG", boardConfig.dump());
                 }
                 else
                 {
-                    if constexpr (debug)
-                    {
-                        std::cerr << "No registered path for pathKey "
-                                  << pathKey << "\n";
-                    }
+                    lg2::debug("No registered path for pathKey {PATH_KEY}",
+                               "PATH_KEY", pathKey);
                 }
             }
         }
@@ -1356,7 +1351,7 @@ int main()
                 return;
             }
 
-            propertiesChangedCallback(systemConfiguration, objServer);
+            propertiesChangedCallback(system.systemConfiguration, objServer);
         });
     // We also need a poke from DBus when new interfaces are created or
     // destroyed.
@@ -1366,7 +1361,8 @@ int main()
         [&](sdbusplus::message_t& msg) {
             if (iaContainsProbeInterface(msg, probeInterfaces))
             {
-                propertiesChangedCallback(systemConfiguration, objServer);
+                propertiesChangedCallback(system.systemConfiguration,
+                                          objServer);
             }
         });
     sdbusplus::bus::match_t interfacesRemovedMatch(
@@ -1375,7 +1371,8 @@ int main()
         [&](sdbusplus::message_t& msg) {
             if (irContainsProbeInterface(msg, probeInterfaces))
             {
-                propertiesChangedCallback(systemConfiguration, objServer);
+                propertiesChangedCallback(system.systemConfiguration,
+                                          objServer);
             }
         });
 

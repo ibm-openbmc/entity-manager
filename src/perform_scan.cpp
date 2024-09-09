@@ -575,12 +575,9 @@ void PerformScan::updateSystemConfiguration(const nlohmann::json& recordRef,
                                &ConfigurationRelation::systemConfiguration);
         auto pathKey = std::to_string(std::hash<std::string>{}(record.dump()));
         cr->probeObjectPaths[pathKey] = path;
-        if constexpr (debug)
-        {
-            std::cerr << "Registered path " << path << " with pathKey "
-                      << pathKey << " for configuration " << record.dump()
-                      << "\n";
-        }
+        lg2::debug(
+            "Registered path {PATH} with {PATH_KEY} for configuration {CONFIGURATION}",
+            "PATH", path, "PATH_KEY", pathKey, "CONFIGURATION", record.dump());
     }
 }
 
