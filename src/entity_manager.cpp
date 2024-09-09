@@ -1365,6 +1365,7 @@ int main()
                                           objServer);
             }
         });
+
     sdbusplus::bus::match_t interfacesRemovedMatch(
         static_cast<sdbusplus::bus_t&>(*systemBus),
         sdbusplus::bus::match::rules::interfacesRemoved(),
