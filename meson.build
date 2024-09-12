@@ -4,11 +4,11 @@ project(
     default_options: [
         'warning_level=3',
         'werror=true',
-        'cpp_std=c++20'
+        'cpp_std=c++23'
     ],
     license: 'Apache-2.0',
     version: '0.1',
-    meson_version: '>=0.58.0',
+    meson_version: '>=1.1.1',
 )
 add_project_arguments('-Wno-psabi', language: 'cpp')
 
@@ -35,13 +35,9 @@ if get_option('fru-device')
 endif
 
 nlohmann_json_dep = dependency('nlohmann_json', include_type: 'system')
+sdbusplus = dependency('sdbusplus', include_type: 'system')
+phosphor_logging_dep = dependency('phosphor-logging')
 
-sdbusplus = dependency('sdbusplus', required: false)
-if not sdbusplus.found()
-    sdbusplus_proj = subproject('sdbusplus', required: true)
-    sdbusplus = sdbusplus_proj.get_variable('sdbusplus_dep')
-    sdbusplus = sdbusplus.as_system('system')
-endif
 systemd = dependency('systemd')
 systemd_system_unit_dir = systemd.get_variable(
     'systemdsystemunitdir',
@@ -78,6 +74,7 @@ configs = [
     'a2ux8x4riser.json',
     'acbell_rica_psu.json',
     'acbel_r1ca2122a_psu.json',
+    'asrock_c3_medium_x86.json',
     'asrock_e3c246d4i.json',
     'asrock_e3c256d4i.json',
     'asrock_m3_small_x86.json',
@@ -105,6 +102,9 @@ configs = [
     'blueridge_2u_chassis.json',
     'blueridge_4u_chassis.json',
     'bonnell.json',
+    'brcm_100g_1p_ocp_mezz.json',
+    'brcm_200g_1p_ocp_mezz.json',
+    'cx7_ocp.json',
     'delta_awf2dc3200w_psu.json',
     'delta_dps-750xb_psu.json',
     'delta_dps-1600ab_psu.json',
@@ -121,6 +121,8 @@ configs = [
     'fbyv35_nic_mellanox.json',
     'flett.json',
     'flextronics_s-1100adu00-201_psu.json',
+    'fp5280g3_chassis.json',
+    'fp5280g3_fanboard.json',
     'fuji.json',
     'generic_nvme_drive.json',
     'genesis3_psu.json',
@@ -132,7 +134,7 @@ configs = [
     'harma_bsm.json',
     'harma_fanboard.json',
     'harma_mb.json',
-    'harma_nic.json',
+    'harma_mb_vr_infineon.json',
     'harma_scm.json',
     'ibm_tacoma_rack_controller.json',
     'ingraham.json',
@@ -141,9 +143,11 @@ configs = [
     'kudo_motherboard.json',
     'micron_7450.json',
     'minerva_cmm.json',
+    'minerva_cmm_hsc_infineon.json',
     'minerva_cmm_bsm.json',
     'minerva_cmm_scm.json',
     'minerva_fanboard.json',
+    'minerva_pdb_hsc_xdp.json',
     'minerva_pdb.json',
     'minerva_pttv.json',
     'minerva_sitv.json',
@@ -153,8 +157,11 @@ configs = [
     'mtmitchell_bmc.json',
     'mtmitchell_mb.json',
     'mudflap.json',
+    'nf5280m7_baseboard.json',
     'nisqually.json',
-    'nvme_p4000.json',
+    'nuvoton_npcm8xx_evb.json',
+    'nvme_intel_p_series.json',
+    'nvme_p4500_p5500.json',
     'pcie_ssd_retimer.json',
     'pennybacker.json',
     'pssf132202a.json',
@@ -172,12 +179,14 @@ configs = [
     'sbp1_nvme.json',
     'sbp1_psu.json',
     'sbp1_rssd.json',
+    'sbp1_hbm.json',
     'system1_baseboard.json',
     'system1_chassis.json',
     'solum_pssf162202_psu.json',
     'storm_king.json',
     'stp_baseboard.json',
     'stp_p4000_chassis.json',
+    'terminus_2x100g_nic_tsff.json',
     'tola.json',
     'twinlake.json',
     'tyan_s7106_baseboard.json',
@@ -186,13 +195,30 @@ configs = [
     'vegman_rx20_baseboard.json',
     'vegman_sx20_baseboard.json',
     'wft_baseboard.json',
-    'yosemite4_fanboard.json',
-    'yosemite4_sentineldome.json',
+    'yosemite4_fanboard_fsc_max_adc_ti_led_nxp_efuse_mps.json',
+    'yosemite4_fanboard_fsc_max_adc_ti_led_nxp_efuse_max.json',
+    'yosemite4_fanboard_fsc_nct_adc_max_led_ons_efuse_mps.json',
+    'yosemite4_fanboard_fsc_nct_adc_max_led_ons_efuse_max.json',
+    'yosemite4_sentineldome_t1.json',
+    'yosemite4_sentineldome_t1_retimer.json',
+    'yosemite4_sentineldome_t2.json',
+    'yosemite4_sentineldome_t2_retimer.json',
+    'yosemite4_sentineldome_chassis.json',
+    'yosemite4_chassis.json',
     'yosemite4_floatingfalls.json',
     'yosemite4_wailuafalls.json',
     'yosemite4.json',
-    'yosemite4_medusaboard.json',
-    'yosemite4_spiderboard.json',
+    'yosemite4n.json',
+    'yosemite4_medusaboard_adc_ti_hsc_adi.json',
+    'yosemite4_medusaboard_adc_ti_12vhsc_mps_48vhsc_inf.json',
+    'yosemite4_medusaboard_adc_ti_12vhsc_adi_48vhsc_inf.json',
+    'yosemite4_medusaboard_adc_ti_12vhsc_mps_48vhsc_adi.json',
+    'yosemite4_medusaboard_adc_rns_12vhsc_mps_48vhsc_inf.json',
+    'yosemite4_medusaboard_adc_rns_hsc_adi.json',
+    'yosemite4_medusaboard_adc_rns_12vhsc_adi_48vhsc_inf.json',
+    'yosemite4_medusaboard_adc_rns_12vhsc_mps_48vhsc_adi.json',
+    'yosemite4_spiderboard_adc_ti_pwr_ti.json',
+    'yosemite4_spiderboard_adc_max_pwr_ti.json',
 ]
 filepaths = []
 foreach c : configs
@@ -207,19 +233,21 @@ foreach c : configs
     filepaths += [file]
 endforeach
 
-validate_script = files('scripts/validate_configs.py')
-autojson = custom_target(
-  'check_syntax',
-  command: [
-    validate_script,
-    '-v',
-    '-k',
-  ],
-  depend_files: files(filepaths),
-  build_by_default: true,
-  capture: true,
-  output: 'validate_configs.log',
-)
+if get_option('validate-json')
+    validate_script = files('scripts/validate_configs.py')
+    autojson = custom_target(
+      'check_syntax',
+      command: [
+        validate_script,
+        '-v',
+        '-k',
+      ],
+      depend_files: files(filepaths),
+      build_by_default: true,
+      capture: true,
+      output: 'validate_configs.log',
+    )
+endif
 
 schemas = [
     'global.json',
@@ -275,6 +303,7 @@ if not build_tests.disabled()
                 boost,
                 gtest,
                 nlohmann_json_dep,
+                phosphor_logging_dep,
                 sdbusplus,
                 valijson,
             ],
@@ -293,6 +322,7 @@ if not build_tests.disabled()
             dependencies: [
                 boost,
                 gtest,
+                phosphor_logging_dep,
                 sdbusplus,
             ],
             include_directories: 'src',
@@ -310,6 +340,7 @@ if not build_tests.disabled()
                 gtest,
                 gmock,
                 nlohmann_json_dep,
+                phosphor_logging_dep,
             ],
             include_directories: 'src',
         )

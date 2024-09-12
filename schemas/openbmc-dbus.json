@@ -9,6 +9,12 @@
                         "Asset": {
                             "additionalProperties": false,
                             "properties": {
+                                "BuildDate": {
+                                    "type": "string"
+                                },
+                                "SparePartNumber": {
+                                    "type": "string"
+                                },
                                 "Manufacturer": {
                                     "type": "string"
                                 },
@@ -65,6 +71,26 @@
                             },
                             "required": ["FieldReplaceable", "HotPluggable"],
                             "type": "object"
+                        },
+                        "Slot": {
+                            "additionalProperties": false,
+                            "properties": {
+                                "SlotNumber": {
+                                    "type": ["string", "number"]
+                                }
+                            },
+                            "required": ["SlotNumber"],
+                            "type": "object"
+                        },
+                        "Revision": {
+                            "additionalProperties": false,
+                            "properties": {
+                                "Version": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": ["Version"],
+                            "type": "object"
                         }
                     },
                     "Item": {
@@ -84,6 +110,16 @@
                             "additionalProperties": false,
                             "type": "object"
                         },
+                        "NetworkInterface": {
+                            "additionalProperties": false,
+                            "properties": {
+                                "MACAddress": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": ["MACAddress"],
+                            "type": "object"
+                        },
                         "Panel": {
                             "additionalProperties": false,
                             "type": "object"
@@ -91,7 +127,23 @@
                         "System": {
                             "additionalProperties": false,
                             "type": "object"
+                        },
+                        "BMC": {
+                            "additionalProperties": false,
+                            "type": "object"
                         }
+                    }
+                },
+                "Common": {
+                    "UUID": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "UUID": {
+                                "type": "string"
+                            }
+                        },
+                        "required": ["UUID"],
+                        "type": "object"
                     }
                 }
             }

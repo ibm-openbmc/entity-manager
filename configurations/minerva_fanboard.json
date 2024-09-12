@@ -7,7 +7,7 @@
                 "Connector": {
                     "Name": "FCB_TOP_$bus * -1 + 17 FAN0_TACH_IL",
                     "Pwm": 2,
-                    "PwmName": "FCB_TOP_$bus * -1 + 17 FAN0_PWM",
+                    "PwmName": "FCB_TOP_$bus * -1 + 17 FAN_PWM",
                     "Tachs": [
                         0
                     ]
@@ -26,7 +26,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -37,7 +37,7 @@
                 "Connector": {
                     "Name": "FCB_TOP_$bus * -1 + 17 FAN0_TACH_OL",
                     "Pwm": 2,
-                    "PwmName": "FCB_TOP_$bus * -1 + 17 FAN0_PWM",
+                    "PwmName": "FCB_TOP_$bus * -1 + 17 FAN_PWM",
                     "Tachs": [
                         1
                     ]
@@ -56,7 +56,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -67,7 +67,7 @@
                 "Connector": {
                     "Name": "FCB_TOP_$bus * -1 + 17 FAN1_TACH_IL",
                     "Pwm": 2,
-                    "PwmName": "FCB_TOP_$bus * -1 + 17 FAN1_PWM",
+                    "PwmName": "FCB_TOP_$bus * -1 + 17 FAN_PWM",
                     "Tachs": [
                         2
                     ]
@@ -86,7 +86,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -97,7 +97,7 @@
                 "Connector": {
                     "Name": "FCB_TOP_$bus * -1 + 17 FAN1_TACH_OL",
                     "Pwm": 2,
-                    "PwmName": "FCB_TOP_$bus * -1 + 17 FAN1_PWM",
+                    "PwmName": "FCB_TOP_$bus * -1 + 17 FAN_PWM",
                     "Tachs": [
                         3
                     ]
@@ -116,7 +116,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -127,7 +127,7 @@
                 "Connector": {
                     "Name": "FCB_TOP_$bus * -1 + 17 FAN2_TACH_IL",
                     "Pwm": 2,
-                    "PwmName": "FCB_TOP_$bus * -1 + 17 FAN2_PWM",
+                    "PwmName": "FCB_TOP_$bus * -1 + 17 FAN_PWM",
                     "Tachs": [
                         4
                     ]
@@ -146,7 +146,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -157,7 +157,7 @@
                 "Connector": {
                     "Name": "FCB_TOP_$bus * -1 + 17 FAN2_TACH_OL",
                     "Pwm": 2,
-                    "PwmName": "FCB_TOP_$bus * -1 + 17 FAN2_PWM",
+                    "PwmName": "FCB_TOP_$bus * -1 + 17 FAN_PWM",
                     "Tachs": [
                         5
                     ]
@@ -176,7 +176,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -187,7 +187,7 @@
                 "Connector": {
                     "Name": "FCB_TOP_$bus * -1 + 17 FAN3_TACH_IL",
                     "Pwm": 2,
-                    "PwmName": "FCB_TOP_$bus * -1 + 17 FAN3_PWM",
+                    "PwmName": "FCB_TOP_$bus * -1 + 17 FAN_PWM",
                     "Tachs": [
                         6
                     ]
@@ -206,7 +206,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -217,7 +217,7 @@
                 "Connector": {
                     "Name": "FCB_TOP_$bus * -1 + 17 FAN3_TACH_OL",
                     "Pwm": 2,
-                    "PwmName": "FCB_TOP_$bus * -1 + 17 FAN3_PWM",
+                    "PwmName": "FCB_TOP_$bus * -1 + 17 FAN_PWM",
                     "Tachs": [
                         7
                     ]
@@ -236,10 +236,182 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
+            },
+            {
+                "Address": "0x40",
+                "Bus": "$bus",
+                "Labels": [
+                    "in1",
+                    "curr1"
+                ],
+                "Name": "FCB_TOP_$bus * -1 + 17 FAN0",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 1.19
+                    }
+                ],
+                "Type": "INA238",
+                "curr1_Name": "FCB_TOP_$bus * -1 + 17 FAN0_CURR_A",
+                "in1_Name": "FCB_TOP_$bus * -1 + 17 FAN0_VOLT_V"
+            },
+            {
+                "Address": "0x41",
+                "Bus": "$bus",
+                "Labels": [
+                    "in1",
+                    "curr1"
+                ],
+                "Name": "FCB_TOP_$bus * -1 + 17 FAN1",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 1.13
+                    }
+                ],
+                "Type": "INA238",
+                "curr1_Name": "FCB_TOP_$bus * -1 + 17 FAN1_CURR_A",
+                "in1_Name": "FCB_TOP_$bus * -1 + 17 FAN1_VOLT_V"
+            },
+            {
+                "Address": "0x44",
+                "Bus": "$bus",
+                "Labels": [
+                    "in1",
+                    "curr1"
+                ],
+                "Name": "FCB_TOP_$bus * -1 + 17 FAN2",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 1.13
+                    }
+                ],
+                "Type": "INA238",
+                "curr1_Name": "FCB_TOP_$bus * -1 + 17 FAN2_CURR_A",
+                "in1_Name": "FCB_TOP_$bus * -1 + 17 FAN2_VOLT_V"
+            },
+            {
+                "Address": "0x45",
+                "Bus": "$bus",
+                "Labels": [
+                    "in1",
+                    "curr1"
+                ],
+                "Name": "FCB_TOP_$bus * -1 + 17 FAN3",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 1.15
+                    }
+                ],
+                "Type": "INA238",
+                "curr1_Name": "FCB_TOP_$bus * -1 + 17 FAN3_CURR_A",
+                "in1_Name": "FCB_TOP_$bus * -1 + 17 FAN3_VOLT_V"
+            },
+            {
+                "Address": "0x4b",
+                "Bus": "$bus",
+                "Name": "FCB_TOP_$bus * -1 + 17 TEMP_C",
+                "Thresholds": [
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 80
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper non critical",
+                        "Severity": 0,
+                        "Value": 75
+                    },
+                    {
+                        "Direction": "less than",
+                        "Name": "lower non critical",
+                        "Severity": 0,
+                        "Value": 5
+                    },
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 0
+                    }
+                ],
+                "Type": "TMP75"
             }
         ],
         "Name": "Minerva Top Fan Board $bus * -1 + 17",
@@ -250,10 +422,12 @@
         ],
         "Type": "Board",
         "xyz.openbmc_project.Inventory.Decorator.Asset": {
-            "Manufacturer": "$PRODUCT_MANUFACTURER",
-            "Model": "$PRODUCT_PRODUCT_NAME",
-            "PartNumber": "$PRODUCT_PART_NUMBER",
-            "SerialNumber": "$PRODUCT_SERIAL_NUMBER"
+            "BuildDate": "$BOARD_MANUFACTURE_DATE",
+            "Manufacturer": "$BOARD_MANUFACTURER",
+            "Model": "$BOARD_PRODUCT_NAME",
+            "PartNumber": "$BOARD_PART_NUMBER",
+            "SerialNumber": "$BOARD_SERIAL_NUMBER",
+            "SparePartNumber": "$BOARD_INFO_AM1"
         }
     },
     {
@@ -264,7 +438,7 @@
                 "Connector": {
                     "Name": "FCB_MID_$bus * -1 + 19 FAN0_TACH_IL",
                     "Pwm": 2,
-                    "PwmName": "FCB_MID_$bus * -1 + 19 FAN0_PWM",
+                    "PwmName": "FCB_MID_$bus * -1 + 19 FAN_PWM",
                     "Tachs": [
                         0
                     ]
@@ -283,7 +457,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -294,7 +468,7 @@
                 "Connector": {
                     "Name": "FCB_MID_$bus * -1 + 19 FAN0_TACH_OL",
                     "Pwm": 2,
-                    "PwmName": "FCB_MID_$bus * -1 + 19 FAN0_PWM",
+                    "PwmName": "FCB_MID_$bus * -1 + 19 FAN_PWM",
                     "Tachs": [
                         1
                     ]
@@ -313,7 +487,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -324,7 +498,7 @@
                 "Connector": {
                     "Name": "FCB_MID_$bus * -1 + 19 FAN1_TACH_IL",
                     "Pwm": 2,
-                    "PwmName": "FCB_MID_$bus * -1 + 19 FAN1_PWM",
+                    "PwmName": "FCB_MID_$bus * -1 + 19 FAN_PWM",
                     "Tachs": [
                         2
                     ]
@@ -343,7 +517,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -354,7 +528,7 @@
                 "Connector": {
                     "Name": "FCB_MID_$bus * -1 + 19 FAN1_TACH_OL",
                     "Pwm": 2,
-                    "PwmName": "FCB_MID_$bus * -1 + 19 FAN1_PWM",
+                    "PwmName": "FCB_MID_$bus * -1 + 19 FAN_PWM",
                     "Tachs": [
                         3
                     ]
@@ -373,7 +547,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -384,7 +558,7 @@
                 "Connector": {
                     "Name": "FCB_MID_$bus * -1 + 19 FAN2_TACH_IL",
                     "Pwm": 2,
-                    "PwmName": "FCB_MID_$bus * -1 + 19 FAN2_PWM",
+                    "PwmName": "FCB_MID_$bus * -1 + 19 FAN_PWM",
                     "Tachs": [
                         4
                     ]
@@ -403,7 +577,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -414,7 +588,7 @@
                 "Connector": {
                     "Name": "FCB_MID_$bus * -1 + 19 FAN2_TACH_OL",
                     "Pwm": 2,
-                    "PwmName": "FCB_MID_$bus * -1 + 19 FAN2_PWM",
+                    "PwmName": "FCB_MID_$bus * -1 + 19 FAN_PWM",
                     "Tachs": [
                         5
                     ]
@@ -433,7 +607,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -444,7 +618,7 @@
                 "Connector": {
                     "Name": "FCB_MID_$bus * -1 + 19 FAN3_TACH_IL",
                     "Pwm": 2,
-                    "PwmName": "FCB_MID_$bus * -1 + 19 FAN3_PWM",
+                    "PwmName": "FCB_MID_$bus * -1 + 19 FAN_PWM",
                     "Tachs": [
                         6
                     ]
@@ -463,7 +637,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -474,7 +648,7 @@
                 "Connector": {
                     "Name": "FCB_MID_$bus * -1 + 19 FAN3_TACH_OL",
                     "Pwm": 2,
-                    "PwmName": "FCB_MID_$bus * -1 + 19 FAN3_PWM",
+                    "PwmName": "FCB_MID_$bus * -1 + 19 FAN_PWM",
                     "Tachs": [
                         7
                     ]
@@ -493,10 +667,182 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
+            },
+            {
+                "Address": "0x40",
+                "Bus": "$bus",
+                "Labels": [
+                    "in1",
+                    "curr1"
+                ],
+                "Name": "FCB_MID_$bus * -1 + 19 FAN0",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 1.19
+                    }
+                ],
+                "Type": "INA238",
+                "curr1_Name": "FCB_MID_$bus * -1 + 19 FAN0_CURR_A",
+                "in1_Name": "FCB_MID_$bus * -1 + 19 FAN0_VOLT_V"
+            },
+            {
+                "Address": "0x41",
+                "Bus": "$bus",
+                "Labels": [
+                    "in1",
+                    "curr1"
+                ],
+                "Name": "FCB_MID_$bus * -1 + 19 FAN1",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 1.13
+                    }
+                ],
+                "Type": "INA238",
+                "curr1_Name": "FCB_MID_$bus * -1 + 19 FAN1_CURR_A",
+                "in1_Name": "FCB_MID_$bus * -1 + 19 FAN1_VOLT_V"
+            },
+            {
+                "Address": "0x44",
+                "Bus": "$bus",
+                "Labels": [
+                    "in1",
+                    "curr1"
+                ],
+                "Name": "FCB_MID_$bus * -1 + 19 FAN2",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 1.13
+                    }
+                ],
+                "Type": "INA238",
+                "curr1_Name": "FCB_MID_$bus * -1 + 19 FAN2_CURR_A",
+                "in1_Name": "FCB_MID_$bus * -1 + 19 FAN2_VOLT_V"
+            },
+            {
+                "Address": "0x45",
+                "Bus": "$bus",
+                "Labels": [
+                    "in1",
+                    "curr1"
+                ],
+                "Name": "FCB_MID_$bus * -1 + 19 FAN3",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 1.15
+                    }
+                ],
+                "Type": "INA238",
+                "curr1_Name": "FCB_MID_$bus * -1 + 19 FAN3_CURR_A",
+                "in1_Name": "FCB_MID_$bus * -1 + 19 FAN3_VOLT_V"
+            },
+            {
+                "Address": "0x4b",
+                "Bus": "$bus",
+                "Name": "FCB_MID_$bus * -1 + 19 TEMP_C",
+                "Thresholds": [
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 80
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper non critical",
+                        "Severity": 0,
+                        "Value": 75
+                    },
+                    {
+                        "Direction": "less than",
+                        "Name": "lower non critical",
+                        "Severity": 0,
+                        "Value": 5
+                    },
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 0
+                    }
+                ],
+                "Type": "TMP75"
             }
         ],
         "Name": "Minerva Middle Fan Board $bus * -1 + 19",
@@ -507,10 +853,12 @@
         ],
         "Type": "Board",
         "xyz.openbmc_project.Inventory.Decorator.Asset": {
-            "Manufacturer": "$PRODUCT_MANUFACTURER",
-            "Model": "$PRODUCT_PRODUCT_NAME",
-            "PartNumber": "$PRODUCT_PART_NUMBER",
-            "SerialNumber": "$PRODUCT_SERIAL_NUMBER"
+            "BuildDate": "$BOARD_MANUFACTURE_DATE",
+            "Manufacturer": "$BOARD_MANUFACTURER",
+            "Model": "$BOARD_PRODUCT_NAME",
+            "PartNumber": "$BOARD_PART_NUMBER",
+            "SerialNumber": "$BOARD_SERIAL_NUMBER",
+            "SparePartNumber": "$BOARD_INFO_AM1"
         }
     },
     {
@@ -521,7 +869,7 @@
                 "Connector": {
                     "Name": "FCB_BOT_$bus * -1 + 21 FAN0_TACH_IL",
                     "Pwm": 2,
-                    "PwmName": "FCB_BOT_$bus * -1 + 21 FAN0_PWM",
+                    "PwmName": "FCB_BOT_$bus * -1 + 21 FAN_PWM",
                     "Tachs": [
                         0
                     ]
@@ -540,7 +888,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -551,7 +899,7 @@
                 "Connector": {
                     "Name": "FCB_BOT_$bus * -1 + 21 FAN0_TACH_OL",
                     "Pwm": 2,
-                    "PwmName": "FCB_BOT_$bus * -1 + 21 FAN0_PWM",
+                    "PwmName": "FCB_BOT_$bus * -1 + 21 FAN_PWM",
                     "Tachs": [
                         1
                     ]
@@ -570,7 +918,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -581,7 +929,7 @@
                 "Connector": {
                     "Name": "FCB_BOT_$bus * -1 + 21 FAN1_TACH_IL",
                     "Pwm": 2,
-                    "PwmName": "FCB_BOT_$bus * -1 + 21 FAN1_PWM",
+                    "PwmName": "FCB_BOT_$bus * -1 + 21 FAN_PWM",
                     "Tachs": [
                         2
                     ]
@@ -600,7 +948,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -611,7 +959,7 @@
                 "Connector": {
                     "Name": "FCB_BOT_$bus * -1 + 21 FAN1_TACH_OL",
                     "Pwm": 2,
-                    "PwmName": "FCB_BOT_$bus * -1 + 21 FAN1_PWM",
+                    "PwmName": "FCB_BOT_$bus * -1 + 21 FAN_PWM",
                     "Tachs": [
                         3
                     ]
@@ -630,7 +978,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -641,7 +989,7 @@
                 "Connector": {
                     "Name": "FCB_BOT_$bus * -1 + 21 FAN2_TACH_IL",
                     "Pwm": 2,
-                    "PwmName": "FCB_BOT_$bus * -1 + 21 FAN2_PWM",
+                    "PwmName": "FCB_BOT_$bus * -1 + 21 FAN_PWM",
                     "Tachs": [
                         4
                     ]
@@ -660,7 +1008,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -671,7 +1019,7 @@
                 "Connector": {
                     "Name": "FCB_BOT_$bus * -1 + 21 FAN2_TACH_OL",
                     "Pwm": 2,
-                    "PwmName": "FCB_BOT_$bus * -1 + 21 FAN2_PWM",
+                    "PwmName": "FCB_BOT_$bus * -1 + 21 FAN_PWM",
                     "Tachs": [
                         5
                     ]
@@ -690,7 +1038,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -701,7 +1049,7 @@
                 "Connector": {
                     "Name": "FCB_BOT_$bus * -1 + 21 FAN3_TACH_IL",
                     "Pwm": 2,
-                    "PwmName": "FCB_BOT_$bus * -1 + 21 FAN3_PWM",
+                    "PwmName": "FCB_BOT_$bus * -1 + 21 FAN_PWM",
                     "Tachs": [
                         6
                     ]
@@ -720,7 +1068,7 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
@@ -731,7 +1079,7 @@
                 "Connector": {
                     "Name": "FCB_BOT_$bus * -1 + 21 FAN3_TACH_OL",
                     "Pwm": 2,
-                    "PwmName": "FCB_BOT_$bus * -1 + 21 FAN3_PWM",
+                    "PwmName": "FCB_BOT_$bus * -1 + 21 FAN_PWM",
                     "Tachs": [
                         7
                     ]
@@ -750,10 +1098,182 @@
                         "Direction": "less than",
                         "Name": "lower critical",
                         "Severity": 1,
-                        "Value": 800
+                        "Value": 1000
                     }
                 ],
                 "Type": "I2CFan"
+            },
+            {
+                "Address": "0x40",
+                "Bus": "$bus",
+                "Labels": [
+                    "in1",
+                    "curr1"
+                ],
+                "Name": "FCB_BOT_$bus * -1 + 21 FAN0",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 1.19
+                    }
+                ],
+                "Type": "INA238",
+                "curr1_Name": "FCB_BOT_$bus * -1 + 21 FAN0_CURR_A",
+                "in1_Name": "FCB_BOT_$bus * -1 + 21 FAN0_VOLT_V"
+            },
+            {
+                "Address": "0x41",
+                "Bus": "$bus",
+                "Labels": [
+                    "in1",
+                    "curr1"
+                ],
+                "Name": "FCB_BOT_$bus * -1 + 21 FAN1",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 1.13
+                    }
+                ],
+                "Type": "INA238",
+                "curr1_Name": "FCB_BOT_$bus * -1 + 21 FAN1_CURR_A",
+                "in1_Name": "FCB_BOT_$bus * -1 + 21 FAN1_VOLT_V"
+            },
+            {
+                "Address": "0x44",
+                "Bus": "$bus",
+                "Labels": [
+                    "in1",
+                    "curr1"
+                ],
+                "Name": "FCB_BOT_$bus * -1 + 21 FAN2",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 1.13
+                    }
+                ],
+                "Type": "INA238",
+                "curr1_Name": "FCB_BOT_$bus * -1 + 21 FAN2_CURR_A",
+                "in1_Name": "FCB_BOT_$bus * -1 + 21 FAN2_VOLT_V"
+            },
+            {
+                "Address": "0x45",
+                "Bus": "$bus",
+                "Labels": [
+                    "in1",
+                    "curr1"
+                ],
+                "Name": "FCB_BOT_$bus * -1 + 21 FAN3",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 1.15
+                    }
+                ],
+                "Type": "INA238",
+                "curr1_Name": "FCB_BOT_$bus * -1 + 21 FAN3_CURR_A",
+                "in1_Name": "FCB_BOT_$bus * -1 + 21 FAN3_VOLT_V"
+            },
+            {
+                "Address": "0x4b",
+                "Bus": "$bus",
+                "Name": "FCB_BOT_$bus * -1 + 21 TEMP_C",
+                "Thresholds": [
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 80
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper non critical",
+                        "Severity": 0,
+                        "Value": 75
+                    },
+                    {
+                        "Direction": "less than",
+                        "Name": "lower non critical",
+                        "Severity": 0,
+                        "Value": 5
+                    },
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 0
+                    }
+                ],
+                "Type": "TMP75"
             }
         ],
         "Name": "Minerva Bottom Fan Board $bus * -1 + 21",
@@ -764,10 +1284,12 @@
         ],
         "Type": "Board",
         "xyz.openbmc_project.Inventory.Decorator.Asset": {
-            "Manufacturer": "$PRODUCT_MANUFACTURER",
-            "Model": "$PRODUCT_PRODUCT_NAME",
-            "PartNumber": "$PRODUCT_PART_NUMBER",
-            "SerialNumber": "$PRODUCT_SERIAL_NUMBER"
+            "BuildDate": "$BOARD_MANUFACTURE_DATE",
+            "Manufacturer": "$BOARD_MANUFACTURER",
+            "Model": "$BOARD_PRODUCT_NAME",
+            "PartNumber": "$BOARD_PART_NUMBER",
+            "SerialNumber": "$BOARD_SERIAL_NUMBER",
+            "SparePartNumber": "$BOARD_INFO_AM1"
         }
     }
 ]

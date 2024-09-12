@@ -17,11 +17,10 @@
 #include "entity_manager.hpp"
 
 #include <boost/algorithm/string/replace.hpp>
+#include <phosphor-logging/lg2.hpp>
 
 #include <regex>
 #include <utility>
-
-constexpr const bool debug = false;
 
 // probes dbus interface dictionary for a key with a value that matches a regex
 // When an interface passes a probe, also save its D-Bus path with it.
@@ -63,11 +62,8 @@ bool probeDbus(const std::string& interfaceName,
         }
         if (deviceMatches)
         {
-            if constexpr (debug)
-            {
-                std::cerr << "probeDBus: Found probe match on " << path << " "
-                          << interfaceName << "\n";
-            }
+            lg2::debug("Found probe match on {PATH} {IFACE}", "PATH", path,
+                       "IFACE", interfaceName);
             devices.emplace_back(interface, path);
             foundMatch = true;
         }
@@ -123,15 +119,15 @@ bool probe(const std::vector<std::string>& probeCommand,
                 {
                     if (!std::regex_search(probe, match, command))
                     {
-                        std::cerr << "found probe syntax error " << probe
-                                  << "\n";
+                        std::cerr
+                            << "found probe syntax error " << probe << "\n";
                         return false;
                     }
                     std::string commandStr = *(match.begin() + 1);
                     boost::replace_all(commandStr, "'", "");
                     cur = (std::find(scan->passedProbes.begin(),
-                                     scan->passedProbes.end(),
-                                     commandStr) != scan->passedProbes.end());
+                                     scan->passedProbes.end(), commandStr) !=
+                           scan->passedProbes.end());
                     break;
                 }
                 default:
@@ -215,8 +211,8 @@ PerformProbe::PerformProbe(nlohmann::json& recordRef,
                            const std::vector<std::string>& probeCommand,
                            std::string probeName,
                            std::shared_ptr<PerformScan>& scanPtr) :
-    recordRef(recordRef),
-    _probeCommand(probeCommand), probeName(std::move(probeName)), scan(scanPtr)
+    recordRef(recordRef), _probeCommand(probeCommand),
+    probeName(std::move(probeName)), scan(scanPtr)
 {}
 PerformProbe::~PerformProbe()
 {

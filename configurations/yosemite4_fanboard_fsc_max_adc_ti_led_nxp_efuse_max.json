@@ -227,18 +227,24 @@
                 }
             ],
             "Type": "ADC128D818",
-            "in0_Name": "FANBOARD$bus % 30 ADC_48V_FAN0_CURR_A",
-            "in0_Scale": 300,
-            "in1_Name": "FANBOARD$bus % 30 ADC_48V_FAN1_CURR_A",
-            "in1_Scale": 300,
-            "in2_Name": "FANBOARD$bus % 30 ADC_48V_FAN2_CURR_A",
-            "in2_Scale": 300,
-            "in3_Name": "FANBOARD$bus % 30 ADC_48V_FAN3_CURR_A",
-            "in3_Scale": 300,
-            "in4_Name": "FANBOARD$bus % 30 ADC_48V_FAN4_CURR_A",
-            "in4_Scale": 300,
-            "in5_Name": "FANBOARD$bus % 30 ADC_48V_FAN5_CURR_A",
-            "in5_Scale": 300,
+            "in0_Max": 2.5,
+            "in0_Name": "FANBOARD$bus % 30 ADC_48V_FAN$bus % 30 * 2 + 8 CURR_A",
+            "in0_Scale": 240,
+            "in1_Max": 2.5,
+            "in1_Name": "FANBOARD$bus % 30 ADC_48V_FAN$bus % 30 * 2 + 4 CURR_A",
+            "in1_Scale": 240,
+            "in2_Max": 2.5,
+            "in2_Name": "FANBOARD$bus % 30 ADC_48V_FAN$bus % 30 * 2 + 0 CURR_A",
+            "in2_Scale": 240,
+            "in3_Max": 2.5,
+            "in3_Name": "FANBOARD$bus % 30 ADC_48V_FAN$bus % 30 * 2 + 9 CURR_A",
+            "in3_Scale": 240,
+            "in4_Max": 2.5,
+            "in4_Name": "FANBOARD$bus % 30 ADC_48V_FAN$bus % 30 * 2 + 5 CURR_A",
+            "in4_Scale": 240,
+            "in5_Max": 2.5,
+            "in5_Name": "FANBOARD$bus % 30 ADC_48V_FAN$bus % 30 * 2 + 1 CURR_A",
+            "in5_Scale": 240,
             "in6_Name": "FANBOARD$bus % 30 ADC_48V_AUX_VOLT_V",
             "in6_Scale": 31.9458,
             "in7_Name": "FANBOARD$bus % 30 ADC_3V3_STBY_VOLT_V",
@@ -254,159 +260,15 @@
             "Address": "0x20",
             "Bus": "$bus",
             "Connector": {
-                "Name": "FANBOARD$bus % 30 FAN0_TACH_IL",
-                "Pwm": 0,
-                "PwmName": "FANBOARD$bus % 30 FAN0_PWM",
-                "Tachs": [
-                    0
-                ]
-            },
-            "Index": 0,
-            "Name": "FANBOARD$bus % 30 FAN0_TACH_IL",
-            "PowerState": "Always",
-            "Thresholds": [
-                {
-                    "Direction": "greater than",
-                    "Name": "upper critical",
-                    "Severity": 1,
-                    "Value": 17380
-                },
-                {
-                    "Direction": "greater than",
-                    "Name": "upper non critical",
-                    "Severity": 0,
-                    "Value": 13915
-                },
-                {
-                    "Direction": "less than",
-                    "Name": "lower critical",
-                    "Severity": 1,
-                    "Value": 1000
-                }
-            ],
-            "Type": "I2CFan"
-        },
-        {
-            "Address": "0x20",
-            "Bus": "$bus",
-            "Connector": {
-                "Name": "FANBOARD$bus % 30 FAN0_TACH_OL",
-                "Pwm": 0,
-                "PwmName": "FANBOARD$bus % 30 FAN0_PWM",
-                "Tachs": [
-                    1
-                ]
-            },
-            "Index": 1,
-            "Name": "FANBOARD$bus % 30 FAN0_TACH_OL",
-            "PowerState": "Always",
-            "Thresholds": [
-                {
-                    "Direction": "greater than",
-                    "Name": "upper critical",
-                    "Severity": 1,
-                    "Value": 17380
-                },
-                {
-                    "Direction": "greater than",
-                    "Name": "upper non critical",
-                    "Severity": 0,
-                    "Value": 13915
-                },
-                {
-                    "Direction": "less than",
-                    "Name": "lower critical",
-                    "Severity": 1,
-                    "Value": 1000
-                }
-            ],
-            "Type": "I2CFan"
-        },
-        {
-            "Address": "0x20",
-            "Bus": "$bus",
-            "Connector": {
-                "Name": "FANBOARD$bus % 30 FAN1_TACH_IL",
-                "Pwm": 1,
-                "PwmName": "FANBOARD$bus % 30 FAN1_PWM",
-                "Tachs": [
-                    2
-                ]
-            },
-            "Index": 2,
-            "Name": "FANBOARD$bus % 30 FAN1_TACH_IL",
-            "PowerState": "Always",
-            "Thresholds": [
-                {
-                    "Direction": "greater than",
-                    "Name": "upper critical",
-                    "Severity": 1,
-                    "Value": 17380
-                },
-                {
-                    "Direction": "greater than",
-                    "Name": "upper non critical",
-                    "Severity": 0,
-                    "Value": 13915
-                },
-                {
-                    "Direction": "less than",
-                    "Name": "lower critical",
-                    "Severity": 1,
-                    "Value": 1000
-                }
-            ],
-            "Type": "I2CFan"
-        },
-        {
-            "Address": "0x20",
-            "Bus": "$bus",
-            "Connector": {
-                "Name": "FANBOARD$bus % 30 FAN1_TACH_OL",
-                "Pwm": 1,
-                "PwmName": "FANBOARD$bus % 30 FAN1_PWM",
-                "Tachs": [
-                    9
-                ]
-            },
-            "Index": 9,
-            "Name": "FANBOARD$bus % 30 FAN1_TACH_OL",
-            "PowerState": "Always",
-            "Thresholds": [
-                {
-                    "Direction": "greater than",
-                    "Name": "upper critical",
-                    "Severity": 1,
-                    "Value": 17380
-                },
-                {
-                    "Direction": "greater than",
-                    "Name": "upper non critical",
-                    "Severity": 0,
-                    "Value": 13915
-                },
-                {
-                    "Direction": "less than",
-                    "Name": "lower critical",
-                    "Severity": 1,
-                    "Value": 1000
-                }
-            ],
-            "Type": "I2CFan"
-        },
-        {
-            "Address": "0x20",
-            "Bus": "$bus",
-            "Connector": {
-                "Name": "FANBOARD$bus % 30 FAN2_TACH_IL",
+                "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 0 TACH_IL",
                 "Pwm": 2,
-                "PwmName": "FANBOARD$bus % 30 FAN2_PWM",
+                "PwmName": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 0 PWM",
                 "Tachs": [
                     3
                 ]
             },
             "Index": 3,
-            "Name": "FANBOARD$bus % 30 FAN2_TACH_IL",
+            "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 0 TACH_IL",
             "PowerState": "Always",
             "Thresholds": [
                 {
@@ -419,7 +281,7 @@
                     "Direction": "greater than",
                     "Name": "upper non critical",
                     "Severity": 0,
-                    "Value": 13915
+                    "Value": 13140
                 },
                 {
                     "Direction": "less than",
@@ -434,28 +296,28 @@
             "Address": "0x20",
             "Bus": "$bus",
             "Connector": {
-                "Name": "FANBOARD$bus % 30 FAN2_TACH_OL",
+                "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 0 TACH_OL",
                 "Pwm": 2,
-                "PwmName": "FANBOARD$bus % 30 FAN2_PWM",
+                "PwmName": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 0 PWM",
                 "Tachs": [
                     10
                 ]
             },
             "Index": 10,
-            "Name": "FANBOARD$bus % 30 FAN2_TACH_OL",
+            "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 0 TACH_OL",
             "PowerState": "Always",
             "Thresholds": [
                 {
                     "Direction": "greater than",
                     "Name": "upper critical",
                     "Severity": 1,
-                    "Value": 17380
+                    "Value": 15950
                 },
                 {
                     "Direction": "greater than",
                     "Name": "upper non critical",
                     "Severity": 0,
-                    "Value": 13915
+                    "Value": 11970
                 },
                 {
                     "Direction": "less than",
@@ -470,159 +332,15 @@
             "Address": "0x2f",
             "Bus": "$bus",
             "Connector": {
-                "Name": "FANBOARD$bus % 30 FAN3_TACH_IL",
-                "Pwm": 0,
-                "PwmName": "FANBOARD$bus % 30 FAN3_PWM",
-                "Tachs": [
-                    0
-                ]
-            },
-            "Index": 0,
-            "Name": "FANBOARD$bus % 30 FAN3_TACH_IL",
-            "PowerState": "Always",
-            "Thresholds": [
-                {
-                    "Direction": "greater than",
-                    "Name": "upper critical",
-                    "Severity": 1,
-                    "Value": 17380
-                },
-                {
-                    "Direction": "greater than",
-                    "Name": "upper non critical",
-                    "Severity": 0,
-                    "Value": 13915
-                },
-                {
-                    "Direction": "less than",
-                    "Name": "lower critical",
-                    "Severity": 1,
-                    "Value": 1000
-                }
-            ],
-            "Type": "I2CFan"
-        },
-        {
-            "Address": "0x2f",
-            "Bus": "$bus",
-            "Connector": {
-                "Name": "FANBOARD$bus % 30 FAN3_TACH_OL",
-                "Pwm": 0,
-                "PwmName": "FANBOARD$bus % 30 FAN3_PWM",
-                "Tachs": [
-                    1
-                ]
-            },
-            "Index": 1,
-            "Name": "FANBOARD$bus % 30 FAN3_TACH_OL",
-            "PowerState": "Always",
-            "Thresholds": [
-                {
-                    "Direction": "greater than",
-                    "Name": "upper critical",
-                    "Severity": 1,
-                    "Value": 17380
-                },
-                {
-                    "Direction": "greater than",
-                    "Name": "upper non critical",
-                    "Severity": 0,
-                    "Value": 13915
-                },
-                {
-                    "Direction": "less than",
-                    "Name": "lower critical",
-                    "Severity": 1,
-                    "Value": 1000
-                }
-            ],
-            "Type": "I2CFan"
-        },
-        {
-            "Address": "0x2f",
-            "Bus": "$bus",
-            "Connector": {
-                "Name": "FANBOARD$bus % 30 FAN4_TACH_IL",
-                "Pwm": 1,
-                "PwmName": "FANBOARD$bus % 30 FAN4_PWM",
-                "Tachs": [
-                    2
-                ]
-            },
-            "Index": 2,
-            "Name": "FANBOARD$bus % 30 FAN4_TACH_IL",
-            "PowerState": "Always",
-            "Thresholds": [
-                {
-                    "Direction": "greater than",
-                    "Name": "upper critical",
-                    "Severity": 1,
-                    "Value": 17380
-                },
-                {
-                    "Direction": "greater than",
-                    "Name": "upper non critical",
-                    "Severity": 0,
-                    "Value": 13915
-                },
-                {
-                    "Direction": "less than",
-                    "Name": "lower critical",
-                    "Severity": 1,
-                    "Value": 1000
-                }
-            ],
-            "Type": "I2CFan"
-        },
-        {
-            "Address": "0x2f",
-            "Bus": "$bus",
-            "Connector": {
-                "Name": "FANBOARD$bus % 30 FAN4_TACH_OL",
-                "Pwm": 1,
-                "PwmName": "FANBOARD$bus % 30 FAN4_PWM",
-                "Tachs": [
-                    9
-                ]
-            },
-            "Index": 9,
-            "Name": "FANBOARD$bus % 30 FAN4_TACH_OL",
-            "PowerState": "Always",
-            "Thresholds": [
-                {
-                    "Direction": "greater than",
-                    "Name": "upper critical",
-                    "Severity": 1,
-                    "Value": 17380
-                },
-                {
-                    "Direction": "greater than",
-                    "Name": "upper non critical",
-                    "Severity": 0,
-                    "Value": 13915
-                },
-                {
-                    "Direction": "less than",
-                    "Name": "lower critical",
-                    "Severity": 1,
-                    "Value": 1000
-                }
-            ],
-            "Type": "I2CFan"
-        },
-        {
-            "Address": "0x2f",
-            "Bus": "$bus",
-            "Connector": {
-                "Name": "FANBOARD$bus % 30 FAN5_TACH_IL",
+                "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 1 TACH_IL",
                 "Pwm": 2,
-                "PwmName": "FANBOARD$bus % 30 FAN5_PWM",
+                "PwmName": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 1 PWM",
                 "Tachs": [
                     3
                 ]
             },
             "Index": 3,
-            "Name": "FANBOARD$bus % 30 FAN5_TACH_IL",
+            "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 1 TACH_IL",
             "PowerState": "Always",
             "Thresholds": [
                 {
@@ -635,7 +353,7 @@
                     "Direction": "greater than",
                     "Name": "upper non critical",
                     "Severity": 0,
-                    "Value": 13915
+                    "Value": 13140
                 },
                 {
                     "Direction": "less than",
@@ -650,15 +368,51 @@
             "Address": "0x2f",
             "Bus": "$bus",
             "Connector": {
-                "Name": "FANBOARD$bus % 30 FAN5_TACH_OL",
+                "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 1 TACH_OL",
                 "Pwm": 2,
-                "PwmName": "FANBOARD$bus % 30 FAN5_PWM",
+                "PwmName": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 1 PWM",
                 "Tachs": [
                     10
                 ]
             },
             "Index": 10,
-            "Name": "FANBOARD$bus % 30 FAN5_TACH_OL",
+            "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 1 TACH_OL",
+            "PowerState": "Always",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 15950
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 11970
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 1000
+                }
+            ],
+            "Type": "I2CFan"
+        },
+        {
+            "Address": "0x20",
+            "Bus": "$bus",
+            "Connector": {
+                "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 4 TACH_IL",
+                "Pwm": 1,
+                "PwmName": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 4 PWM",
+                "Tachs": [
+                    2
+                ]
+            },
+            "Index": 2,
+            "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 4 TACH_IL",
             "PowerState": "Always",
             "Thresholds": [
                 {
@@ -671,7 +425,259 @@
                     "Direction": "greater than",
                     "Name": "upper non critical",
                     "Severity": 0,
-                    "Value": 13915
+                    "Value": 13140
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 1000
+                }
+            ],
+            "Type": "I2CFan"
+        },
+        {
+            "Address": "0x20",
+            "Bus": "$bus",
+            "Connector": {
+                "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 4 TACH_OL",
+                "Pwm": 1,
+                "PwmName": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 4 PWM",
+                "Tachs": [
+                    9
+                ]
+            },
+            "Index": 9,
+            "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 4 TACH_OL",
+            "PowerState": "Always",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 15950
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 11970
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 1000
+                }
+            ],
+            "Type": "I2CFan"
+        },
+        {
+            "Address": "0x2f",
+            "Bus": "$bus",
+            "Connector": {
+                "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 5 TACH_IL",
+                "Pwm": 1,
+                "PwmName": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 5 PWM",
+                "Tachs": [
+                    2
+                ]
+            },
+            "Index": 2,
+            "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 5 TACH_IL",
+            "PowerState": "Always",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 17380
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 13140
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 1000
+                }
+            ],
+            "Type": "I2CFan"
+        },
+        {
+            "Address": "0x2f",
+            "Bus": "$bus",
+            "Connector": {
+                "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 5 TACH_OL",
+                "Pwm": 1,
+                "PwmName": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 5 PWM",
+                "Tachs": [
+                    9
+                ]
+            },
+            "Index": 9,
+            "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 5 TACH_OL",
+            "PowerState": "Always",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 15950
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 11970
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 1000
+                }
+            ],
+            "Type": "I2CFan"
+        },
+        {
+            "Address": "0x20",
+            "Bus": "$bus",
+            "Connector": {
+                "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 8 TACH_IL",
+                "Pwm": 0,
+                "PwmName": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 8 PWM",
+                "Tachs": [
+                    0
+                ]
+            },
+            "Index": 0,
+            "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 8 TACH_IL",
+            "PowerState": "Always",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 17380
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 13140
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 1000
+                }
+            ],
+            "Type": "I2CFan"
+        },
+        {
+            "Address": "0x20",
+            "Bus": "$bus",
+            "Connector": {
+                "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 8 TACH_OL",
+                "Pwm": 0,
+                "PwmName": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 8 PWM",
+                "Tachs": [
+                    1
+                ]
+            },
+            "Index": 1,
+            "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 8 TACH_OL",
+            "PowerState": "Always",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 15950
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 11970
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 1000
+                }
+            ],
+            "Type": "I2CFan"
+        },
+        {
+            "Address": "0x2f",
+            "Bus": "$bus",
+            "Connector": {
+                "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 9 TACH_IL",
+                "Pwm": 0,
+                "PwmName": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 9 PWM",
+                "Tachs": [
+                    0
+                ]
+            },
+            "Index": 0,
+            "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 9 TACH_IL",
+            "PowerState": "Always",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 17380
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 13140
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 1000
+                }
+            ],
+            "Type": "I2CFan"
+        },
+        {
+            "Address": "0x2f",
+            "Bus": "$bus",
+            "Connector": {
+                "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 9 TACH_OL",
+                "Pwm": 0,
+                "PwmName": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 9 PWM",
+                "Tachs": [
+                    1
+                ]
+            },
+            "Index": 1,
+            "Name": "FANBOARD$bus % 30 FAN$bus % 30 * 2 + 9 TACH_OL",
+            "PowerState": "Always",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 15950
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 11970
                 },
                 {
                     "Direction": "less than",
@@ -683,13 +689,24 @@
             "Type": "I2CFan"
         }
     ],
-    "Name": "Yosemite 4 FAN Board $bus % 30",
-    "Probe": "xyz.openbmc_project.FruDevice({'BOARD_PRODUCT_NAME': 'Fan Board', 'PRODUCT_PRODUCT_NAME': 'Yosemite V4'})",
+    "Name": "Yosemite 4 Fan Board $bus % 30",
+    "Probe": "xyz.openbmc_project.FruDevice({'BOARD_PRODUCT_NAME': 'Fan Board FSC-MAX ADC-TI LED-NXP EFUSE-MAX', 'PRODUCT_PRODUCT_NAME': 'Yosemite V4'})",
     "Type": "Board",
     "xyz.openbmc_project.Inventory.Decorator.Asset": {
-        "Manufacturer": "$PRODUCT_MANUFACTURER",
-        "Model": "$PRODUCT_PRODUCT_NAME",
-        "PartNumber": "$PRODUCT_PART_NUMBER",
-        "SerialNumber": "$PRODUCT_SERIAL_NUMBER"
+        "BuildDate": "$BOARD_MANUFACTURE_DATE",
+        "Manufacturer": "$BOARD_MANUFACTURER",
+        "Model": "$BOARD_PRODUCT_NAME",
+        "PartNumber": "$BOARD_PART_NUMBER",
+        "SerialNumber": "$BOARD_SERIAL_NUMBER",
+        "SparePartNumber": "$BOARD_INFO_AM1"
+    },
+    "xyz.openbmc_project.Inventory.Decorator.AssetTag": {
+        "AssetTag": "$PRODUCT_ASSET_TAG"
+    },
+    "xyz.openbmc_project.Inventory.Decorator.Revision": {
+        "Version": "$PRODUCT_VERSION"
+    },
+    "xyz.openbmc_project.Inventory.Decorator.Slot": {
+        "SlotNumber": "$bus % 30"
     }
 }

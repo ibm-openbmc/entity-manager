@@ -42,7 +42,9 @@
 constexpr const char* templateChar = "$";
 
 namespace fs = std::filesystem;
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
 static bool powerStatusOn = false;
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
 static std::unique_ptr<sdbusplus::bus::match_t> powerMatch = nullptr;
 
 bool findFiles(const fs::path& dirPath, const std::string& matchString,
@@ -139,7 +141,7 @@ bool validateJson(const nlohmann::json& schemaFile, const nlohmann::json& input)
     return validator.validate(schema, targetAdapter, nullptr);
 }
 
-bool isPowerOn(void)
+bool isPowerOn()
 {
     if (!powerMatch)
     {
@@ -156,28 +158,28 @@ void setupPowerMatch(const std::shared_ptr<sdbusplus::asio::connection>& conn)
             "',path='" + std::string(power::path) + "',arg0='" +
             std::string(power::interface) + "'",
         [](sdbusplus::message_t& message) {
-        std::string objectName;
-        boost::container::flat_map<std::string, std::variant<std::string>>
-            values;
-        message.read(objectName, values);
-        auto findState = values.find(power::property);
-        if (findState != values.end())
-        {
-            powerStatusOn = boost::ends_with(
-                std::get<std::string>(findState->second), "Running");
-        }
-    });
+            std::string objectName;
+            boost::container::flat_map<std::string, std::variant<std::string>>
+                values;
+            message.read(objectName, values);
+            auto findState = values.find(power::property);
+            if (findState != values.end())
+            {
+                powerStatusOn = boost::ends_with(
+                    std::get<std::string>(findState->second), "Running");
+            }
+        });
 
     conn->async_method_call(
         [](boost::system::error_code ec,
            const std::variant<std::string>& state) {
-        if (ec)
-        {
-            return;
-        }
-        powerStatusOn = boost::ends_with(std::get<std::string>(state),
-                                         "Running");
-    },
+            if (ec)
+            {
+                return;
+            }
+            powerStatusOn =
+                boost::ends_with(std::get<std::string>(state), "Running");
+        },
         power::busname, power::path, properties::interface, properties::get,
         power::interface, power::property);
 }
@@ -185,10 +187,9 @@ void setupPowerMatch(const std::shared_ptr<sdbusplus::asio::connection>& conn)
 // Replaces the template character like the other version of this function,
 // but checks all properties on all interfaces provided to do the substitution
 // with.
-std::optional<std::string>
-    templateCharReplace(nlohmann::json::iterator& keyPair,
-                        const DBusObject& object, const size_t index,
-                        const std::optional<std::string>& replaceStr)
+std::optional<std::string> templateCharReplace(
+    nlohmann::json::iterator& keyPair, const DBusObject& object,
+    const size_t index, const std::optional<std::string>& replaceStr)
 {
     for (const auto& [_, interface] : object)
     {
@@ -204,10 +205,9 @@ std::optional<std::string>
 // finds the template character (currently set to $) and replaces the value with
 // the field found in a dbus object i.e. $ADDRESS would get populated with the
 // ADDRESS field from a object on dbus
-std::optional<std::string>
-    templateCharReplace(nlohmann::json::iterator& keyPair,
-                        const DBusInterface& interface, const size_t index,
-                        const std::optional<std::string>& replaceStr)
+std::optional<std::string> templateCharReplace(
+    nlohmann::json::iterator& keyPair, const DBusInterface& interface,
+    const size_t index, const std::optional<std::string>& replaceStr)
 {
     std::optional<std::string> ret = std::nullopt;
 

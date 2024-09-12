@@ -43,6 +43,7 @@ constexpr const char* configurationOutDir = "/var/configuration/";
 constexpr const char* versionHashFile = "/var/configuration/version";
 constexpr const char* versionFile = "/etc/os-release";
 
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
 extern boost::asio::io_context io;
 
 using DBusValueVariant =
@@ -81,7 +82,7 @@ bool getI2cDevicePaths(
 bool validateJson(const nlohmann::json& schemaFile,
                   const nlohmann::json& input);
 
-bool isPowerOn(void);
+bool isPowerOn();
 void setupPowerMatch(const std::shared_ptr<sdbusplus::asio::connection>& conn);
 struct DBusInternalError final : public sdbusplus::exception_t
 {
@@ -105,7 +106,7 @@ struct DBusInternalError final : public sdbusplus::exception_t
     }
 };
 
-inline bool fwVersionIsSame(void)
+inline bool fwVersionIsSame()
 {
     std::ifstream version(versionFile);
     if (!version.good())

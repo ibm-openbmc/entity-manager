@@ -15,6 +15,20 @@
                 "Index": 0,
                 "Name": "FAN_BP0_FAN0_TACH_IL_SPEED_RPM",
                 "PowerState": "Always",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 1000.0
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 20000.0
+                    }
+                ],
                 "Type": "I2CFan"
             },
             {
@@ -31,6 +45,20 @@
                 "Index": 1,
                 "Name": "FAN_BP0_FAN0_TACH_OL_SPEED_RPM",
                 "PowerState": "Always",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 1000.0
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 20000.0
+                    }
+                ],
                 "Type": "I2CFan"
             },
             {
@@ -47,6 +75,20 @@
                 "Index": 2,
                 "Name": "FAN_BP0_FAN1_TACH_IL_SPEED_RPM",
                 "PowerState": "Always",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 1000.0
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 20000.0
+                    }
+                ],
                 "Type": "I2CFan"
             },
             {
@@ -63,6 +105,20 @@
                 "Index": 3,
                 "Name": "FAN_BP0_FAN1_TACH_OL_SPEED_RPM",
                 "PowerState": "Always",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 1000.0
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 20000.0
+                    }
+                ],
                 "Type": "I2CFan"
             },
             {
@@ -79,6 +135,20 @@
                 "Index": 4,
                 "Name": "FAN_BP0_FAN2_TACH_IL_SPEED_RPM",
                 "PowerState": "Always",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 1000.0
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 20000.0
+                    }
+                ],
                 "Type": "I2CFan"
             },
             {
@@ -95,6 +165,20 @@
                 "Index": 5,
                 "Name": "FAN_BP0_FAN2_TACH_OL_SPEED_RPM",
                 "PowerState": "Always",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 1000.0
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 20000.0
+                    }
+                ],
                 "Type": "I2CFan"
             },
             {
@@ -111,6 +195,20 @@
                 "Index": 6,
                 "Name": "FAN_BP0_FAN3_TACH_IL_SPEED_RPM",
                 "PowerState": "Always",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 1000.0
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 20000.0
+                    }
+                ],
                 "Type": "I2CFan"
             },
             {
@@ -127,6 +225,20 @@
                 "Index": 7,
                 "Name": "FAN_BP0_FAN3_TACH_OL_SPEED_RPM",
                 "PowerState": "Always",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 1000.0
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 20000.0
+                    }
+                ],
                 "Type": "I2CFan"
             },
             {
@@ -134,56 +246,146 @@
                 "Bus": 2,
                 "Labels": [
                     "in1",
-                    "curr1",
-                    "power1"
+                    "curr1"
                 ],
                 "Name": "FAN_BP0_FAN0",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 2.88
+                    }
+                ],
                 "Type": "INA238",
                 "curr1_Name": "FAN_BP0_FAN0_CURR_A",
-                "in1_Name": "FAN_BP0_FAN0_VOLT_V",
-                "power1_Name": "FAN_BP0_FAN0_PWR_W"
+                "in1_Name": "FAN_BP0_FAN0_VOLT_V"
             },
             {
                 "Address": "0x41",
                 "Bus": 2,
                 "Labels": [
                     "in1",
-                    "curr1",
-                    "power1"
+                    "curr1"
                 ],
                 "Name": "FAN_BP0_FAN1",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 2.88
+                    }
+                ],
                 "Type": "INA238",
                 "curr1_Name": "FAN_BP0_FAN1_CURR_A",
-                "in1_Name": "FAN_BP0_FAN1_VOLT_V",
-                "power1_Name": "FAN_BP0_FAN1_PWR_W"
+                "in1_Name": "FAN_BP0_FAN1_VOLT_V"
             },
             {
                 "Address": "0x44",
                 "Bus": 2,
                 "Labels": [
                     "in1",
-                    "curr1",
-                    "power1"
+                    "curr1"
                 ],
                 "Name": "FAN_BP0_FAN2",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 2.88
+                    }
+                ],
                 "Type": "INA238",
                 "curr1_Name": "FAN_BP0_FAN2_CURR_A",
-                "in1_Name": "FAN_BP0_FAN2_VOLT_V",
-                "power1_Name": "FAN_BP0_FAN2_PWR_W"
+                "in1_Name": "FAN_BP0_FAN2_VOLT_V"
             },
             {
                 "Address": "0x45",
                 "Bus": 2,
                 "Labels": [
                     "in1",
-                    "curr1",
-                    "power1"
+                    "curr1"
                 ],
                 "Name": "FAN_BP0_FAN3",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 2.88
+                    }
+                ],
                 "Type": "INA238",
                 "curr1_Name": "FAN_BP0_FAN3_CURR_A",
-                "in1_Name": "FAN_BP0_FAN3_VOLT_V",
-                "power1_Name": "FAN_BP0_FAN3_PWR_W"
+                "in1_Name": "FAN_BP0_FAN3_VOLT_V"
+            },
+            {
+                "Address": "0x4B",
+                "Bus": 2,
+                "Name": "FAN_BP0_TEMP_C",
+                "Type": "TMP75"
             }
         ],
         "Name": "Harma Fan Board 0",
@@ -206,6 +408,20 @@
                 "Index": 0,
                 "Name": "FAN_BP1_FAN0_TACH_IL_SPEED_RPM",
                 "PowerState": "Always",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 1000.0
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 20000.0
+                    }
+                ],
                 "Type": "I2CFan"
             },
             {
@@ -222,6 +438,20 @@
                 "Index": 1,
                 "Name": "FAN_BP1_FAN0_TACH_OL_SPEED_RPM",
                 "PowerState": "Always",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 1000.0
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 20000.0
+                    }
+                ],
                 "Type": "I2CFan"
             },
             {
@@ -238,6 +468,20 @@
                 "Index": 2,
                 "Name": "FAN_BP1_FAN1_TACH_IL_SPEED_RPM",
                 "PowerState": "Always",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 1000.0
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 20000.0
+                    }
+                ],
                 "Type": "I2CFan"
             },
             {
@@ -254,6 +498,20 @@
                 "Index": 3,
                 "Name": "FAN_BP1_FAN1_TACH_OL_SPEED_RPM",
                 "PowerState": "Always",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 1000.0
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 20000.0
+                    }
+                ],
                 "Type": "I2CFan"
             },
             {
@@ -270,6 +528,20 @@
                 "Index": 4,
                 "Name": "FAN_BP1_FAN2_TACH_IL_SPEED_RPM",
                 "PowerState": "Always",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 1000.0
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 20000.0
+                    }
+                ],
                 "Type": "I2CFan"
             },
             {
@@ -286,6 +558,20 @@
                 "Index": 5,
                 "Name": "FAN_BP1_FAN2_TACH_OL_SPEED_RPM",
                 "PowerState": "Always",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 1000.0
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 20000.0
+                    }
+                ],
                 "Type": "I2CFan"
             },
             {
@@ -302,6 +588,20 @@
                 "Index": 6,
                 "Name": "FAN_BP1_FAN3_TACH_IL_SPEED_RPM",
                 "PowerState": "Always",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 1000.0
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 20000.0
+                    }
+                ],
                 "Type": "I2CFan"
             },
             {
@@ -318,6 +618,20 @@
                 "Index": 7,
                 "Name": "FAN_BP1_FAN3_TACH_OL_SPEED_RPM",
                 "PowerState": "Always",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 1000.0
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 20000.0
+                    }
+                ],
                 "Type": "I2CFan"
             },
             {
@@ -325,56 +639,146 @@
                 "Bus": 0,
                 "Labels": [
                     "in1",
-                    "curr1",
-                    "power1"
+                    "curr1"
                 ],
                 "Name": "FAN_BP1_FAN0",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 2.88
+                    }
+                ],
                 "Type": "INA238",
                 "curr1_Name": "FAN_BP1_FAN0_CURR_A",
-                "in1_Name": "FAN_BP1_FAN0_VOLT_V",
-                "power1_Name": "FAN_BP1_FAN0_PWR_W"
+                "in1_Name": "FAN_BP1_FAN0_VOLT_V"
             },
             {
                 "Address": "0x41",
                 "Bus": 0,
                 "Labels": [
                     "in1",
-                    "curr1",
-                    "power1"
+                    "curr1"
                 ],
                 "Name": "FAN_BP1_FAN1",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 2.88
+                    }
+                ],
                 "Type": "INA238",
                 "curr1_Name": "FAN_BP1_FAN1_CURR_A",
-                "in1_Name": "FAN_BP1_FAN1_VOLT_V",
-                "power1_Name": "FAN_BP1_FAN1_PWR_W"
+                "in1_Name": "FAN_BP1_FAN1_VOLT_V"
             },
             {
                 "Address": "0x44",
                 "Bus": 0,
                 "Labels": [
                     "in1",
-                    "curr1",
-                    "power1"
+                    "curr1"
                 ],
                 "Name": "FAN_BP1_FAN2",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 2.88
+                    }
+                ],
                 "Type": "INA238",
                 "curr1_Name": "FAN_BP1_FAN2_CURR_A",
-                "in1_Name": "FAN_BP1_FAN2_VOLT_V",
-                "power1_Name": "FAN_BP1_FAN2_PWR_W"
+                "in1_Name": "FAN_BP1_FAN2_VOLT_V"
             },
             {
                 "Address": "0x45",
                 "Bus": 0,
                 "Labels": [
                     "in1",
-                    "curr1",
-                    "power1"
+                    "curr1"
                 ],
                 "Name": "FAN_BP1_FAN3",
+                "Thresholds": [
+                    {
+                        "Direction": "less than",
+                        "Label": "in1",
+                        "Name": "lower critical",
+                        "Severity": 1,
+                        "Value": 48.45
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "in1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 53.35
+                    },
+                    {
+                        "Direction": "greater than",
+                        "Label": "curr1",
+                        "Name": "upper critical",
+                        "Severity": 1,
+                        "Value": 2.88
+                    }
+                ],
                 "Type": "INA238",
                 "curr1_Name": "FAN_BP1_FAN3_CURR_A",
-                "in1_Name": "FAN_BP1_FAN3_VOLT_V",
-                "power1_Name": "FAN_BP1_FAN3_PWR_W"
+                "in1_Name": "FAN_BP1_FAN3_VOLT_V"
+            },
+            {
+                "Address": "0x4B",
+                "Bus": 0,
+                "Name": "FAN_BP1_TEMP_C",
+                "Type": "TMP75"
             }
         ],
         "Name": "Harma Fan Board 1",

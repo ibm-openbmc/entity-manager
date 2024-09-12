@@ -57,9 +57,8 @@ enum class probe_type_codes
     MATCH_ONE
 };
 
-using FoundProbeTypeT =
-    std::optional<boost::container::flat_map<const char*, probe_type_codes,
-                                             CmpStr>::const_iterator>;
+using FoundProbeTypeT = std::optional<boost::container::flat_map<
+    const char*, probe_type_codes, CmpStr>::const_iterator>;
 FoundProbeTypeT findProbeType(const std::string& probe);
 
 struct ConfigurationRelation
@@ -78,7 +77,7 @@ struct PerformScan : std::enable_shared_from_this<PerformScan>
     void updateSystemConfiguration(const nlohmann::json& recordRef,
                                    const std::string& probeName,
                                    FoundDevices& foundDevices);
-    void run(void);
+    void run();
     virtual ~PerformScan();
     nlohmann::json& _systemConfiguration;
     nlohmann::json& _missingConfigurations;

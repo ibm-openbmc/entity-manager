@@ -22,6 +22,7 @@
 #include <sdbusplus/asio/object_server.hpp>
 
 #include <cstdint>
+#include <cstdio>
 #include <functional>
 #include <regex>
 #include <string>
@@ -38,6 +39,7 @@ constexpr size_t fruBlockSize = 8;
 using DeviceMap = boost::container::flat_map<int, std::vector<uint8_t>>;
 using BusMap = boost::container::flat_map<int, std::shared_ptr<DeviceMap>>;
 
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
 inline BusMap busMap;
 
 enum class DecodeState
@@ -80,9 +82,9 @@ const std::regex nonAsciiRegex("[^\x01-\x7f]");
 const std::vector<std::string> chassisFruAreas = {"PART_NUMBER",
                                                   "SERIAL_NUMBER"};
 
-const std::vector<std::string> boardFruAreas = {"MANUFACTURER", "PRODUCT_NAME",
-                                                "SERIAL_NUMBER", "PART_NUMBER",
-                                                "FRU_VERSION_ID"};
+const std::vector<std::string> boardFruAreas = {
+    "MANUFACTURER", "PRODUCT_NAME", "SERIAL_NUMBER", "PART_NUMBER",
+    "FRU_VERSION_ID"};
 
 const std::vector<std::string> productFruAreas = {
     "MANUFACTURER",  "PRODUCT_NAME", "PART_NUMBER",   "VERSION",
@@ -92,8 +94,8 @@ const std::string fruCustomFieldName = "INFO_AM";
 
 inline fruAreas operator++(fruAreas& x)
 {
-    return x = static_cast<fruAreas>(std::underlying_type<fruAreas>::type(x) +
-                                     1);
+    return x = static_cast<fruAreas>(
+               std::underlying_type<fruAreas>::type(x) + 1);
 }
 
 inline const std::string& getFruAreaName(fruAreas area)
@@ -101,7 +103,7 @@ inline const std::string& getFruAreaName(fruAreas area)
     return fruAreaNames[static_cast<unsigned int>(area)];
 }
 
-std::tm intelEpoch(void);
+std::tm intelEpoch();
 
 char sixBitToChar(uint8_t val);
 
@@ -115,10 +117,9 @@ char bcdPlusToChar(uint8_t val);
 bool verifyOffset(const std::vector<uint8_t>& fruBytes, fruAreas currentArea,
                   uint8_t len);
 
-std::pair<DecodeState, std::string>
-    decodeFRUData(std::vector<uint8_t>::const_iterator& iter,
-                  const std::vector<uint8_t>::const_iterator& end,
-                  bool isLangEng);
+std::pair<DecodeState, std::string> decodeFRUData(
+    std::vector<uint8_t>::const_iterator& iter,
+    const std::vector<uint8_t>::const_iterator& end, bool isLangEng);
 
 bool checkLangEng(uint8_t lang);
 
@@ -133,10 +134,9 @@ uint8_t calculateChecksum(std::vector<uint8_t>::const_iterator iter,
 
 uint8_t calculateChecksum(std::vector<uint8_t>& fruAreaData);
 
-unsigned int updateFRUAreaLenAndChecksum(std::vector<uint8_t>& fruData,
-                                         size_t fruAreaStart,
-                                         size_t fruAreaEndOfFieldsOffset,
-                                         size_t fruAreaEndOffset);
+unsigned int updateFRUAreaLenAndChecksum(
+    std::vector<uint8_t>& fruData, size_t fruAreaStart,
+    size_t fruAreaEndOfFieldsOffset, size_t fruAreaEndOffset);
 
 ssize_t getFieldLength(uint8_t fruFieldTypeLenValue);
 

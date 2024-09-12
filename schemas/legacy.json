@@ -2,11 +2,7 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "Aggregate": {
-            "description": [
-                "Don't add additional properties to this schema.  Consult ",
-                "README.schema for instructions on adding new Exposes element ",
-                "sub-schema."
-            ],
+            "description": "Don't add additional properties to this schema. Consult README.schema for instructions on adding new Exposes element sub-schema.",
             "additionalProperties": false,
             "properties": {
                 "Address": {
@@ -51,6 +47,9 @@
                 "Connector": {
                     "$ref": "#/definitions/Types/Connector"
                 },
+                "ConnectsToType": {
+                    "$ref": "#/definitions/Types/ConnectsToType"
+                },
                 "CpuID": {
                     "$ref": "#/definitions/Types/CpuID"
                 },
@@ -68,9 +67,6 @@
                 },
                 "EntityInstance": {
                     "$ref": "#/definitions/Types/EntityInstance"
-                },
-                "EndpointId": {
-                    "$ref": "#/definitions/Types/EndpointId"
                 },
                 "FaultIndex": {
                     "$ref": "#/definitions/Types/FaultIndex"
@@ -186,6 +182,9 @@
                 "PowerFactorMin": {
                     "$ref": "#/definitions/Types/PowerFactorMin"
                 },
+                "PowerPort": {
+                    "$ref": "#/definitions/Types/PowerPort"
+                },
                 "PowerScaleFactor": {
                     "$ref": "#/definitions/Types/PowerScaleFactor"
                 },
@@ -224,6 +223,9 @@
                 },
                 "SensorType": {
                     "$ref": "#/definitions/Types/SensorType"
+                },
+                "SlotId": {
+                    "$ref": "#/definitions/Types/SlotId"
                 },
                 "TachMaxPercent": {
                     "$ref": "#/definitions/Types/TachMaxPercent"
@@ -267,20 +269,38 @@
                 "iin_Name": {
                     "$ref": "#/definitions/Types/iin_Name"
                 },
+                "in0_Max": {
+                    "$ref": "#/definitions/Types/in0_Max"
+                },
                 "in0_Name": {
                     "$ref": "#/definitions/Types/in0_Name"
+                },
+                "in1_Max": {
+                    "$ref": "#/definitions/Types/in1_Max"
                 },
                 "in1_Name": {
                     "$ref": "#/definitions/Types/in1_Name"
                 },
+                "in2_Max": {
+                    "$ref": "#/definitions/Types/in2_Max"
+                },
                 "in2_Name": {
                     "$ref": "#/definitions/Types/in2_Name"
+                },
+                "in3_Max": {
+                    "$ref": "#/definitions/Types/in3_Max"
                 },
                 "in3_Name": {
                     "$ref": "#/definitions/Types/in3_Name"
                 },
+                "in4_Max": {
+                    "$ref": "#/definitions/Types/in4_Max"
+                },
                 "in4_Name": {
                     "$ref": "#/definitions/Types/in4_Name"
+                },
+                "in5_Max": {
+                    "$ref": "#/definitions/Types/in5_Max"
                 },
                 "in5_Name": {
                     "$ref": "#/definitions/Types/in5_Name"
@@ -290,6 +310,78 @@
                 },
                 "in7_Name": {
                     "$ref": "#/definitions/Types/in7_Name"
+                },
+                "in_voltage0_Max": {
+                    "$ref": "#/definitions/Types/in_voltage0_Max"
+                },
+                "in_voltage0_Name": {
+                    "$ref": "#/definitions/Types/in_voltage0_Name"
+                },
+                "in_voltage1_Max": {
+                    "$ref": "#/definitions/Types/in_voltage1_Max"
+                },
+                "in_voltage1_Name": {
+                    "$ref": "#/definitions/Types/in_voltage1_Name"
+                },
+                "in_voltage2_Max": {
+                    "$ref": "#/definitions/Types/in_voltage2_Max"
+                },
+                "in_voltage2_Name": {
+                    "$ref": "#/definitions/Types/in_voltage2_Name"
+                },
+                "in_voltage3_Max": {
+                    "$ref": "#/definitions/Types/in_voltage3_Max"
+                },
+                "in_voltage3_Name": {
+                    "$ref": "#/definitions/Types/in_voltage3_Name"
+                },
+                "in_voltage4_Max": {
+                    "$ref": "#/definitions/Types/in_voltage4_Max"
+                },
+                "in_voltage4_Name": {
+                    "$ref": "#/definitions/Types/in_voltage4_Name"
+                },
+                "in_voltage5_Max": {
+                    "$ref": "#/definitions/Types/in_voltage5_Max"
+                },
+                "in_voltage5_Name": {
+                    "$ref": "#/definitions/Types/in_voltage5_Name"
+                },
+                "in_voltage6_Name": {
+                    "$ref": "#/definitions/Types/in_voltage6_Name"
+                },
+                "in_voltage7_Name": {
+                    "$ref": "#/definitions/Types/in_voltage7_Name"
+                },
+                "in_voltage8_Name": {
+                    "$ref": "#/definitions/Types/in_voltage8_Name"
+                },
+                "in_voltage9_Name": {
+                    "$ref": "#/definitions/Types/in_voltage9_Name"
+                },
+                "in0_PowerState": {
+                    "$ref": "#/definitions/Types/in0_PowerState"
+                },
+                "in1_PowerState": {
+                    "$ref": "#/definitions/Types/in1_PowerState"
+                },
+                "in2_PowerState": {
+                    "$ref": "#/definitions/Types/in2_PowerState"
+                },
+                "in3_PowerState": {
+                    "$ref": "#/definitions/Types/in3_PowerState"
+                },
+                "in4_PowerState": {
+                    "$ref": "#/definitions/Types/in4_PowerState"
+                },
+                "in5_PowerState": {
+                    "$ref": "#/definitions/Types/in5_PowerState"
+                },
+                "in6_PowerState": {
+                    "$ref": "#/definitions/Types/in6_PowerState"
+                },
+                "in7_PowerState": {
+                    "$ref": "#/definitions/Types/in7_PowerState"
                 },
                 "curr1_Name": {
                     "$ref": "#/definitions/Types/curr1_Name"
@@ -630,6 +722,9 @@
                 "iout1_Scale": {
                     "$ref": "#/definitions/Types/iout1_Scale"
                 },
+                "pin_Scale": {
+                    "$ref": "#/definitions/Types/pin_Scale"
+                },
                 "in0_Scale": {
                     "$ref": "#/definitions/Types/in0_Scale"
                 },
@@ -653,6 +748,36 @@
                 },
                 "in7_Scale": {
                     "$ref": "#/definitions/Types/in7_Scale"
+                },
+                "in_voltage0_Scale": {
+                    "$ref": "#/definitions/Types/in_voltage0_Scale"
+                },
+                "in_voltage1_Scale": {
+                    "$ref": "#/definitions/Types/in_voltage1_Scale"
+                },
+                "in_voltage2_Scale": {
+                    "$ref": "#/definitions/Types/in_voltage2_Scale"
+                },
+                "in_voltage3_Scale": {
+                    "$ref": "#/definitions/Types/in_voltage3_Scale"
+                },
+                "in_voltage4_Scale": {
+                    "$ref": "#/definitions/Types/in_voltage4_Scale"
+                },
+                "in_voltage5_Scale": {
+                    "$ref": "#/definitions/Types/in_voltage5_Scale"
+                },
+                "in_voltage6_Scale": {
+                    "$ref": "#/definitions/Types/in_voltage6_Scale"
+                },
+                "in_voltage7_Scale": {
+                    "$ref": "#/definitions/Types/in_voltage7_Scale"
+                },
+                "in_voltage8_Scale": {
+                    "$ref": "#/definitions/Types/in_voltage8_Scale"
+                },
+                "in_voltage9_Scale": {
+                    "$ref": "#/definitions/Types/in_voltage9_Scale"
                 },
                 "PollRate": {
                     "$ref": "#/definitions/Types/PollRate"
@@ -725,6 +850,9 @@
                 "required": ["Name", "Pwm", "Tachs"],
                 "type": "object"
             },
+            "ConnectsToType": {
+                "type": "string"
+            },
             "CpuID": {
                 "type": "number"
             },
@@ -742,9 +870,6 @@
             },
             "EntityInstance": {
                 "type": "number"
-            },
-            "EndpointId": {
-                "type": ["string", "number"]
             },
             "FaultIndex": {
                 "type": "number"
@@ -881,6 +1006,9 @@
             "PowerFactorMin": {
                 "type": "number"
             },
+            "PowerPort": {
+                "type": "boolean"
+            },
             "PowerScaleFactor": {
                 "type": "number"
             },
@@ -927,6 +1055,9 @@
                 "type": "number"
             },
             "SensorType": {
+                "type": "string"
+            },
+            "SlotId": {
                 "type": "string"
             },
             "TachMaxPercent": {
@@ -1000,20 +1131,38 @@
             "iin_Name": {
                 "type": "string"
             },
+            "in0_Max": {
+                "type": "number"
+            },
             "in0_Name": {
                 "type": "string"
+            },
+            "in1_Max": {
+                "type": "number"
             },
             "in1_Name": {
                 "type": "string"
             },
+            "in2_Max": {
+                "type": "number"
+            },
             "in2_Name": {
                 "type": "string"
+            },
+            "in3_Max": {
+                "type": "number"
             },
             "in3_Name": {
                 "type": "string"
             },
+            "in4_Max": {
+                "type": "number"
+            },
             "in4_Name": {
                 "type": "string"
+            },
+            "in5_Max": {
+                "type": "number"
             },
             "in5_Name": {
                 "type": "string"
@@ -1022,6 +1171,78 @@
                 "type": "string"
             },
             "in7_Name": {
+                "type": "string"
+            },
+            "in_voltage0_Max": {
+                "type": "number"
+            },
+            "in_voltage0_Name": {
+                "type": "string"
+            },
+            "in_voltage1_Max": {
+                "type": "number"
+            },
+            "in_voltage1_Name": {
+                "type": "string"
+            },
+            "in_voltage2_Max": {
+                "type": "number"
+            },
+            "in_voltage2_Name": {
+                "type": "string"
+            },
+            "in_voltage3_Max": {
+                "type": "number"
+            },
+            "in_voltage3_Name": {
+                "type": "string"
+            },
+            "in_voltage4_Max": {
+                "type": "number"
+            },
+            "in_voltage4_Name": {
+                "type": "string"
+            },
+            "in_voltage5_Max": {
+                "type": "number"
+            },
+            "in_voltage5_Name": {
+                "type": "string"
+            },
+            "in_voltage6_Name": {
+                "type": "string"
+            },
+            "in_voltage7_Name": {
+                "type": "string"
+            },
+            "in_voltage8_Name": {
+                "type": "string"
+            },
+            "in_voltage9_Name": {
+                "type": "string"
+            },
+            "in0_PowerState": {
+                "type": "string"
+            },
+            "in1_PowerState": {
+                "type": "string"
+            },
+            "in2_PowerState": {
+                "type": "string"
+            },
+            "in3_PowerState": {
+                "type": "string"
+            },
+            "in4_PowerState": {
+                "type": "string"
+            },
+            "in5_PowerState": {
+                "type": "string"
+            },
+            "in6_PowerState": {
+                "type": "string"
+            },
+            "in7_PowerState": {
                 "type": "string"
             },
             "curr1_Name": {
@@ -1363,6 +1584,9 @@
             "iout1_Scale": {
                 "type": "number"
             },
+            "pin_Scale": {
+                "type": "number"
+            },
             "in0_Scale": {
                 "type": "number"
             },
@@ -1385,6 +1609,36 @@
                 "type": "number"
             },
             "in7_Scale": {
+                "type": "number"
+            },
+            "in_voltage0_Scale": {
+                "type": "number"
+            },
+            "in_voltage1_Scale": {
+                "type": "number"
+            },
+            "in_voltage2_Scale": {
+                "type": "number"
+            },
+            "in_voltage3_Scale": {
+                "type": "number"
+            },
+            "in_voltage4_Scale": {
+                "type": "number"
+            },
+            "in_voltage5_Scale": {
+                "type": "number"
+            },
+            "in_voltage6_Scale": {
+                "type": "number"
+            },
+            "in_voltage7_Scale": {
+                "type": "number"
+            },
+            "in_voltage8_Scale": {
+                "type": "number"
+            },
+            "in_voltage9_Scale": {
                 "type": "number"
             },
             "PollRate": {

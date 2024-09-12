@@ -1,5 +1,6 @@
 cpp_args = boost_args + ['-DPACKAGE_DIR="' + packagedir + '/"']
 cpp_args += ['-DSYSCONF_DIR="' + sysconfdir + '/"' ]
+installdir = join_paths(get_option('libexecdir'), 'entity-manager')
 
 executable(
     'entity-manager',
@@ -14,10 +15,12 @@ executable(
     dependencies: [
         boost,
         nlohmann_json_dep,
+        phosphor_logging_dep,
         sdbusplus,
         valijson,
     ],
     install: true,
+    install_dir: installdir,
 )
 
 if get_option('fru-device')
@@ -37,10 +40,12 @@ if get_option('fru-device')
             boost,
             i2c,
             nlohmann_json_dep,
+            phosphor_logging_dep,
             sdbusplus,
             threads,
             valijson,
         ],
         install: true,
+        install_dir: installdir,
     )
 endif

@@ -20,24 +20,25 @@
 #include <boost/asio/steady_timer.hpp>
 #include <boost/container/flat_map.hpp>
 #include <boost/container/flat_set.hpp>
+#include <phosphor-logging/lg2.hpp>
 
 #include <charconv>
 #include <functional>
 
 /* Hacks from splitting entity_manager.cpp */
+// NOLINTBEGIN(cppcoreguidelines-avoid-non-const-global-variables)
 extern std::shared_ptr<sdbusplus::asio::connection> systemBus;
 extern nlohmann::json lastJson;
 extern void
     propertiesChangedCallback(nlohmann::json& systemConfiguration,
                               sdbusplus::asio::object_server& objServer);
+// NOLINTEND(cppcoreguidelines-avoid-non-const-global-variables)
 
 using GetSubTreeType = std::vector<
     std::pair<std::string,
               std::vector<std::pair<std::string, std::vector<std::string>>>>>;
 
 constexpr const int32_t maxMapperDepth = 0;
-
-constexpr const bool debug = false;
 
 struct DBusInterfaceInstance
 {
@@ -59,32 +60,28 @@ void getInterfaces(
     }
 
     systemBus->async_method_call(
-        [instance, scan, probeVector, retries](boost::system::error_code& errc,
-                                               const DBusInterface& resp) {
-        if (errc)
-        {
-            std::cerr << "error calling getall on  " << instance.busName << " "
-                      << instance.path << " " << instance.interface << "\n";
+        [instance, scan, probeVector,
+         retries](boost::system::error_code& errc, const DBusInterface& resp) {
+            if (errc)
+            {
+                std::cerr << "error calling getall on  " << instance.busName
+                          << " " << instance.path << " "
+                          << instance.interface << "\n";
 
-            auto timer = std::make_shared<boost::asio::steady_timer>(io);
-            timer->expires_after(std::chrono::seconds(2));
+                auto timer = std::make_shared<boost::asio::steady_timer>(io);
+                timer->expires_after(std::chrono::seconds(2));
 
-            timer->async_wait([timer, instance, scan, probeVector,
-                               retries](const boost::system::error_code&) {
-                getInterfaces(instance, probeVector, scan, retries - 1);
-            });
-            return;
-        }
+                timer->async_wait([timer, instance, scan, probeVector,
+                                   retries](const boost::system::error_code&) {
+                    getInterfaces(instance, probeVector, scan, retries - 1);
+                });
+                return;
+            }
 
-        scan->dbusProbeObjects[instance.path][instance.interface] = resp;
-    },
+            scan->dbusProbeObjects[instance.path][instance.interface] = resp;
+        },
         instance.busName, instance.path, "org.freedesktop.DBus.Properties",
         "GetAll", instance.interface);
-
-    if constexpr (debug)
-    {
-        std::cerr << __LINE__ << "\n";
-    }
 }
 
 static void registerCallback(nlohmann::json& systemConfiguration,
@@ -102,8 +99,8 @@ static void registerCallback(nlohmann::json& systemConfiguration,
 
     std::function<void(sdbusplus::message_t & message)> eventHandler =
         [&](sdbusplus::message_t&) {
-        propertiesChangedCallback(systemConfiguration, objServer);
-    };
+            propertiesChangedCallback(systemConfiguration, objServer);
+        };
 
     sdbusplus::bus::match_t match(
         static_cast<sdbusplus::bus_t&>(*systemBus),
@@ -164,44 +161,41 @@ void findDbusObjects(std::vector<std::shared_ptr<PerformProbe>>&& probeVector,
         [interfaces, probeVector{std::move(probeVector)}, scan,
          retries](boost::system::error_code& ec,
                   const GetSubTreeType& interfaceSubtree) mutable {
-        if (ec)
-        {
-            if (ec.value() == ENOENT)
+            if (ec)
             {
-                return; // wasn't found by mapper
+                if (ec.value() == ENOENT)
+                {
+                    return; // wasn't found by mapper
+                }
+                std::cerr << "Error communicating to mapper.\n";
+
+                if (retries == 0U)
+                {
+                    // if we can't communicate to the mapper something is very
+                    // wrong
+                    std::exit(EXIT_FAILURE);
+                }
+
+                auto timer = std::make_shared<boost::asio::steady_timer>(io);
+                timer->expires_after(std::chrono::seconds(10));
+
+                timer->async_wait(
+                    [timer, interfaces{std::move(interfaces)}, scan,
+                     probeVector{std::move(probeVector)},
+                     retries](const boost::system::error_code&) mutable {
+                        findDbusObjects(std::move(probeVector),
+                                        std::move(interfaces), scan,
+                                        retries - 1);
+                    });
+                return;
             }
-            std::cerr << "Error communicating to mapper.\n";
 
-            if (retries == 0U)
-            {
-                // if we can't communicate to the mapper something is very
-                // wrong
-                std::exit(EXIT_FAILURE);
-            }
-
-            auto timer = std::make_shared<boost::asio::steady_timer>(io);
-            timer->expires_after(std::chrono::seconds(10));
-
-            timer->async_wait([timer, interfaces{std::move(interfaces)}, scan,
-                               probeVector{std::move(probeVector)}, retries](
-                                  const boost::system::error_code&) mutable {
-                findDbusObjects(std::move(probeVector), std::move(interfaces),
-                                scan, retries - 1);
-            });
-            return;
-        }
-
-        processDbusObjects(probeVector, scan, interfaceSubtree);
-    },
+            processDbusObjects(probeVector, scan, interfaceSubtree);
+        },
         "xyz.openbmc_project.ObjectMapper",
         "/xyz/openbmc_project/object_mapper",
         "xyz.openbmc_project.ObjectMapper", "GetSubTree", "/", maxMapperDepth,
         interfaces);
-
-    if constexpr (debug)
-    {
-        std::cerr << __LINE__ << "\n";
-    }
 }
 
 static std::string getRecordName(const DBusInterface& probe,
@@ -223,10 +217,7 @@ static std::string getRecordName(const DBusInterface& probe,
 
     // hashes are hard to distinguish, use the non-hashed version if we want
     // debug
-    if constexpr (debug)
-    {
-        return probeName + device.dump();
-    }
+    // return probeName + device.dump();
 
     return std::to_string(std::hash<std::string>{}(probeName + device.dump()));
 }
@@ -261,10 +252,9 @@ static void pruneRecordExposes(nlohmann::json& record)
     *findExposes = copy;
 }
 
-static void recordDiscoveredIdentifiers(std::set<nlohmann::json>& usedNames,
-                                        std::list<size_t>& indexes,
-                                        const std::string& probeName,
-                                        const nlohmann::json& record)
+static void recordDiscoveredIdentifiers(
+    std::set<nlohmann::json>& usedNames, std::list<size_t>& indexes,
+    const std::string& probeName, const nlohmann::json& record)
 {
     size_t indexIdx = probeName.find('$');
     if (indexIdx == std::string::npos)
@@ -327,9 +317,8 @@ static bool extractExposeActionRecordNames(std::vector<std::string>& matches,
     return false;
 }
 
-static std::optional<std::vector<std::string>::iterator>
-    findExposeActionRecord(std::vector<std::string>& matches,
-                           const nlohmann::json& record)
+static std::optional<std::vector<std::string>::iterator> findExposeActionRecord(
+    std::vector<std::string>& matches, const nlohmann::json& record)
 {
     const auto& name = (record)["Name"].get_ref<const std::string&>();
     auto compare = [&name](const std::string& s) { return s == name; };
@@ -364,10 +353,9 @@ static void applyDisableExposeAction(nlohmann::json& exposedObject,
     }
 }
 
-static void applyConfigExposeActions(std::vector<std::string>& matches,
-                                     nlohmann::json& expose,
-                                     const std::string& propertyName,
-                                     nlohmann::json& configExposes)
+static void applyConfigExposeActions(
+    std::vector<std::string>& matches, nlohmann::json& expose,
+    const std::string& propertyName, nlohmann::json& configExposes)
 {
     for (auto& exposedObject : configExposes)
     {
@@ -381,10 +369,9 @@ static void applyConfigExposeActions(std::vector<std::string>& matches,
     }
 }
 
-static void applyExposeActions(nlohmann::json& systemConfiguration,
-                               const std::string& recordName,
-                               nlohmann::json& expose,
-                               nlohmann::json::iterator& keyPair)
+static void applyExposeActions(
+    nlohmann::json& systemConfiguration, const std::string& recordName,
+    nlohmann::json& expose, nlohmann::json::iterator& keyPair)
 {
     bool isBind = boost::starts_with(keyPair.key(), "Bind");
     bool isDisable = keyPair.key() == "DisableNode";
@@ -432,11 +419,10 @@ static void applyExposeActions(nlohmann::json& systemConfiguration,
     }
 }
 
-static std::string generateDeviceName(const std::set<nlohmann::json>& usedNames,
-                                      const DBusObject& dbusObject,
-                                      size_t foundDeviceIdx,
-                                      const std::string& nameTemplate,
-                                      std::optional<std::string>& replaceStr)
+static std::string generateDeviceName(
+    const std::set<nlohmann::json>& usedNames, const DBusObject& dbusObject,
+    size_t foundDeviceIdx, const std::string& nameTemplate,
+    std::optional<std::string>& replaceStr)
 {
     nlohmann::json copyForName = {{"Name", nameTemplate}};
     nlohmann::json::iterator copyIt = copyForName.begin();
@@ -589,12 +575,9 @@ void PerformScan::updateSystemConfiguration(const nlohmann::json& recordRef,
                                &ConfigurationRelation::systemConfiguration);
         auto pathKey = std::to_string(std::hash<std::string>{}(record.dump()));
         cr->probeObjectPaths[pathKey] = path;
-        if constexpr (debug)
-        {
-            std::cerr << "Registered path " << path << " with pathKey "
-                      << pathKey << " for configuration " << record.dump()
-                      << "\n";
-        }
+        lg2::debug(
+            "Registered path {PATH} with {PATH_KEY} for configuration {CONFIGURATION}",
+            "PATH", path, "PATH_KEY", pathKey, "CONFIGURATION", record.dump());
     }
 }
 
@@ -675,10 +658,6 @@ void PerformScan::run()
     // about a dbus interface
     findDbusObjects(std::move(dbusProbePointers),
                     std::move(dbusProbeInterfaces), shared_from_this());
-    if constexpr (debug)
-    {
-        std::cerr << __LINE__ << "\n";
-    }
 }
 
 PerformScan::~PerformScan()
@@ -691,19 +670,9 @@ PerformScan::~PerformScan()
         nextScan->passedProbes = std::move(passedProbes);
         nextScan->dbusProbeObjects = std::move(dbusProbeObjects);
         nextScan->run();
-
-        if constexpr (debug)
-        {
-            std::cerr << __LINE__ << "\n";
-        }
     }
     else
     {
         _callback();
-
-        if constexpr (debug)
-        {
-            std::cerr << __LINE__ << "\n";
-        }
     }
 }
