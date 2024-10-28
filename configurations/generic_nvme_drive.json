@@ -4,7 +4,7 @@
         {
             "Address": "0x6a",
             "Bus": "$bus",
-            "Name": "NVMe $index Temp",
+            "Name": "NVMe $SlotNumber Temp",
             "Thresholds": [
                 {
                     "Direction": "greater than",
@@ -23,7 +23,7 @@
         }
     ],
     "Logging": "Off",
-    "Name": "NVMe $index",
+    "Name": "NVMe $SlotNumber",
     "Probe": "com.ibm.ipzvpd.VINI({'CC': [78, 86, 77, 101]})",
     "Type": "NVMe",
     "xyz.openbmc_project.Inventory.Decorator.Asset": {
