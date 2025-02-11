@@ -34,6 +34,10 @@ if get_option('fru-device')
     i2c = cpp.find_library('i2c')
 endif
 
+if get_option('devicetree-vpd')
+    phosphor_dbus_interfaces_dep = dependency('phosphor-dbus-interfaces', include_type: 'system')
+endif
+
 nlohmann_json_dep = dependency('nlohmann_json', include_type: 'system')
 sdbusplus = dependency('sdbusplus', include_type: 'system')
 phosphor_logging_dep = dependency('phosphor-logging')
@@ -154,12 +158,19 @@ configs = [
     'mori_bmc.json',
     'mori_motherboard.json',
     'mtjade.json',
+    'mtjefferson_bmc.json',
+    'mtjefferson_mb.json',
     'mtmitchell_bmc.json',
+    'mtmitchell_bp.json',
     'mtmitchell_mb.json',
+    'mtmitchell_riser.json',
     'mudflap.json',
     'nf5280m7_baseboard.json',
     'nisqually.json',
     'nuvoton_npcm8xx_evb.json',
+    'nvidia_gb200_io_board.json',
+    'nvidia_gb200.json',
+    'nvidia_hmc.json',
     'nvme_intel_p_series.json',
     'nvme_p4500_p5500.json',
     'pcie_ssd_retimer.json',
@@ -196,6 +207,11 @@ configs = [
     'vegman_n110_baseboard.json',
     'vegman_rx20_baseboard.json',
     'vegman_sx20_baseboard.json',
+    'ventura_fanboard.json',
+    'ventura_ioboard.json',
+    'ventura_ledboard.json',
+    'ventura_rmc.json',
+    'ventura_scm.json',
     'wft_baseboard.json',
     'yosemite4.json',
     'yosemite4_chassis.json',
