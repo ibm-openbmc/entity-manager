@@ -70,7 +70,9 @@ constexpr const char* blocklistPath = PACKAGE_DIR "blacklist.json";
 const static constexpr char* baseboardFruLocation =
     "/etc/fru/baseboard.fru.bin";
 
+#if RESCAN_ON_POWERON
 const static constexpr char* i2CDevLocation = "/dev";
+#endif
 
 // TODO Refactor these to not be globals
 // NOLINTBEGIN(cppcoreguidelines-avoid-non-const-global-variables)
@@ -247,8 +249,7 @@ static int i2cSmbusWriteThenRead(
 
     constexpr size_t smbusWriteThenReadMsgCount = 2;
     std::array<struct i2c_msg, smbusWriteThenReadMsgCount> msgs{};
-    struct i2c_rdwr_ioctl_data rdwr
-    {};
+    struct i2c_rdwr_ioctl_data rdwr{};
 
     msgs[0].addr = address;
     msgs[0].flags = 0;
@@ -1151,8 +1152,7 @@ bool updateFRUProperty(
         return false;
     }
 
-    struct FruArea fruAreaParams
-    {};
+    struct FruArea fruAreaParams{};
 
     if (!findFruAreaLocationAndField(fruData, propertyName, fruAreaParams))
     {
@@ -1350,6 +1350,7 @@ int main()
         });
     iface->initialize();
 
+#if RESCAN_ON_POWERON
     std::function<void(sdbusplus::message_t & message)> eventHandler =
         [&](sdbusplus::message_t& message) {
             std::string objectName;
@@ -1444,6 +1445,10 @@ int main()
         };
 
     dirWatch.async_read_some(boost::asio::buffer(readBuffer), watchI2cBusses);
+#else
+    lg2::info("No scanning will be done during poweron");
+#endif
+
     // run the initial scan
     rescanBusses(busMap, dbusInterfaceMap, unknownBusObjectCount, powerIsOn,
                  objServer, systemBus);
