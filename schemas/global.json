@@ -35,6 +35,9 @@
                     "$ref": "stepwise.json#/$defs/Stepwise"
                 },
                 {
+                    "$ref": "supported_configuration.json#/$defs/SupportedConfiguration"
+                },
+                {
                     "$ref": "legacy.json#/$defs/Aggregate"
                 },
                 {
