@@ -35,6 +35,9 @@
                     "$ref": "stepwise.json#/$defs/Stepwise"
                 },
                 {
+                    "$ref": "supported_configuration.json#/$defs/SupportedConfiguration"
+                },
+                {
                     "$ref": "legacy.json#/$defs/Aggregate"
                 },
                 {
@@ -42,6 +45,9 @@
                 },
                 {
                     "$ref": "leak_detector.json#/$defs/GPIOLeakDetector"
+                },
+                {
+                    "$ref": "firmware.json#/$defs/XDPE1X2XXFirmware"
                 },
                 {
                     "description": "Ensure the parent anyOf schema does not validate when an element does not define a type property.",
@@ -114,9 +120,6 @@
                 },
                 "xyz.openbmc_project.Inventory.Decorator.Asset": {
                     "$ref": "openbmc-dbus.json#/$defs/xyz/openbmc_project/Inventory/Decorator/Asset"
-                },
-                "ProductId": {
-                    "type": "number"
                 },
                 "xyz.openbmc_project.Inventory.Decorator.AssetTag": {
                     "$ref": "openbmc-dbus.json#/$defs/xyz/openbmc_project/Inventory/Decorator/AssetTag"

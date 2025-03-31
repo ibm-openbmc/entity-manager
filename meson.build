@@ -104,6 +104,7 @@ schemas = [
     'satellite_controller.json',
     'leak_detector.json',
     'firmware.json',
+    'supported_configuration.json',
 ]
 
 foreach s : schemas

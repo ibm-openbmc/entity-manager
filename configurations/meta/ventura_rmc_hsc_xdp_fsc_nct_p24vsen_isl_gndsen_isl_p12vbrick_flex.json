@@ -12,6 +12,7 @@
             "Thresholds": [
                 {
                     "Direction": "greater than",
+                    "Hysteresis": 0.504,
                     "Label": "in1",
                     "Name": "upper critical",
                     "Severity": 1,
@@ -19,6 +20,7 @@
                 },
                 {
                     "Direction": "less than",
+                    "Hysteresis": 0.456,
                     "Label": "in1",
                     "Name": "lower critical",
                     "Severity": 1,
@@ -26,6 +28,7 @@
                 },
                 {
                     "Direction": "greater than",
+                    "Hysteresis": 2.88,
                     "Label": "power1",
                     "Name": "upper critical",
                     "Severity": 1,
@@ -36,6 +39,7 @@
             "curr1_Name": "RMC_M12_P24V_CURR_A",
             "curr1_Offset": 0.0015,
             "curr1_Scale": 103.8152089281,
+            "in1_Max": 36,
             "in1_Name": "RMC_M12_P24V_VOLT_V",
             "power1_Name": "RMC_M12_P24V_PWR_W",
             "power1_Offset": 0.0015,
@@ -53,6 +57,7 @@
             "Thresholds": [
                 {
                     "Direction": "greater than",
+                    "Hysteresis": 0.504,
                     "Label": "in1",
                     "Name": "upper critical",
                     "Severity": 1,
@@ -60,6 +65,7 @@
                 },
                 {
                     "Direction": "less than",
+                    "Hysteresis": 0.456,
                     "Label": "in1",
                     "Name": "lower critical",
                     "Severity": 1,
@@ -67,6 +73,7 @@
                 },
                 {
                     "Direction": "greater than",
+                    "Hysteresis": 5.28,
                     "Label": "power1",
                     "Name": "upper critical",
                     "Severity": 1,
@@ -77,6 +84,7 @@
             "curr1_Name": "RMC_RJ14_P24V_CURR_A",
             "curr1_Offset": -0.0003,
             "curr1_Scale": 104.4004802422,
+            "in1_Max": 36,
             "in1_Name": "RMC_RJ14_P24V_VOLT_V",
             "power1_Name": "RMC_RJ14_P24V_PWR_W",
             "power1_Offset": -0.0161,
@@ -92,6 +100,7 @@
             "Thresholds": [
                 {
                     "Direction": "greater than",
+                    "Hysteresis": 4.0,
                     "Label": "in0",
                     "Name": "upper critical",
                     "Severity": 1,
@@ -114,6 +123,7 @@
             "Thresholds": [
                 {
                     "Direction": "greater than",
+                    "Hysteresis": 4.0,
                     "Label": "in0",
                     "Name": "upper critical",
                     "Severity": 1,
@@ -133,15 +143,10 @@
             "Thresholds": [
                 {
                     "Direction": "greater than",
+                    "Hysteresis": 1.0,
                     "Name": "upper critical",
                     "Severity": 1,
-                    "Value": 45
-                },
-                {
-                    "Direction": "less than",
-                    "Name": "lower critical",
-                    "Severity": 1,
-                    "Value": 0
+                    "Value": 50
                 }
             ],
             "Type": "TMP75"
@@ -160,6 +165,7 @@
             "Thresholds": [
                 {
                     "Direction": "greater than",
+                    "Hysteresis": 2.0,
                     "Label": "temp1",
                     "Name": "upper critical",
                     "Severity": 1,
@@ -167,6 +173,7 @@
                 },
                 {
                     "Direction": "greater than",
+                    "Hysteresis": 1.12,
                     "Label": "vin",
                     "Name": "upper critical",
                     "Severity": 1,
@@ -174,6 +181,7 @@
                 },
                 {
                     "Direction": "less than",
+                    "Hysteresis": 0.92,
                     "Label": "vin",
                     "Name": "lower critical",
                     "Severity": 1,
@@ -181,6 +189,7 @@
                 },
                 {
                     "Direction": "greater than",
+                    "Hysteresis": 1.12,
                     "Label": "vout1",
                     "Name": "upper critical",
                     "Severity": 1,
@@ -188,6 +197,7 @@
                 },
                 {
                     "Direction": "less than",
+                    "Hysteresis": 0.92,
                     "Label": "vout1",
                     "Name": "lower critical",
                     "Severity": 1,
@@ -195,6 +205,7 @@
                 },
                 {
                     "Direction": "greater than",
+                    "Hysteresis": 11.6,
                     "Label": "pin",
                     "Name": "upper critical",
                     "Severity": 1,
@@ -205,7 +216,9 @@
             "iout1_Name": "RMC_HSC_CURR_A",
             "pin_Name": "RMC_HSC_PWR_W",
             "temp1_Name": "RMC_HSC_TEMP_C",
+            "vin_Max": 76,
             "vin_Name": "RMC_HSC_VIN_VOLT_V",
+            "vout1_Max": 18,
             "vout1_Name": "RMC_HSC_VOUT_VOLT_V"
         },
         {
@@ -221,13 +234,15 @@
             "Thresholds": [
                 {
                     "Direction": "greater than",
+                    "Hysteresis": 2.1,
                     "Label": "temp1",
                     "Name": "upper critical",
                     "Severity": 1,
-                    "Value": 100
+                    "Value": 105
                 },
                 {
                     "Direction": "less than",
+                    "Hysteresis": 0.92,
                     "Label": "vin",
                     "Name": "lower critical",
                     "Severity": 1,
@@ -235,6 +250,7 @@
                 },
                 {
                     "Direction": "greater than",
+                    "Hysteresis": 1.12,
                     "Label": "vin",
                     "Name": "upper critical",
                     "Severity": 1,
@@ -242,6 +258,7 @@
                 },
                 {
                     "Direction": "less than",
+                    "Hysteresis": 0.21,
                     "Label": "vout1",
                     "Name": "lower critical",
                     "Severity": 1,
@@ -249,6 +266,7 @@
                 },
                 {
                     "Direction": "greater than",
+                    "Hysteresis": 0.272,
                     "Label": "vout1",
                     "Name": "upper critical",
                     "Severity": 1,
@@ -258,7 +276,9 @@
             "Type": "pmbus",
             "iout1_Name": "RMC_BRICK_CURR_A",
             "temp1_Name": "RMC_BRICK_TEMP_C",
+            "vin_Max": 76,
             "vin_Name": "RMC_BRICK_INPUT_VOLT_V",
+            "vout1_Max": 18,
             "vout1_Name": "RMC_BRICK_OUTPUT_VOLT_V"
         }
     ],
@@ -283,6 +303,7 @@
     "xyz.openbmc_project.Inventory.Decorator.Revision": {
         "Version": "$PRODUCT_VERSION"
     },
+    "xyz.openbmc_project.Inventory.Item.Board.Motherboard": {},
     "xyz.openbmc_project.Inventory.Item.NetworkInterface": {
         "MACAddress": "$CHASSIS_INFO_AM2"
     }

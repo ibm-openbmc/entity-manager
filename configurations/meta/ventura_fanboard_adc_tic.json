@@ -14,6 +14,7 @@
                 "Thresholds": [
                     {
                         "Direction": "greater than",
+                        "Hysteresis": 2.72,
                         "Label": "in0",
                         "Name": "upper critical",
                         "Severity": 1,
@@ -21,6 +22,7 @@
                     },
                     {
                         "Direction": "less than",
+                        "Hysteresis": 2.1,
                         "Label": "in0",
                         "Name": "lower critical",
                         "Severity": 1,
@@ -28,6 +30,7 @@
                     },
                     {
                         "Direction": "greater than",
+                        "Hysteresis": 2.72,
                         "Label": "in2",
                         "Name": "upper critical",
                         "Severity": 1,
@@ -35,6 +38,7 @@
                     },
                     {
                         "Direction": "less than",
+                        "Hysteresis": 2.1,
                         "Label": "in2",
                         "Name": "lower critical",
                         "Severity": 1,
@@ -42,12 +46,14 @@
                     }
                 ],
                 "Type": "ADC128D818",
+                "in0_Max": 18,
                 "in0_Name": "FCB_0_FAN_0_VOLT_V",
-                "in0_Scale": 166.667,
+                "in0_Scale": 133.262,
                 "in1_Name": "FCB_0_FAN_0_CURR_A",
                 "in1_Scale": 464,
+                "in2_Max": 18,
                 "in2_Name": "FCB_0_FAN_1_VOLT_V",
-                "in2_Scale": 166.667,
+                "in2_Scale": 133.262,
                 "in3_Name": "FCB_0_FAN_1_CURR_A",
                 "in3_Scale": 464
             },
@@ -68,12 +74,14 @@
                 "Thresholds": [
                     {
                         "Direction": "greater than",
+                        "Hysteresis": 660.0,
                         "Name": "upper critical",
                         "Severity": 1,
                         "Value": 33000
                     },
                     {
                         "Direction": "less than",
+                        "Hysteresis": 39.2,
                         "Name": "lower critical",
                         "Severity": 1,
                         "Value": 1960
@@ -98,12 +106,14 @@
                 "Thresholds": [
                     {
                         "Direction": "greater than",
+                        "Hysteresis": 726.0,
                         "Name": "upper critical",
                         "Severity": 1,
                         "Value": 36300
                     },
                     {
                         "Direction": "less than",
+                        "Hysteresis": 51,
                         "Name": "lower critical",
                         "Severity": 1,
                         "Value": 2550
@@ -128,12 +138,14 @@
                 "Thresholds": [
                     {
                         "Direction": "greater than",
+                        "Hysteresis": 660.0,
                         "Name": "upper critical",
                         "Severity": 1,
                         "Value": 33000
                     },
                     {
                         "Direction": "less than",
+                        "Hysteresis": 39.2,
                         "Name": "lower critical",
                         "Severity": 1,
                         "Value": 1960
@@ -158,12 +170,14 @@
                 "Thresholds": [
                     {
                         "Direction": "greater than",
+                        "Hysteresis": 726.0,
                         "Name": "upper critical",
                         "Severity": 1,
                         "Value": 36300
                     },
                     {
                         "Direction": "less than",
+                        "Hysteresis": 51,
                         "Name": "lower critical",
                         "Severity": 1,
                         "Value": 2550
@@ -173,11 +187,7 @@
             }
         ],
         "Name": "Ventura Fan Board 0",
-        "Probe": [
-            "xyz.openbmc_project.FruDevice({'BOARD_PRODUCT_NAME': 'Ventura FAN Board', 'BUS': 16})",
-            "AND",
-            "xyz.openbmc_project.FruDevice({'BOARD_INFO_AM4': 'adc-tic'})"
-        ],
+        "Probe": "xyz.openbmc_project.FruDevice({'BOARD_PRODUCT_NAME': 'Ventura FAN Board', 'BUS': 16, 'BOARD_INFO_AM4': 'adc-tic'})",
         "Type": "Board",
         "xyz.openbmc_project.Inventory.Decorator.Asset": {
             "BuildDate": "$BOARD_MANUFACTURE_DATE",
@@ -209,6 +219,7 @@
                 "Thresholds": [
                     {
                         "Direction": "greater than",
+                        "Hysteresis": 0.272,
                         "Label": "in0",
                         "Name": "upper critical",
                         "Severity": 1,
@@ -216,6 +227,7 @@
                     },
                     {
                         "Direction": "less than",
+                        "Hysteresis": 2.1,
                         "Label": "in0",
                         "Name": "lower critical",
                         "Severity": 1,
@@ -223,6 +235,7 @@
                     },
                     {
                         "Direction": "greater than",
+                        "Hysteresis": 0.272,
                         "Label": "in2",
                         "Name": "upper critical",
                         "Severity": 1,
@@ -230,6 +243,7 @@
                     },
                     {
                         "Direction": "less than",
+                        "Hysteresis": 2.1,
                         "Label": "in2",
                         "Name": "lower critical",
                         "Severity": 1,
@@ -237,12 +251,14 @@
                     }
                 ],
                 "Type": "ADC128D818",
+                "in0_Max": 18,
                 "in0_Name": "FCB_1_FAN_2_VOLT_V",
-                "in0_Scale": 166.667,
+                "in0_Scale": 133.262,
                 "in1_Name": "FCB_1_FAN_2_CURR_A",
                 "in1_Scale": 464,
+                "in2_Max": 18,
                 "in2_Name": "FCB_1_FAN_3_VOLT_V",
-                "in2_Scale": 166.667,
+                "in2_Scale": 133.262,
                 "in3_Name": "FCB_1_FAN_3_CURR_A",
                 "in3_Scale": 464
             },
@@ -263,12 +279,14 @@
                 "Thresholds": [
                     {
                         "Direction": "greater than",
+                        "Hysteresis": 660.0,
                         "Name": "upper critical",
                         "Severity": 1,
                         "Value": 33000
                     },
                     {
                         "Direction": "less than",
+                        "Hysteresis": 39.2,
                         "Name": "lower critical",
                         "Severity": 1,
                         "Value": 1960
@@ -293,12 +311,14 @@
                 "Thresholds": [
                     {
                         "Direction": "greater than",
+                        "Hysteresis": 726.0,
                         "Name": "upper critical",
                         "Severity": 1,
                         "Value": 36300
                     },
                     {
                         "Direction": "less than",
+                        "Hysteresis": 51.0,
                         "Name": "lower critical",
                         "Severity": 1,
                         "Value": 2550
@@ -323,12 +343,14 @@
                 "Thresholds": [
                     {
                         "Direction": "greater than",
+                        "Hysteresis": 660.0,
                         "Name": "upper critical",
                         "Severity": 1,
                         "Value": 33000
                     },
                     {
                         "Direction": "less than",
+                        "Hysteresis": 39.2,
                         "Name": "lower critical",
                         "Severity": 1,
                         "Value": 1960
@@ -353,12 +375,14 @@
                 "Thresholds": [
                     {
                         "Direction": "greater than",
+                        "Hysteresis": 726.0,
                         "Name": "upper critical",
                         "Severity": 1,
                         "Value": 36300
                     },
                     {
                         "Direction": "less than",
+                        "Hysteresis": 51.0,
                         "Name": "lower critical",
                         "Severity": 1,
                         "Value": 2550
@@ -368,11 +392,7 @@
             }
         ],
         "Name": "Ventura Fan Board 1",
-        "Probe": [
-            "xyz.openbmc_project.FruDevice({'BOARD_PRODUCT_NAME': 'Ventura FAN Board', 'BUS': 17})",
-            "AND",
-            "xyz.openbmc_project.FruDevice({'BOARD_INFO_AM4': 'adc-tic'})"
-        ],
+        "Probe": "xyz.openbmc_project.FruDevice({'BOARD_PRODUCT_NAME': 'Ventura FAN Board', 'BUS': 17, 'BOARD_INFO_AM4': 'adc-tic'})",
         "Type": "Board",
         "xyz.openbmc_project.Inventory.Decorator.Asset": {
             "BuildDate": "$BOARD_MANUFACTURE_DATE",

@@ -34,6 +34,7 @@
 #include <boost/container/flat_set.hpp>
 #include <boost/range/iterator_range.hpp>
 #include <nlohmann/json.hpp>
+#include <phosphor-logging/lg2.hpp>
 #include <sdbusplus/asio/connection.hpp>
 #include <sdbusplus/asio/object_server.hpp>
 
@@ -67,6 +68,8 @@ using JsonVariantType =
     std::variant<std::vector<std::string>, std::vector<double>, std::string,
                  int64_t, uint64_t, double, int32_t, uint32_t, int16_t,
                  uint16_t, uint8_t, bool>;
+
+using Association = std::tuple<std::string, std::string, std::string>;
 
 // NOLINTBEGIN(cppcoreguidelines-avoid-non-const-global-variables)
 // store reference to all interfaces so we can destroy them later
@@ -579,12 +582,34 @@ void createAddObjectMethod(
     tryIfaceInitialize(iface);
 }
 
+static void saveAssociation(
+    const std::string& path, const std::string& boardName,
+    const Association& assoc,
+    std::unordered_map<std::string,
+                       std::tuple<std::string, std::vector<Association>>>&
+        allAssocs)
+{
+    auto it = allAssocs.find(path);
+    if (it == allAssocs.end())
+    {
+        allAssocs[path] = std::tuple{boardName, std::vector{assoc}};
+    }
+    else
+    {
+        auto& assocs = std::get<1>(it->second);
+        assocs.push_back(assoc);
+    }
+}
+
 void postToDbus(const nlohmann::json& newConfiguration,
                 nlohmann::json& systemConfiguration,
                 sdbusplus::asio::object_server& objServer)
 
 {
     std::map<std::string, std::string> newBoards; // path -> name
+    std::unordered_map<std::string,
+                       std::tuple<std::string, std::vector<Association>>>
+        associations;
 
     // iterate through boards
     for (const auto& [boardId, boardConfig] : newConfiguration.items())
@@ -623,16 +648,48 @@ void postToDbus(const nlohmann::json& newConfiguration,
             createInterface(objServer, boardPath,
                             "xyz.openbmc_project.Inventory.Item", boardName);
 
-        std::shared_ptr<sdbusplus::asio::dbus_interface> boardIface =
-            createInterface(objServer, boardPath,
-                            "xyz.openbmc_project.Inventory.Item." + boardType,
-                            boardNameOrig);
-
         createAddObjectMethod(jsonPointerPath, boardPath, systemConfiguration,
                               objServer, boardNameOrig);
 
-        populateInterfaceFromJson(systemConfiguration, jsonPointerPath,
-                                  boardIface, boardValues, objServer);
+        if (boardType != "Chassis")
+        {
+            std::shared_ptr<sdbusplus::asio::dbus_interface> boardIface =
+                createInterface(
+                    objServer, boardPath,
+                    "xyz.openbmc_project.Inventory.Item." + boardType,
+                    boardNameOrig);
+
+            populateInterfaceFromJson(systemConfiguration, jsonPointerPath,
+                                      boardIface, boardValues, objServer);
+
+            {
+                auto* cr =
+                    containerOf(&systemConfiguration,
+                                &ConfigurationRelation::systemConfiguration);
+                auto pathKey = std::to_string(
+                    std::hash<std::string>{}(boardConfig.dump()));
+                if (cr->probeObjectPaths.contains(pathKey))
+                {
+                    auto& path = cr->probeObjectPaths[pathKey];
+                    Association values{"probed_by", "probes", path};
+                    saveAssociation(boardPath, boardNameOrig, values,
+                                    associations);
+
+                    lg2::debug(
+                        "Added association interface to path {PATH} "
+                        "from pathKey {PATH_KEY} on boardPath {BOARD_PATH} "
+                        "for configuration {BOARD_CONFIG}",
+                        "PATH", path, "PATH_KEY", pathKey, "BOARD_PATH",
+                        boardPath, "BOARD_CONFIG", boardConfig.dump());
+                }
+                else
+                {
+                    lg2::debug("No registered path for pathKey {PATH_KEY}",
+                               "PATH_KEY", pathKey);
+                }
+            }
+        }
+
         jsonPointerPath += "/";
         // iterate through board properties
         for (const auto& [propName, propValue] : boardValues.items())
@@ -815,11 +872,21 @@ void postToDbus(const nlohmann::json& newConfiguration,
             continue;
         }
 
+        // Add the assocs on this path to the associations map.
+        for (const auto& a : assocPropValue)
+        {
+            saveAssociation(assocPath, findBoard->second, a, associations);
+        }
+    }
+
+    // Now put them on D-Bus.
+    for (const auto& [assocPath, assocData] : associations)
+    {
         auto ifacePtr = createInterface(
             objServer, assocPath, "xyz.openbmc_project.Association.Definitions",
-            findBoard->second);
+            std::get<0>(assocData));
 
-        ifacePtr->register_property("Associations", assocPropValue);
+        ifacePtr->register_property("Associations", std::get<1>(assocData));
         tryIfaceInitialize(ifacePtr);
     }
 }
@@ -1257,7 +1324,10 @@ int main()
     // to keep reference to the match / filter objects so they don't get
     // destroyed
 
-    nlohmann::json systemConfiguration = nlohmann::json::object();
+    ConfigurationRelation system;
+
+    system.systemConfiguration = nlohmann::json::object();
+    system.probeObjectPaths = nlohmann::json::object();
 
     std::set<std::string> probeInterfaces = getProbeInterfaces();
 
@@ -1279,7 +1349,7 @@ int main()
                 return;
             }
 
-            propertiesChangedCallback(systemConfiguration, objServer);
+            propertiesChangedCallback(system.systemConfiguration, objServer);
         });
     // We also need a poke from DBus when new interfaces are created or
     // destroyed.
@@ -1289,7 +1359,8 @@ int main()
         [&](sdbusplus::message_t& msg) {
             if (iaContainsProbeInterface(msg, probeInterfaces))
             {
-                propertiesChangedCallback(systemConfiguration, objServer);
+                propertiesChangedCallback(system.systemConfiguration,
+                                          objServer);
             }
         });
     sdbusplus::bus::match_t interfacesRemovedMatch(
@@ -1298,16 +1369,17 @@ int main()
         [&](sdbusplus::message_t& msg) {
             if (irContainsProbeInterface(msg, probeInterfaces))
             {
-                propertiesChangedCallback(systemConfiguration, objServer);
+                propertiesChangedCallback(system.systemConfiguration,
+                                          objServer);
             }
         });
 
     boost::asio::post(io, [&]() {
-        propertiesChangedCallback(systemConfiguration, objServer);
+        propertiesChangedCallback(system.systemConfiguration, objServer);
     });
 
     entityIface->register_method("ReScan", [&]() {
-        propertiesChangedCallback(systemConfiguration, objServer);
+        propertiesChangedCallback(system.systemConfiguration, objServer);
     });
     tryIfaceInitialize(entityIface);
 

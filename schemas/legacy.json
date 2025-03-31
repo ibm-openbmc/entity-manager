@@ -92,6 +92,9 @@
                 "LedGpioPins": {
                     "$ref": "#/$defs/Types/LedGpioPins"
                 },
+                "LocationCode": {
+                    "$ref": "#/$defs/Types/LocationCode"
+                },
                 "MaxCFM": {
                     "$ref": "#/$defs/Types/MaxCFM"
                 },
@@ -187,6 +190,9 @@
                 },
                 "PowerState": {
                     "$ref": "#/$defs/Types/PowerState"
+                },
+                "PowerStateOwner": {
+                    "$ref": "#/$defs/Types/PowerStateOwner"
                 },
                 "Presence": {
                     "$ref": "#/$defs/Types/Presence"
@@ -1078,6 +1084,9 @@
                 },
                 "type": "array"
             },
+            "LocationCode": {
+                "type": "string"
+            },
             "MaxCFM": {
                 "type": "number"
             },
@@ -1185,6 +1194,10 @@
             },
             "PowerState": {
                 "type": "string"
+            },
+            "PowerStateOwner": {
+                "type": "string",
+                "enum": ["PCIeSlot"]
             },
             "Presence": {
                 "properties": {
