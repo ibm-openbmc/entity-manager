@@ -1,0 +1,16 @@
+{
+    "Exposes": [
+        {
+            "AuthType": "None",
+            "Hostname": "10.2.2.100",
+            "Name": "satellite_controller",
+            "Port": 0,
+            "Type": "SatelliteController"
+        }
+    ],
+    "Name": "redundant bmc",
+    "Probe": [
+        "xyz.openbmc_project.State.BMC.Redundancy.Sibling({'BMCPosition': 1})"
+    ],
+    "Type": "Chassis"
+}
