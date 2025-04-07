@@ -185,6 +185,7 @@ configs = [
     'system1_chassis.json',
     'solum_pssf162202_psu.json',
     'storm_king.json',
+    'storm_king2.json',
     'stp_baseboard.json',
     'stp_p4000_chassis.json',
     'terminus_2x100g_nic_tsff.json',
