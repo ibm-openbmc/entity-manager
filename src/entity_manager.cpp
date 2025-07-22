@@ -892,8 +892,15 @@ void postToDbus(const nlohmann::json& newConfiguration,
 }
 
 // reads json files out of the filesystem
-bool loadConfigurations(std::list<nlohmann::json>& configurations)
+std::list<nlohmann::json> loadConfigurations()
 {
+    static std::list<nlohmann::json> configurations;
+
+    if (!configurations.empty())
+    {
+        return configurations;
+    }
+
     // find configuration files
     std::vector<std::filesystem::path> jsonPaths;
     if (!findFiles(
@@ -903,7 +910,7 @@ bool loadConfigurations(std::list<nlohmann::json>& configurations)
     {
         std::cerr << "Unable to find any configuration files in "
                   << configurationDirectory << "\n";
-        return false;
+        return configurations;
     }
 
     std::ifstream schemaStream(
@@ -913,7 +920,6 @@ bool loadConfigurations(std::list<nlohmann::json>& configurations)
         std::cerr
             << "Cannot open schema file,  cannot validate JSON, exiting\n\n";
         std::exit(EXIT_FAILURE);
-        return false;
     }
     nlohmann::json schema =
         nlohmann::json::parse(schemaStream, nullptr, false, true);
@@ -922,7 +928,6 @@ bool loadConfigurations(std::list<nlohmann::json>& configurations)
         std::cerr
             << "Illegal schema file detected, cannot validate JSON, exiting\n";
         std::exit(EXIT_FAILURE);
-        return false;
     }
 
     for (auto& jsonPath : jsonPaths)
@@ -961,7 +966,8 @@ bool loadConfigurations(std::list<nlohmann::json>& configurations)
             configurations.emplace_back(data);
         }
     }
-    return true;
+
+    return configurations;
 }
 
 static bool deviceRequiresPowerOn(const nlohmann::json& entity)
@@ -1160,8 +1166,8 @@ void propertiesChangedCallback(nlohmann::json& systemConfiguration,
         auto missingConfigurations = std::make_shared<nlohmann::json>();
         *missingConfigurations = systemConfiguration;
 
-        std::list<nlohmann::json> configurations;
-        if (!loadConfigurations(configurations))
+        std::list<nlohmann::json> configurations = loadConfigurations();
+        if (configurations.empty())
         {
             std::cerr << "Could not load configurations\n";
             inProgress = false;
@@ -1208,11 +1214,7 @@ void propertiesChangedCallback(nlohmann::json& systemConfiguration,
 static std::set<std::string> getProbeInterfaces()
 {
     std::set<std::string> interfaces;
-    std::list<nlohmann::json> configurations;
-    if (!loadConfigurations(configurations))
-    {
-        return interfaces;
-    }
+    std::list<nlohmann::json> configurations = loadConfigurations();
 
     for (auto it = configurations.begin(); it != configurations.end();)
     {
