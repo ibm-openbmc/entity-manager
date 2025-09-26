@@ -1,0 +1,52 @@
+{
+    "Exposes": [
+        {
+            "CustomerModes": [
+                "PowerSaving",
+                "MaximumPerformance",
+                "EfficiencyFavorPower"
+            ],
+            "EcoModeSupport": true,
+            "EnterUtilizationDwellTime": 240,
+            "EnterUtilizationPercent": 8,
+            "ExitUtilizationDwellTime": 10,
+            "ExitUtilizationPercent": 12,
+            "IdlePowerSaverEnabled": true,
+            "Name": "Default Power Mode Properties",
+            "OemModes": [
+                "BalancedPerformance",
+                "EfficiencyFavorPerformance",
+                "FFO",
+                "MaxFrequency",
+                "NonDeterministic",
+                "SFP",
+                "Static"
+            ],
+            "PowerMode": "MaximumPerformance",
+            "Type": "PowerModeProperties"
+        },
+        {
+            "InputVoltage": [
+                220
+            ],
+            "Name": "1400W 1600W IBMCFFPS Configuration",
+            "PowerConfigFullLoad": true,
+            "RedundantCount": 4,
+            "SupportedModel": "2B1E",
+            "SupportedType": "PowerSupply",
+            "Type": "SupportedConfiguration"
+        }
+    ],
+    "Name": "RBMC Prototype Rainier 4U Chassis",
+    "Probe": [
+        "com.ibm.ipzvpd.VSBP({'IM': [118, 0, 32, 0]})"
+    ],
+    "Type": "Chassis",
+    "xyz.openbmc_project.Inventory.Decorator.Compatible": {
+        "Names": [
+            "com.ibm.Hardware.Chassis.Model.RBMCPrototype",
+            "com.ibm.Hardware.Chassis.Model.Rainier4U",
+            "com.ibm.Hardware.Chassis.Model.Rainier"
+        ]
+    }
+}
