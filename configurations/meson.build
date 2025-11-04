@@ -58,6 +58,7 @@ configs = [
     'genesis3_chassis.json',
     'genesis3_psu.json',
     'gospower_g1136-1300wna_psu.json',
+    'huygens_chassis.json',
     'ibm_tacoma_rack_controller.json',
     'ingraham.json',
     'intel_front_panel.json',
