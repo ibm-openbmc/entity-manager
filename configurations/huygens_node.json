@@ -1,0 +1,19 @@
+{
+    "Exposes": [
+        {
+            "InputVoltage": [
+                220
+            ],
+            "Name": "3200W IBMCFFPS Configuration",
+            "RedundantCount": 2,
+            "SupportedModel": "C37F",
+            "SupportedType": "PowerSupply",
+            "Type": "SupportedConfiguration"
+        }
+    ],
+    "Name": "Huygens Node Chassis$Position",
+    "Probe": [
+        "com.ibm.ipzvpd.VCEN({'FC': [50, 69, 52, 67, 45, 48, 48, 49]})"
+    ],
+    "Type": "Chassis"
+}
