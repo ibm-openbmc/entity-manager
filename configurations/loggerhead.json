@@ -1,0 +1,23 @@
+{
+    "Exposes": [
+        {
+            "I2CAddress": 104,
+            "I2CBus": "$bus + 13",
+            "Name": "Power Supply Slot 0",
+            "NamedPresenceGpio": "presence-ps0-chassis$bus / 100",
+            "Type": "IBMCFFPSConnector"
+        },
+        {
+            "I2CAddress": 104,
+            "I2CBus": "$bus + 11",
+            "Name": "Power Supply Slot 1",
+            "NamedPresenceGpio": "presence-ps1-chassis$bus / 100",
+            "Type": "IBMCFFPSConnector"
+        }
+    ],
+    "Name": "Loggerhead Backplane $bus / 100",
+    "Probe": [
+        "com.ibm.ipzvpd.VINI({'CC': [50, 70, 50, 48]})"
+    ],
+    "Type": "Board"
+}
