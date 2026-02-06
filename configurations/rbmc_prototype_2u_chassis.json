@@ -27,17 +27,30 @@
         },
         {
             "InputVoltage": [
+                110,
                 220
             ],
-            "Name": "1400W 1600W IBMCFFPS Configuration",
-            "PowerConfigFullLoad": true,
-            "RedundantCount": 4,
-            "SupportedModel": "2B1E",
+            "Name": "1000W IBMCFFPS Configuration",
+            "PowerConfigFullLoad": false,
+            "RedundantCount": 2,
+            "SupportedModel": "51ED",
+            "SupportedType": "PowerSupply",
+            "Type": "SupportedConfiguration"
+        },
+        {
+            "InputVoltage": [
+                110,
+                220
+            ],
+            "Name": "2000W IBMCFFPS Configuration",
+            "PowerConfigFullLoad": false,
+            "RedundantCount": 2,
+            "SupportedModel": "51E9",
             "SupportedType": "PowerSupply",
             "Type": "SupportedConfiguration"
         }
     ],
-    "Name": "RBMC Prototype Rainier 4U Chassis",
+    "Name": "RBMC Prototype Rainier 2U Chassis",
     "Probe": [
         "com.ibm.ipzvpd.VSBP({'IM': [118, 0, 32, 0]})"
     ],
@@ -45,7 +58,7 @@
     "xyz.openbmc_project.Inventory.Decorator.Compatible": {
         "Names": [
             "com.ibm.Hardware.Chassis.Model.RBMCPrototype",
-            "com.ibm.Hardware.Chassis.Model.Rainier4U",
+            "com.ibm.Hardware.Chassis.Model.Rainier2U",
             "com.ibm.Hardware.Chassis.Model.Rainier"
         ]
     }

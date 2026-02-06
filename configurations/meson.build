@@ -172,7 +172,7 @@ configs = [
     'rainier_1s4u_chassis.json',
     'rainier_2u_chassis.json',
     'rainier_4u_chassis.json',
-    'rbmc_prototype_4u_chassis.json',
+    'rbmc_prototype_2u_chassis.json',
     'sas_module.json',
     'sbp1_baseboard.json',
     'sbp1_chassis.json',
