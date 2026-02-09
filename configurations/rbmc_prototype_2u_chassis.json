@@ -52,7 +52,9 @@
     ],
     "Name": "RBMC Prototype Rainier 2U Chassis",
     "Probe": [
-        "com.ibm.ipzvpd.VSBP({'IM': [118, 0, 32, 0]})"
+        "com.ibm.ipzvpd.VSBP({'IM': [118, 0, 32, 0]})",
+        "OR",
+        "com.ibm.ipzvpd.VSBP({'IM': [118, 0, 32, 1]})"
     ],
     "Type": "Chassis",
     "xyz.openbmc_project.Inventory.Decorator.Compatible": {
