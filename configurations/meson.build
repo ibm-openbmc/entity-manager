@@ -65,6 +65,7 @@ configs = [
     'intel_front_panel.json',
     'kudo_bmc.json',
     'kudo_motherboard.json',
+    'loggerhead.json',
     'meta/bletchley_baseboard.json',
     'meta/bletchley_chassis.json',
     'meta/bletchley_frontpanel.json',
