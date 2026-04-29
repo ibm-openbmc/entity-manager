@@ -102,6 +102,7 @@ schemas = [
     'stepwise.json',
     'virtual_sensor.json',
     'satellite_controller.json',
+    'spdm_endpoint.json',
     'leak_detector.json',
     'firmware.json',
     'supported_configuration.json',
