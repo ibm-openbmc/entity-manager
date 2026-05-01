@@ -19,5 +19,9 @@
     "Probe": [
         "com.ibm.ipzvpd.VINI({'CC': [50, 70, 50, 48]})"
     ],
-    "Type": "Board"
+    "Type": "Board",
+
+    "xyz.openbmc_project.Inventory.Decorator.Position": {
+        "Position": "$bus / 100"
+    }
 }

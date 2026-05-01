@@ -82,6 +82,16 @@
                             "required": ["Length", "Type"],
                             "type": "object"
                         },
+                        "Position": {
+                            "additionalProperties": false,
+                            "properties": {
+                                "Position": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": ["Position"],
+                            "type": "object"
+                        },
                         "Replaceable": {
                             "additionalProperties": false,
                             "properties": {
