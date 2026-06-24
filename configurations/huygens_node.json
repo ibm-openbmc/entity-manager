@@ -15,5 +15,9 @@
     "Probe": [
         "com.ibm.ipzvpd.VCEN({'FC': [50, 69, 52, 67, 45, 48, 48, 49]})"
     ],
-    "Type": "Chassis"
+    "Type": "Chassis",
+
+    "xyz.openbmc_project.Inventory.Decorator.Position": {
+        "Position": "$Position"
+    }
 }
