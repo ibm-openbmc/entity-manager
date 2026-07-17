@@ -6,6 +6,13 @@
             "Port": 4194,
             "TrustedComponentType": "discrete",
             "Type": "SpdmTcpResponder"
+        },
+        {
+            "AuthType": "MTLS",
+            "Hostname": "bmc.peer",
+            "Name": "Sat$ManagementAddressIPv4",
+            "Port": 443,
+            "Type": "SatelliteController"
         }
     ],
     "Name": "Huygens BMC Peer",
