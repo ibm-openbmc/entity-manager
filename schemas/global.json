@@ -35,6 +35,9 @@
                     "$ref": "spdm_endpoint.json#/$defs/SpdmTcpEndpoint"
 		},
                 {
+                    "$ref": "spdm_endpoint.json#/$defs/SpdmTcpResponder"
+                },
+                {
                     "$ref": "stepwise.json#/$defs/Stepwise"
                 },
                 {
