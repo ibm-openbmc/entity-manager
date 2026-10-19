@@ -1269,7 +1269,7 @@ static std::set<std::string> getProbeInterfaces()
 static bool iaContainsProbeInterface(
     sdbusplus::message_t& msg, const std::set<std::string>& probeInterfaces)
 {
-    sdbusplus::message::object_path path;
+    sdbusplus::object_path path;
     DBusObject interfaces;
     std::set<std::string> interfaceSet;
     std::set<std::string> intersect;
@@ -1291,7 +1291,7 @@ static bool iaContainsProbeInterface(
 static bool irContainsProbeInterface(
     sdbusplus::message_t& msg, const std::set<std::string>& probeInterfaces)
 {
-    sdbusplus::message::object_path path;
+    sdbusplus::object_path path;
     std::set<std::string> interfaces;
     std::set<std::string> intersect;
 

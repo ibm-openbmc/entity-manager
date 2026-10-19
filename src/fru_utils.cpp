@@ -1061,7 +1061,7 @@ std::optional<int> findIndexForFRU(
 
     for (const auto& busIface : dbusInterfaceMap)
     {
-        std::string path = busIface.second->get_object_path();
+        std::string path = busIface.second->get_object_path().string();
         if (std::regex_match(path, std::regex(productName + "(_\\d+|)$")))
         {
             // Check if the match named has extra information.
