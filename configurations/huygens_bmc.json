@@ -10,7 +10,7 @@
         {
             "AuthType": "MTLS",
             "Hostname": "bmc.peer",
-            "Name": "Sat$ManagementAddressIPv4",
+            "Name": "5B247A",
             "Port": 443,
             "Type": "SatelliteController"
         }
